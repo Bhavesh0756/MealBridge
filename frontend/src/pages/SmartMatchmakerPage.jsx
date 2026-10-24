@@ -223,7 +223,7 @@ export function SmartMatchmakerPage() {
                 <div className="space-y-3">
                   {/* Top Match Badge */}
                   <div className="flex items-center justify-between">
-                    <span className="px-3 py-1 rounded-full text-xs font-black bg-gradient-to-r from-emerald-500 to-teal-600 text-white shadow-xs">
+                    <span className="px-3 py-1 rounded-full text-xs font-black bg-gradient-to-r from-[#047857] via-[#10b981] to-[#06b6d4] text-white shadow-md shadow-emerald-500/20">
                       {item.match_score}% Match Score
                     </span>
                     <span className="text-xs font-bold text-slate-600 flex items-center gap-1">
@@ -278,7 +278,7 @@ export function SmartMatchmakerPage() {
                 <div className="space-y-2 pt-2 border-t border-slate-100">
                   <button
                     onClick={() => handleOpenRequest(item)}
-                    className="w-full py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold text-center transition flex items-center justify-center gap-1.5 shadow-xs cursor-pointer"
+                    className="w-full py-2.5 bg-gradient-to-r from-[#047857] via-[#10b981] to-[#06b6d4] hover:from-[#065f46] hover:to-[#0891b2] text-white rounded-xl text-xs font-bold text-center transition flex items-center justify-center gap-1.5 shadow-md shadow-emerald-500/20 cursor-pointer"
                   >
                     <Send className="w-3.5 h-3.5" />
                     <span>Claim Allocation Directly</span>

@@ -298,7 +298,7 @@ export function DonorDashboard() {
 
         <button
           onClick={() => setCreateModalOpen(true)}
-          className="px-6 py-3.5 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white rounded-2xl text-xs font-black shadow-lg shadow-emerald-600/25 hover:shadow-xl hover:scale-[1.02] transition-all flex items-center gap-2 self-start sm:self-auto cursor-pointer"
+          className="px-6 py-3.5 bg-gradient-to-r from-[#047857] via-[#10b981] to-[#06b6d4] hover:from-[#065f46] hover:to-[#0891b2] text-white rounded-2xl text-xs font-black shadow-lg shadow-emerald-500/25 hover:shadow-xl hover:scale-[1.02] transition-all flex items-center gap-2 self-start sm:self-auto cursor-pointer"
         >
           <Plus className="w-4 h-4" />
           <span>Publish Surplus Listing</span>
