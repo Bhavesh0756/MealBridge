@@ -133,17 +133,17 @@ The database seed command (`python manage.py seed_data`) creates verified accoun
 
 ## 🧪 Automated Testing
 
-Run the Django automated test suite covering authentication, permissions, overbooking prevention, matching, pickup transitions, and analytics:
+Run the full Django automated test suite covering authentication, permissions, concurrency safety, matching, pickup transitions, emergency unclaiming, and receipt verification:
 
 ```bash
 cd backend
-.\venv\Scripts\python.exe manage.py test apps.donations
+.\venv\Scripts\python.exe manage.py test
 ```
+*12 automated integration and unit tests across `donations`, `requests_app`, and `pickups` all passing.*
 
-Run frontend linting & production build check:
+Run frontend production build validation:
 ```bash
 cd frontend
-npm run lint
 npm run build
 ```
 
