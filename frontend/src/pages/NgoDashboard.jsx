@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import {
   HeartHandshake,
@@ -10,6 +10,7 @@ import {
   RefreshCw,
   Star,
   Check,
+  Search,
   X
 } from 'lucide-react';
 import { requestsApi } from '../api/requests';
@@ -24,6 +25,8 @@ export function NgoDashboard() {
   const [requests, setRequests] = useState([]);
   const [recommendations, setRecommendations] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [requestFilter, setRequestFilter] = useState('all'); // 'all' | 'active' | 'fulfilled'
+  const [searchQuery, setSearchQuery] = useState('');
 
   // Food Receipt & Rating Modal State
   const [confirmModalReq, setConfirmModalReq] = useState(null);
@@ -87,6 +90,24 @@ export function NgoDashboard() {
 
   const activeRequests = requests.filter((r) => ['PENDING', 'ACCEPTED'].includes(r.status));
   const fulfilledRequests = requests.filter((r) => r.status === 'FULFILLED');
+
+  const totalMealsRescued = useMemo(() => {
+    return fulfilledRequests.reduce((sum, r) => sum + (parseFloat(r.requested_quantity) || 0), 0);
+  }, [fulfilledRequests]);
+
+  const filteredRequests = useMemo(() => {
+    return requests.filter((r) => {
+      if (requestFilter === 'active' && !['PENDING', 'ACCEPTED'].includes(r.status)) return false;
+      if (requestFilter === 'fulfilled' && r.status !== 'FULFILLED') return false;
+      if (searchQuery.trim()) {
+        const q = searchQuery.toLowerCase();
+        const titleMatch = r.donation?.title?.toLowerCase().includes(q);
+        const donorMatch = r.donation?.donor_organization_name?.toLowerCase().includes(q);
+        if (!titleMatch && !donorMatch) return false;
+      }
+      return true;
+    });
+  }, [requests, requestFilter, searchQuery]);
 
   if (loading && requests.length === 0) {
     return (
@@ -240,32 +261,82 @@ export function NgoDashboard() {
 
       {/* Section: My Food Requests Tracking Table */}
       <div className="bg-white rounded-3xl border border-slate-200 shadow-xs overflow-hidden">
-        <div className="p-5 border-b border-slate-100 flex items-center justify-between bg-slate-50">
+        <div className="p-5 border-b border-slate-100 flex flex-col md:flex-row md:items-center justify-between gap-4 bg-slate-50">
           <div>
-            <h2 className="font-extrabold text-base text-slate-900">
-              My Requests & Delivery Status Tracker
-            </h2>
+            <div className="flex items-center gap-2">
+              <h2 className="font-extrabold text-base text-slate-900">
+                My Requests & Delivery Status Tracker
+              </h2>
+              {totalMealsRescued > 0 && (
+                <span className="px-2 py-0.5 rounded-full text-[10px] font-black bg-emerald-100 text-emerald-800">
+                  {totalMealsRescued} Units Rescued
+                </span>
+              )}
+            </div>
             <p className="text-xs text-slate-500">
               Track donor approval, automated quantity reservation, and live volunteer transit updates.
             </p>
           </div>
+
+          {/* Search & Tabs */}
+          <div className="flex flex-col sm:flex-row items-center gap-2">
+            <div className="relative w-full sm:w-48">
+              <Search className="w-3.5 h-3.5 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
+              <input
+                type="text"
+                placeholder="Search requests..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="w-full pl-8 pr-3 py-1.5 text-xs bg-white border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/20"
+              />
+            </div>
+
+            <div className="flex items-center gap-1 bg-white p-1 rounded-xl border border-slate-200 text-xs font-bold">
+              <button
+                onClick={() => setRequestFilter('all')}
+                className={`px-2.5 py-1 rounded-lg transition cursor-pointer ${
+                  requestFilter === 'all' ? 'bg-blue-600 text-white shadow-xs' : 'text-slate-500 hover:text-slate-800'
+                }`}
+              >
+                All ({requests.length})
+              </button>
+              <button
+                onClick={() => setRequestFilter('active')}
+                className={`px-2.5 py-1 rounded-lg transition cursor-pointer ${
+                  requestFilter === 'active' ? 'bg-blue-600 text-white shadow-xs' : 'text-slate-500 hover:text-slate-800'
+                }`}
+              >
+                Active ({activeRequests.length})
+              </button>
+              <button
+                onClick={() => setRequestFilter('fulfilled')}
+                className={`px-2.5 py-1 rounded-lg transition cursor-pointer ${
+                  requestFilter === 'fulfilled' ? 'bg-blue-600 text-white shadow-xs' : 'text-slate-500 hover:text-slate-800'
+                }`}
+              >
+                Fulfilled ({fulfilledRequests.length})
+              </button>
+            </div>
+          </div>
         </div>
 
         <div className="p-5">
-          {requests.length === 0 ? (
+          {filteredRequests.length === 0 ? (
             <div className="text-center py-12 text-slate-400 space-y-2">
               <HeartHandshake className="w-10 h-10 mx-auto opacity-40" />
-              <p className="text-xs font-medium">You haven't requested any food donations yet.</p>
-              <Link
-                to="/browse"
-                className="inline-block mt-2 px-4 py-2 bg-blue-600 text-white rounded-xl text-xs font-bold"
-              >
-                Browse Surplus Feed
-              </Link>
+              <p className="text-xs font-medium">No requests match this filter.</p>
+              {requests.length === 0 && (
+                <Link
+                  to="/browse"
+                  className="inline-block mt-2 px-4 py-2 bg-blue-600 text-white rounded-xl text-xs font-bold"
+                >
+                  Browse Surplus Feed
+                </Link>
+              )}
             </div>
           ) : (
             <div className="space-y-4">
-              {requests.map((req) => (
+              {filteredRequests.map((req) => (
                 <div
                   key={req.id}
                   className={`p-4 rounded-2xl border transition ${
