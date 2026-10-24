@@ -37,60 +37,76 @@ export function Navbar() {
   };
 
   return (
-    <header className="sticky top-0 z-40 bg-white/90 backdrop-blur-md border-b border-slate-200">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-18 flex items-center justify-between">
+    <header className="sticky top-0 z-40 bg-white/80 backdrop-blur-xl border-b border-slate-200/70 shadow-xs transition-all">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
         {/* Brand */}
         <div className="flex items-center gap-8">
-          <Link to="/" className="flex items-center gap-2.5 group">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-emerald-600 to-emerald-400 text-white flex items-center justify-center font-bold shadow-md shadow-emerald-500/20 group-hover:scale-105 transition">
-              <Utensils className="w-5 h-5" />
+          <Link to="/" className="flex items-center gap-3 group">
+            <div className="relative w-11 h-11 rounded-2xl bg-gradient-to-tr from-emerald-600 via-emerald-500 to-teal-400 text-white flex items-center justify-center font-bold shadow-lg shadow-emerald-500/25 group-hover:scale-105 group-hover:rotate-1 transition-all duration-300">
+              <Utensils className="w-5 h-5 transition-transform group-hover:scale-110" />
+              <span className="absolute -top-1 -right-1 flex h-3 w-3">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-3 w-3 bg-emerald-500 border-2 border-white"></span>
+              </span>
             </div>
             <div>
-              <div className="flex items-center gap-1.5">
-                <span className="font-extrabold text-xl tracking-tight text-slate-900">MealBridge</span>
-                <span className="px-1.5 py-0.2 bg-emerald-100 text-emerald-800 text-[10px] font-bold rounded uppercase tracking-wider">
-                  Rescue
+              <div className="flex items-center gap-2">
+                <span className="font-display font-black text-2xl tracking-tight bg-gradient-to-r from-slate-900 via-emerald-950 to-slate-800 bg-clip-text text-transparent">
+                  Meal<span className="text-emerald-600">Bridge</span>
+                </span>
+                <span className="px-2 py-0.5 bg-gradient-to-r from-emerald-500/10 to-teal-500/10 text-emerald-700 border border-emerald-500/20 text-[10px] font-black rounded-full uppercase tracking-widest shadow-2xs">
+                  Rescue Net
                 </span>
               </div>
-              <p className="text-[11px] text-slate-500 font-medium">Surplus Food Platform</p>
+              <p className="text-[11px] text-slate-500 font-medium tracking-wide">
+                Hyperlocal Surplus Redistribution
+              </p>
             </div>
           </Link>
 
           {/* Desktop Nav Links */}
-          <nav className="hidden md:flex items-center gap-1">
+          <nav className="hidden md:flex items-center gap-1.5 bg-slate-100/60 p-1 rounded-2xl border border-slate-200/50">
             <Link
               to="/browse"
-              className={`px-3 py-1.5 rounded-lg text-sm font-semibold transition ${
-                isActive('/browse') ? 'bg-emerald-50 text-emerald-700' : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100/60'
+              className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all duration-200 ${
+                isActive('/browse')
+                  ? 'bg-white text-emerald-700 shadow-xs border border-slate-200/50 scale-[1.02]'
+                  : 'text-slate-600 hover:text-slate-900 hover:bg-white/60'
               }`}
             >
-              Food Feed
+              Live Feed
             </Link>
             <Link
               to="/matchmaker"
-              className={`px-3 py-1.5 rounded-lg text-sm font-semibold flex items-center gap-1.5 transition ${
-                isActive('/matchmaker') ? 'bg-emerald-50 text-emerald-700' : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100/60'
+              className={`px-3.5 py-1.5 rounded-xl text-xs font-bold flex items-center gap-1.5 transition-all duration-200 ${
+                isActive('/matchmaker')
+                  ? 'bg-white text-emerald-700 shadow-xs border border-slate-200/50 scale-[1.02]'
+                  : 'text-slate-600 hover:text-slate-900 hover:bg-white/60'
               }`}
             >
-              <Sparkles className="w-3.5 h-3.5 text-amber-500" />
+              <Sparkles className="w-3.5 h-3.5 text-amber-500 animate-pulse" />
               Smart Match
             </Link>
             <Link
               to="/impact"
-              className={`px-3 py-1.5 rounded-lg text-sm font-semibold flex items-center gap-1.5 transition ${
-                isActive('/impact') ? 'bg-emerald-50 text-emerald-700' : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100/60'
+              className={`px-3.5 py-1.5 rounded-xl text-xs font-bold flex items-center gap-1.5 transition-all duration-200 ${
+                isActive('/impact')
+                  ? 'bg-white text-emerald-700 shadow-xs border border-slate-200/50 scale-[1.02]'
+                  : 'text-slate-600 hover:text-slate-900 hover:bg-white/60'
               }`}
             >
-              <BarChart3 className="w-3.5 h-3.5 text-emerald-600" />
-              Impact Analytics
+              <BarChart3 className="w-3.5 h-3.5 text-teal-600" />
+              ESG Analytics
             </Link>
 
             {/* Role-Specific Dashboard quicklink */}
             {isDonor && (
               <Link
                 to="/dashboard/donor"
-                className={`px-3 py-1.5 rounded-lg text-sm font-semibold transition ${
-                  isActive('/dashboard/donor') ? 'bg-emerald-100/80 text-emerald-900' : 'text-emerald-700 hover:bg-emerald-50'
+                className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all duration-200 ${
+                  isActive('/dashboard/donor')
+                    ? 'bg-gradient-to-r from-emerald-600 to-teal-600 text-white shadow-md shadow-emerald-600/20'
+                    : 'text-emerald-700 hover:bg-emerald-50'
                 }`}
               >
                 Donor Console
@@ -99,8 +115,10 @@ export function Navbar() {
             {isNgo && (
               <Link
                 to="/dashboard/ngo"
-                className={`px-3 py-1.5 rounded-lg text-sm font-semibold transition ${
-                  isActive('/dashboard/ngo') ? 'bg-blue-100/80 text-blue-900' : 'text-blue-700 hover:bg-blue-50'
+                className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all duration-200 ${
+                  isActive('/dashboard/ngo')
+                    ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-md shadow-blue-600/20'
+                    : 'text-blue-700 hover:bg-blue-50'
                 }`}
               >
                 NGO Console
@@ -109,64 +127,73 @@ export function Navbar() {
             {isVolunteer && (
               <Link
                 to="/dashboard/volunteer"
-                className={`px-3 py-1.5 rounded-lg text-sm font-semibold transition ${
-                  isActive('/dashboard/volunteer') ? 'bg-amber-100/80 text-amber-900' : 'text-amber-700 hover:bg-amber-50'
+                className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all duration-200 ${
+                  isActive('/dashboard/volunteer')
+                    ? 'bg-gradient-to-r from-amber-600 to-orange-600 text-white shadow-md shadow-amber-600/20'
+                    : 'text-amber-800 hover:bg-amber-50'
                 }`}
               >
-                Rescue Log
+                Courier Ops
               </Link>
             )}
             {isAdmin && (
               <Link
                 to="/dashboard/admin"
-                className={`px-3 py-1.5 rounded-lg text-sm font-semibold transition ${
-                  isActive('/dashboard/admin') ? 'bg-purple-100/80 text-purple-900' : 'text-purple-700 hover:bg-purple-50'
+                className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all duration-200 ${
+                  isActive('/dashboard/admin')
+                    ? 'bg-gradient-to-r from-purple-600 to-pink-600 text-white shadow-md shadow-purple-600/20'
+                    : 'text-purple-700 hover:bg-purple-50'
                 }`}
               >
-                Admin Panel
+                Admin Shield
               </Link>
             )}
           </nav>
         </div>
 
         {/* Right Actions */}
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2.5">
           {/* Quick Demo Switcher Button */}
           <div className="relative">
             <button
               onClick={() => setDemoMenuOpen(!demoMenuOpen)}
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-amber-50 hover:bg-amber-100 text-amber-900 border border-amber-200 transition cursor-pointer"
+              className="flex items-center gap-2 px-3 py-1.5 rounded-xl text-xs font-bold bg-gradient-to-r from-amber-500/10 to-orange-500/10 hover:from-amber-500/20 hover:to-orange-500/20 text-amber-900 border border-amber-300/60 shadow-2xs transition-all duration-200 cursor-pointer"
               title="Switch demo roles instantly"
             >
-              <span className="w-2 h-2 rounded-full bg-amber-500 animate-pulse" />
-              <span className="hidden sm:inline">Role:</span>
-              <span className="font-bold">
+              <span className="w-2 h-2 rounded-full bg-amber-500 animate-ping" />
+              <span className="hidden sm:inline text-amber-700 font-medium">Role:</span>
+              <span className="font-extrabold uppercase tracking-wide">
                 {user ? user.role : 'Demo Switcher'}
               </span>
               <ChevronDown className="w-3.5 h-3.5 text-amber-700" />
             </button>
 
             {demoMenuOpen && (
-              <div className="absolute right-0 mt-2 w-64 bg-white rounded-xl shadow-xl border border-slate-200 p-2 z-50">
-                <div className="px-2 py-1 text-[11px] font-bold text-slate-400 uppercase tracking-wider">
-                  Switch Active Role
+              <div className="absolute right-0 mt-2 w-72 bg-white/95 backdrop-blur-xl rounded-2xl shadow-2xl border border-slate-200/80 p-2.5 z-50 animate-in fade-in zoom-in-95 duration-150">
+                <div className="px-3 py-1.5 text-[10px] font-black text-slate-400 uppercase tracking-widest border-b border-slate-100 mb-1">
+                  Instant Role Simulation
                 </div>
                 {DEMO_ACCOUNTS.map((acc) => (
                   <button
                     key={acc.role}
                     onClick={() => handleDemoSwitch(acc)}
-                    className={`w-full text-left p-2 rounded-lg text-xs transition flex items-center justify-between cursor-pointer ${
+                    className={`w-full text-left p-2.5 rounded-xl text-xs transition-all flex items-center justify-between cursor-pointer ${
                       user?.email === acc.email
-                        ? 'bg-emerald-50 text-emerald-800 font-bold'
+                        ? 'bg-emerald-50/80 text-emerald-900 font-bold border border-emerald-200/60'
                         : 'hover:bg-slate-50 text-slate-700'
                     }`}
                   >
                     <div>
-                      <div className="font-semibold">{acc.label}</div>
-                      <div className="text-[10px] text-slate-400">{acc.org}</div>
+                      <div className="font-bold flex items-center gap-1.5">
+                        {acc.label}
+                        <span className="text-[10px] px-1.5 py-0.2 bg-slate-100 text-slate-600 rounded font-semibold">
+                          {acc.role}
+                        </span>
+                      </div>
+                      <div className="text-[11px] text-slate-400 mt-0.5">{acc.org}</div>
                     </div>
                     {user?.email === acc.email && (
-                      <span className="text-[10px] px-1.5 py-0.5 bg-emerald-600 text-white rounded font-bold">
+                      <span className="text-[10px] px-2 py-0.5 bg-emerald-600 text-white rounded-full font-black shadow-xs">
                         ACTIVE
                       </span>
                     )}
@@ -180,12 +207,12 @@ export function Navbar() {
           {isAuthenticated && (
             <button
               onClick={() => setDrawerOpen(true)}
-              className="relative p-2 rounded-xl text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition cursor-pointer"
+              className="relative p-2.5 rounded-xl text-slate-600 hover:text-slate-900 hover:bg-slate-100 border border-transparent hover:border-slate-200 transition-all cursor-pointer"
               title="View notifications"
             >
               <Bell className="w-5 h-5" />
               {unreadCount > 0 && (
-                <span className="absolute -top-0.5 -right-0.5 px-1.5 py-0.2 bg-rose-500 text-white text-[10px] font-extrabold rounded-full animate-bounce">
+                <span className="absolute -top-1 -right-1 px-1.5 py-0.2 bg-gradient-to-r from-rose-500 to-red-600 text-white text-[10px] font-black rounded-full shadow-md shadow-rose-500/30 animate-pulse">
                   {unreadCount}
                 </span>
               )}
@@ -197,31 +224,31 @@ export function Navbar() {
             <div className="flex items-center gap-2">
               <button
                 onClick={() => setProfileOpen(true)}
-                className="hidden lg:flex items-center gap-2 px-2.5 py-1.5 rounded-xl hover:bg-slate-100 transition text-right cursor-pointer group"
+                className="hidden lg:flex items-center gap-2.5 px-3 py-1.5 rounded-xl bg-slate-50 hover:bg-slate-100/80 border border-slate-200/60 transition-all text-right cursor-pointer group hover:ring-2 hover:ring-emerald-400/30"
                 title="View & Edit Profile Settings"
               >
-                <div className="w-8 h-8 rounded-lg bg-emerald-100 text-emerald-800 flex items-center justify-center font-bold text-xs group-hover:scale-105 transition">
+                <div className="w-8 h-8 rounded-xl bg-gradient-to-tr from-emerald-600 to-teal-500 text-white flex items-center justify-center font-bold text-xs shadow-xs group-hover:scale-105 transition">
                   <User className="w-4 h-4" />
                 </div>
                 <div>
-                  <p className="text-xs font-bold text-slate-800 leading-tight">
+                  <p className="text-xs font-black text-slate-900 leading-tight">
                     {user.username}
                   </p>
-                  <span className="text-[10px] text-slate-500 font-medium">
-                    {user.role} {user.is_verified && '• Verified ✓'}
+                  <span className="text-[10px] text-emerald-600 font-bold flex items-center gap-1 justify-end">
+                    {user.role} {user.is_verified && '✓'}
                   </span>
                 </div>
               </button>
               <button
                 onClick={() => setProfileOpen(true)}
-                className="lg:hidden p-2 text-slate-600 hover:bg-slate-100 rounded-xl transition cursor-pointer"
+                className="lg:hidden p-2.5 text-slate-600 hover:bg-slate-100 rounded-xl transition cursor-pointer"
                 title="Profile Settings"
               >
                 <User className="w-5 h-5" />
               </button>
               <button
                 onClick={logout}
-                className="p-2 text-slate-500 hover:text-rose-600 hover:bg-rose-50 rounded-xl transition cursor-pointer"
+                className="p-2.5 text-slate-400 hover:text-rose-600 hover:bg-rose-50 rounded-xl transition cursor-pointer"
                 title="Logout"
               >
                 <LogOut className="w-5 h-5" />
@@ -231,13 +258,13 @@ export function Navbar() {
             <div className="flex items-center gap-2">
               <Link
                 to="/login"
-                className="px-3.5 py-2 text-xs font-bold text-slate-700 hover:text-slate-900 rounded-xl hover:bg-slate-100 transition"
+                className="px-4 py-2 text-xs font-bold text-slate-700 hover:text-slate-900 rounded-xl hover:bg-slate-100 transition"
               >
                 Sign In
               </Link>
               <Link
                 to="/register"
-                className="px-4 py-2 text-xs font-bold bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl shadow-xs transition"
+                className="px-4 py-2 text-xs font-bold bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white rounded-xl shadow-md shadow-emerald-500/20 transition-all hover:scale-105"
               >
                 Get Started
               </Link>
@@ -247,7 +274,7 @@ export function Navbar() {
           {/* Mobile menu button */}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="md:hidden p-2 text-slate-600 hover:bg-slate-100 rounded-lg cursor-pointer"
+            className="md:hidden p-2 text-slate-600 hover:bg-slate-100 rounded-xl cursor-pointer"
           >
             {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
           </button>
