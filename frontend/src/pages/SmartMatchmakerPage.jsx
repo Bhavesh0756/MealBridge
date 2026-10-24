@@ -2,22 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'motion/react';
 import {
   Sparkles,
-  Sliders,
   MapPin,
-  Clock,
   CheckCircle2,
-  AlertCircle,
-  ShieldCheck,
-  Building,
-  ArrowRight,
-  Info
+  AlertCircle
 } from 'lucide-react';
 import { matchingApi } from '../api/matching';
-import { useAuth } from '../context/AuthContext';
 import { Link } from 'react-router-dom';
 
 export function SmartMatchmakerPage() {
-  const { user, isNgo } = useAuth();
   const [radius, setRadius] = useState(25);
   const [matches, setMatches] = useState([]);
   const [loading, setLoading] = useState(false);

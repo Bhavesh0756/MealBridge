@@ -1,14 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { motion } from 'motion/react';
 import {
   HeartHandshake,
   Sparkles,
-  MapPin,
-  Clock,
   CheckCircle2,
-  XCircle,
   Truck,
-  AlertTriangle,
   ArrowRight,
   ShieldCheck,
   RefreshCw
@@ -56,6 +51,15 @@ export function NgoDashboard() {
 
   const activeRequests = requests.filter((r) => ['PENDING', 'ACCEPTED'].includes(r.status));
   const fulfilledRequests = requests.filter((r) => r.status === 'FULFILLED');
+
+  if (loading && requests.length === 0) {
+    return (
+      <div className="min-h-[60vh] flex flex-col items-center justify-center gap-3">
+        <div className="w-8 h-8 border-3 border-blue-500 border-t-transparent rounded-full animate-spin" />
+        <p className="text-sm text-slate-500 font-medium">Loading NGO community requests & surplus intake...</p>
+      </div>
+    );
+  }
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">

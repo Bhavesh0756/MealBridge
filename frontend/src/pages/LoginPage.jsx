@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth, DEMO_ACCOUNTS } from '../context/AuthContext';
-import { Utensils, Lock, Mail, AlertCircle, ArrowRight, ShieldCheck } from 'lucide-react';
+import { Utensils, Lock, Mail, AlertCircle, ArrowRight } from 'lucide-react';
 
 export function LoginPage() {
   const { login } = useAuth();

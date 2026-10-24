@@ -2,8 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import {
   Search,
-  Filter,
-  MapPin,
   Clock,
   ShieldCheck,
   Utensils,
@@ -11,9 +9,7 @@ import {
   Grid,
   CheckCircle2,
   X,
-  AlertCircle,
-  Sparkles,
-  Info
+  AlertCircle
 } from 'lucide-react';
 import { donationsApi } from '../api/donations';
 import { requestsApi } from '../api/requests';
@@ -22,7 +18,7 @@ import { LeafletMapView } from '../components/LeafletMapView';
 import { useNavigate } from 'react-router-dom';
 
 export function BrowseFeedPage() {
-  const { user, isNgo, isAuthenticated } = useAuth();
+  const { isNgo, isAuthenticated } = useAuth();
   const navigate = useNavigate();
 
   const [donations, setDonations] = useState([]);

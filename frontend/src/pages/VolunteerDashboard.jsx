@@ -2,15 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import {
   Truck,
-  MapPin,
-  Clock,
   CheckCircle2,
-  AlertTriangle,
-  ArrowRight,
-  Phone,
-  UserCheck,
-  PackageCheck,
-  Shield,
   X
 } from 'lucide-react';
 import { pickupsApi } from '../api/pickups';
@@ -108,6 +100,15 @@ export function VolunteerDashboard() {
         return null;
     }
   };
+
+  if (loading && availablePool.length === 0 && myPickups.length === 0) {
+    return (
+      <div className="min-h-[60vh] flex flex-col items-center justify-center gap-3">
+        <div className="w-8 h-8 border-3 border-amber-500 border-t-transparent rounded-full animate-spin" />
+        <p className="text-sm text-slate-500 font-medium">Connecting to live volunteer dispatch pool...</p>
+      </div>
+    );
+  }
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">

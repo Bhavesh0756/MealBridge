@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { Utensils, HeartHandshake, Truck, ShieldCheck, AlertCircle, ArrowRight } from 'lucide-react';
+import { Utensils, HeartHandshake, Truck, AlertCircle, ArrowRight } from 'lucide-react';
 
 export function RegisterPage() {
   const { register } = useAuth();

@@ -3,16 +3,9 @@ import { motion, AnimatePresence } from 'motion/react';
 import {
   Utensils,
   Plus,
-  Clock,
   CheckCircle2,
-  XCircle,
-  AlertTriangle,
-  Building,
-  MapPin,
   ShieldCheck,
-  Users,
   Sparkles,
-  ChevronRight,
   X
 } from 'lucide-react';
 import { donationsApi } from '../api/donations';
@@ -60,7 +53,6 @@ export function DonorDashboard() {
   });
 
   const [formError, setFormError] = useState('');
-  const [submitting, setSubmitting] = useState(false);
 
   const loadDashboardData = async () => {
     try {
@@ -184,7 +176,8 @@ export function DonorDashboard() {
         donationTitle: donation.title,
         matches: res.matches || [],
       });
-    } catch (e) {
+    } catch (err) {
+      console.error('Failed to calculate matches for listing:', err);
       alert('Could not calculate matches for this listing.');
     }
   };
@@ -193,6 +186,15 @@ export function DonorDashboard() {
   const activeDonationsCount = myDonations.filter((d) =>
     ['AVAILABLE', 'PARTIALLY_RESERVED'].includes(d.status)
   ).length;
+
+  if (loading && myDonations.length === 0) {
+    return (
+      <div className="min-h-[60vh] flex flex-col items-center justify-center gap-3">
+        <div className="w-8 h-8 border-3 border-emerald-500 border-t-transparent rounded-full animate-spin" />
+        <p className="text-sm text-slate-500 font-medium">Loading food donor console & active listings...</p>
+      </div>
+    );
+  }
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">

@@ -4,17 +4,10 @@ import { Link, useNavigate } from 'react-router-dom';
 import {
   Utensils,
   Truck,
-  HeartHandshake,
   ShieldCheck,
   Clock,
   Sparkles,
-  ArrowRight,
-  MapPin,
-  Leaf,
-  CheckCircle2,
-  Users,
-  Flame,
-  Search
+  ArrowRight
 } from 'lucide-react';
 import { ImpactCounter } from '../components/ImpactCounter';
 import { LeafletMapView } from '../components/LeafletMapView';
@@ -29,7 +22,6 @@ export function LandingPage() {
     water_saved_liters: 88200,
   });
   const [featuredDonations, setFeaturedDonations] = useState([]);
-  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -45,8 +37,6 @@ export function LandingPage() {
         setFeaturedDonations(listings?.results?.slice(0, 4) || []);
       } catch (e) {
         console.error(e);
-      } finally {
-        setLoading(false);
       }
     }
     loadData();
@@ -137,7 +127,7 @@ export function LandingPage() {
                     donations={featuredDonations}
                     zoom={12}
                     className="h-full w-full"
-                    onSelectDonation={(d) => navigate(`/browse`)}
+                    onSelectDonation={() => navigate(`/browse`)}
                   />
                 </div>
                 <div className="mt-3 px-2 flex items-center justify-between text-xs text-slate-600">

@@ -1,16 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { motion } from 'motion/react';
 import {
   BarChart3,
   Leaf,
   Droplet,
   Utensils,
   Award,
-  ShieldCheck,
-  TrendingUp,
-  Info,
-  Calendar,
-  CheckCircle2
+  Info
 } from 'lucide-react';
 import { analyticsApi } from '../api/analytics';
 import { ImpactCounter } from '../components/ImpactCounter';
@@ -50,6 +45,15 @@ export function ImpactAnalyticsPage() {
   };
 
   const weeklyTrends = data?.weekly_trends || [];
+
+  if (loading) {
+    return (
+      <div className="min-h-[60vh] flex flex-col items-center justify-center gap-3">
+        <div className="w-8 h-8 border-3 border-emerald-500 border-t-transparent rounded-full animate-spin" />
+        <p className="text-sm text-slate-500 font-medium">Calculating verified ecological & social metrics...</p>
+      </div>
+    );
+  }
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-10">

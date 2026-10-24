@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
 import L from 'leaflet';
-import { MapPin, Navigation, Clock, ShieldCheck, Utensils } from 'lucide-react';
 
 // Custom modern SVG icons
 const createCustomIcon = (bgColor, iconText) => {

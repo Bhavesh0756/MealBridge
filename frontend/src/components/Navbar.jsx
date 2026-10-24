@@ -6,13 +6,8 @@ import {
   Utensils,
   Bell,
   LogOut,
-  User,
-  ShieldCheck,
   ChevronDown,
   Sparkles,
-  MapPin,
-  Truck,
-  HeartHandshake,
   BarChart3,
   Menu,
   X

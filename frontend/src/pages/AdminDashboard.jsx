@@ -1,20 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { motion } from 'motion/react';
 import {
-  ShieldCheck,
   Users,
-  AlertTriangle,
   FileText,
   CheckCircle2,
-  XCircle,
-  RefreshCw,
-  Search,
-  Building,
-  Truck,
-  HeartHandshake
+  RefreshCw
 } from 'lucide-react';
 import { authApi } from '../api/auth';
-import { donationsApi } from '../api/donations';
 
 export function AdminDashboard() {
   const [users, setUsers] = useState([]);
@@ -60,6 +51,15 @@ export function AdminDashboard() {
 
   const pendingUsers = users.filter((u) => u.verification_status === 'PENDING');
   const verifiedUsers = users.filter((u) => u.verification_status === 'VERIFIED');
+
+  if (loading && users.length === 0) {
+    return (
+      <div className="min-h-[60vh] flex flex-col items-center justify-center gap-3">
+        <div className="w-8 h-8 border-3 border-purple-500 border-t-transparent rounded-full animate-spin" />
+        <p className="text-sm text-slate-500 font-medium">Loading administrative audit and verification queue...</p>
+      </div>
+    );
+  }
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
