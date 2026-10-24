@@ -17,6 +17,8 @@ import { matchingApi } from '../api/matching';
 import { useAuth } from '../context/AuthContext';
 import { useToast } from '../context/ToastContext';
 import { FoodSafetyModal } from '../components/FoodSafetyModal';
+import { ExpiryTimerRing } from '../components/ExpiryTimerRing';
+import { SkeletonStat, SkeletonCard } from '../components/SkeletonLoader';
 
 export function DonorDashboard() {
   const { user } = useAuth();
@@ -269,9 +271,23 @@ export function DonorDashboard() {
 
   if (loading && myDonations.length === 0) {
     return (
-      <div className="min-h-[60vh] flex flex-col items-center justify-center gap-3">
-        <div className="w-8 h-8 border-3 border-emerald-500 border-t-transparent rounded-full animate-spin" />
-        <p className="text-sm text-slate-500 font-medium">Loading food donor console & active listings...</p>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
+        <div className="flex justify-between items-center pb-4 border-b border-slate-200">
+          <div className="space-y-2">
+            <div className="h-4 w-32 bg-slate-200 rounded-full skeleton-shimmer" />
+            <div className="h-7 w-72 bg-slate-200 rounded-lg skeleton-shimmer" />
+          </div>
+        </div>
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+          {Array.from({ length: 4 }).map((_, i) => (
+            <SkeletonStat key={i} />
+          ))}
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <SkeletonCard />
+          <SkeletonCard />
+          <SkeletonCard />
+        </div>
       </div>
     );
   }
@@ -423,26 +439,31 @@ export function DonorDashboard() {
             {myDonations.map((d) => (
               <div
                 key={d.id}
-                className="bg-white rounded-2xl border border-slate-200 shadow-xs hover:shadow-md transition overflow-hidden flex flex-col justify-between"
+                className="stripe-card rounded-2xl border border-slate-200/90 shadow-xs hover:shadow-md transition overflow-hidden flex flex-col justify-between bg-white"
               >
                 <div>
-                  <div className="p-4 bg-slate-50 border-b border-slate-100 flex items-center justify-between">
-                    <span className="px-2 py-0.5 rounded text-xs font-bold bg-slate-200 text-slate-700">
-                      {d.category?.name || 'Cooked Food'}
-                    </span>
-                    <span
-                      className={`px-2 py-0.5 rounded text-[10px] font-bold ${
-                        d.status === 'AVAILABLE'
-                          ? 'bg-emerald-100 text-emerald-800'
-                          : d.status === 'PARTIALLY_RESERVED'
-                          ? 'bg-blue-100 text-blue-800'
-                          : d.status === 'COMPLETED'
-                          ? 'bg-teal-100 text-teal-800'
-                          : 'bg-slate-200 text-slate-600'
-                      }`}
-                    >
-                      {d.status}
-                    </span>
+                  <div className="p-3.5 bg-slate-50/90 border-b border-slate-100 flex items-center justify-between gap-2">
+                    <div className="flex items-center gap-1.5 flex-wrap">
+                      <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-slate-200 text-slate-700">
+                        {d.category?.name || 'Cooked Food'}
+                      </span>
+                      <span
+                        className={`px-2 py-0.5 rounded-full text-[10px] font-bold ${
+                          d.status === 'AVAILABLE'
+                            ? 'bg-emerald-100 text-emerald-800'
+                            : d.status === 'PARTIALLY_RESERVED'
+                            ? 'bg-blue-100 text-blue-800'
+                            : d.status === 'COMPLETED'
+                            ? 'bg-teal-100 text-teal-800'
+                            : 'bg-slate-200 text-slate-600'
+                        }`}
+                      >
+                        {d.status}
+                      </span>
+                    </div>
+                    {['AVAILABLE', 'PARTIALLY_RESERVED'].includes(d.status) && (
+                      <ExpiryTimerRing remainingHours={d.remaining_hours} size="sm" />
+                    )}
                   </div>
 
                   <div className="p-5 space-y-3">
