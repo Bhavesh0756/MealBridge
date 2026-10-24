@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import { NotificationProvider } from './context/NotificationContext';
+import { ToastProvider } from './context/ToastContext';
 
 import { Navbar } from './components/Navbar';
 import { Footer } from './components/Footer';
@@ -40,8 +41,9 @@ export default function App() {
   return (
     <BrowserRouter>
       <AuthProvider>
-        <NotificationProvider>
-          <div className="min-h-screen flex flex-col bg-slate-50 text-slate-800 font-sans selection:bg-emerald-500 selection:text-white">
+        <ToastProvider>
+          <NotificationProvider>
+            <div className="min-h-screen flex flex-col bg-slate-50 text-slate-800 font-sans selection:bg-emerald-500 selection:text-white">
             <Navbar />
             <NotificationDrawer />
             <main className="flex-1">
@@ -94,7 +96,8 @@ export default function App() {
             </main>
             <Footer />
           </div>
-        </NotificationProvider>
+          </NotificationProvider>
+        </ToastProvider>
       </AuthProvider>
     </BrowserRouter>
   );
