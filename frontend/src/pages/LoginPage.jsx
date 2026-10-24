@@ -104,7 +104,7 @@ export function LoginPage() {
 
   return (
     <div className="min-h-screen flex items-center justify-center px-4 py-10 relative overflow-hidden"
-      style={{ background: 'linear-gradient(135deg, #060d0a 0%, #0b0f17 45%, #071712 100%)' }}>
+      style={{ background: 'linear-gradient(135deg, #0b0f17 0%, #0f1923 45%, #071712 100%)' }}>
       
       {/* Animated particle network */}
       <ParticleCanvas />

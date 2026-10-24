@@ -167,7 +167,7 @@ export function RegisterPage() {
 
   return (
     <div className="min-h-screen px-4 py-10 relative overflow-hidden"
-      style={{ background: 'linear-gradient(135deg, #060d0a 0%, #0b0f17 50%, #071712 100%)' }}>
+      style={{ background: 'linear-gradient(135deg, #0b0f17 0%, #0f1923 50%, #071712 100%)' }}>
 
       {/* Aurora orbs */}
       <div className="absolute top-[-8%] right-[-6%] w-[380px] h-[380px] rounded-full pointer-events-none"
