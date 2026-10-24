@@ -1,14 +1,31 @@
 @import "tailwindcss";
 
+:root {
+  /* Obsidian Emerald & Aurora Mint Design System */
+  --color-canvas-light: #ffffff;
+  --color-surface-glass: rgba(255, 255, 255, 0.85);
+  --color-border-subtle: #e2e8f0;
+  
+  --color-obsidian-noir: #0b0f17;
+  --color-emerald-deep: #047857;
+  --color-aurora-jade: #10b981;
+  --color-luminous-cyan: #06b6d4;
+  
+  --color-saffron-amber: #f59e0b;
+  --color-coral-flame: #f43f5e;
+}
+
 @layer base {
   html {
     font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
     scroll-behavior: smooth;
+    background-color: #fafbfd;
+    color: #0f172a;
   }
   
   h1, h2, h3, h4, .font-display {
     font-family: 'Outfit', 'Plus Jakarta Sans', sans-serif;
-    letter-spacing: -0.02em;
+    letter-spacing: -0.025em;
   }
 }
 
@@ -32,24 +49,24 @@
 .leaflet-container {
   width: 100%;
   height: 100%;
-  border-radius: 1.25rem;
+  border-radius: 1.5rem;
   z-index: 10;
 }
 
 /* Micro-animations */
 @keyframes float-slow {
   0%, 100% { transform: translateY(0px) rotate(0deg); }
-  50% { transform: translateY(-12px) rotate(1.5deg); }
+  50% { transform: translateY(-10px) rotate(1deg); }
 }
 
 @keyframes float-reverse {
   0%, 100% { transform: translateY(0px) rotate(0deg); }
-  50% { transform: translateY(12px) rotate(-1.5deg); }
+  50% { transform: translateY(10px) rotate(-1deg); }
 }
 
 @keyframes pulse-glow {
   0%, 100% { opacity: 0.35; transform: scale(1); }
-  50% { opacity: 0.75; transform: scale(1.06); }
+  50% { opacity: 0.75; transform: scale(1.05); }
 }
 
 @keyframes gradient-flow {
@@ -74,39 +91,53 @@
   animation: gradient-flow 6s ease infinite;
 }
 
+/* Silicon Valley / Stripe Climate Aesthetic Gradients */
+.gradient-aurora {
+  background: linear-gradient(135deg, #047857 0%, #10b981 50%, #06b6d4 100%);
+}
+
+.gradient-aurora-text {
+  background: linear-gradient(135deg, #047857 0%, #10b981 48%, #06b6d4 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.gradient-obsidian-card {
+  background: linear-gradient(145deg, #0b0f17 0%, #071712 55%, #051c14 100%);
+}
+
 /* Luminous Mesh Gradients */
 .mesh-gradient {
-  background-color: #f8fafc;
+  background-color: #fafbfd;
   background-image: 
-    radial-gradient(at 12% 15%, rgba(16, 185, 129, 0.18) 0px, transparent 48%),
-    radial-gradient(at 88% 18%, rgba(6, 182, 212, 0.16) 0px, transparent 46%),
-    radial-gradient(at 50% 88%, rgba(245, 158, 11, 0.12) 0px, transparent 50%),
-    radial-gradient(at 95% 82%, rgba(139, 92, 246, 0.14) 0px, transparent 50%);
+    radial-gradient(at 10% 12%, rgba(16, 185, 129, 0.15) 0px, transparent 45%),
+    radial-gradient(at 88% 15%, rgba(6, 182, 212, 0.14) 0px, transparent 45%),
+    radial-gradient(at 50% 85%, rgba(245, 158, 11, 0.10) 0px, transparent 48%);
 }
 
 .mesh-gradient-dark {
-  background-color: #030712;
+  background-color: #0b0f17;
   background-image: 
-    radial-gradient(at 8% 12%, rgba(16, 185, 129, 0.26) 0px, transparent 50%),
-    radial-gradient(at 92% 16%, rgba(6, 182, 212, 0.22) 0px, transparent 50%),
-    radial-gradient(at 50% 90%, rgba(139, 92, 246, 0.2) 0px, transparent 50%);
+    radial-gradient(at 10% 15%, rgba(16, 185, 129, 0.28) 0px, transparent 50%),
+    radial-gradient(at 90% 18%, rgba(6, 182, 212, 0.24) 0px, transparent 50%),
+    radial-gradient(at 50% 85%, rgba(245, 158, 11, 0.15) 0px, transparent 50%);
 }
 
-/* Glassmorphism Classes */
+/* Glassmorphism Classes (Obsidian Emerald & Aurora Mint) */
 .glass-panel {
-  background: rgba(255, 255, 255, 0.82);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.9);
-  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.04), 0 8px 10px -6px rgba(0, 0, 0, 0.02);
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(226, 232, 240, 0.8);
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.04), 0 4px 6px -4px rgba(0, 0, 0, 0.02);
 }
 
 .glass-panel-dark {
-  background: rgba(15, 23, 42, 0.85);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+  background: rgba(11, 15, 23, 0.88);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(16, 185, 129, 0.2);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
 }
 
 .glass-card-hover {
@@ -114,11 +145,15 @@
 }
 
 .glass-card-hover:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 20px 40px -15px rgba(16, 185, 129, 0.2), 0 0 0 1.5px rgba(16, 185, 129, 0.4);
+  transform: translateY(-4px);
+  box-shadow: 0 20px 40px -15px rgba(16, 185, 129, 0.22), 0 0 0 1.5px rgba(16, 185, 129, 0.45);
 }
 
 /* Neon Glows */
+.glow-aurora {
+  box-shadow: 0 0 35px -5px rgba(16, 185, 129, 0.38), 0 0 15px -3px rgba(6, 182, 212, 0.25);
+}
+
 .glow-emerald {
   box-shadow: 0 0 35px -5px rgba(16, 185, 129, 0.4);
 }
@@ -127,25 +162,25 @@
   box-shadow: 0 0 35px -5px rgba(6, 182, 212, 0.4);
 }
 
-.glow-amber {
-  box-shadow: 0 0 35px -5px rgba(245, 158, 11, 0.4);
+.glow-saffron {
+  box-shadow: 0 0 25px -4px rgba(245, 158, 11, 0.35);
 }
 
-.glow-purple {
-  box-shadow: 0 0 35px -5px rgba(139, 92, 246, 0.4);
+.glow-coral {
+  box-shadow: 0 0 25px -4px rgba(244, 63, 94, 0.35);
 }
 
-/* Text Gradients */
-.gradient-text-emerald {
-  background: linear-gradient(135deg, #10b981 0%, #059669 45%, #047857 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+/* Saffron & Coral Food Accents */
+.badge-saffron {
+  background-color: rgba(245, 158, 11, 0.12);
+  color: #b45309;
+  border: 1px solid rgba(245, 158, 11, 0.3);
 }
 
-.gradient-text-electric {
-  background: linear-gradient(135deg, #10b981 0%, #06b6d4 50%, #8b5cf6 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+.badge-coral-urgent {
+  background-color: rgba(244, 63, 94, 0.12);
+  color: #be123c;
+  border: 1px solid rgba(244, 63, 94, 0.3);
 }
 
 .font-mono-numbers {

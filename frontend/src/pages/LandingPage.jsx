@@ -125,7 +125,7 @@ export function LandingPage() {
               {/* Main Headline */}
               <h1 className="font-display text-4xl sm:text-6xl lg:text-7xl font-black text-slate-900 tracking-tight leading-[1.08]">
                 Rescuing Surplus.{' '}
-                <span className="block text-transparent bg-clip-text bg-gradient-to-r from-emerald-600 via-teal-500 to-cyan-600">
+                <span className="block text-transparent bg-clip-text bg-gradient-to-r from-[#047857] via-[#10b981] to-[#06b6d4]">
                   Nourishing Lives.
                 </span>
               </h1>
@@ -139,7 +139,7 @@ export function LandingPage() {
               <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-2">
                 <Link
                   to="/browse"
-                  className="w-full sm:w-auto px-8 py-4 rounded-2xl bg-gradient-to-r from-emerald-600 via-emerald-500 to-teal-500 hover:from-emerald-700 hover:to-teal-600 text-white font-extrabold text-sm shadow-xl shadow-emerald-500/25 hover:shadow-2xl hover:shadow-emerald-500/35 hover:scale-[1.02] transition-all flex items-center justify-center gap-2.5 group cursor-pointer"
+                  className="w-full sm:w-auto px-8 py-4 rounded-2xl bg-gradient-to-r from-[#047857] via-[#10b981] to-[#06b6d4] hover:from-[#065f46] hover:to-[#0891b2] text-white font-extrabold text-sm shadow-xl shadow-emerald-500/25 hover:shadow-2xl hover:shadow-emerald-500/35 hover:scale-[1.02] transition-all flex items-center justify-center gap-2.5 group cursor-pointer"
                 >
                   <Sparkles className="w-4 h-4 text-amber-300 animate-pulse" />
                   <span>Explore Available Food</span>
@@ -219,9 +219,9 @@ export function LandingPage() {
         </div>
       </section>
 
-      {/* Real-time Impact Metrics Bar with Futuristic Cyber-Nature Aesthetic */}
+      {/* Real-time Impact Metrics Bar with Obsidian Emerald & Aurora Mint Aesthetic */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-slate-950 via-slate-900 to-emerald-950 p-8 sm:p-12 text-white shadow-2xl border border-emerald-500/30">
+        <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-[#0B0F17] via-[#071712] to-[#051C14] p-8 sm:p-12 text-white shadow-2xl border border-emerald-500/30">
           <div className="absolute top-0 right-0 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none" />
           <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-6 pb-8 border-b border-slate-800">
             <div>

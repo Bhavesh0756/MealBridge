@@ -37,12 +37,12 @@ export function Navbar() {
   };
 
   return (
-    <header className="sticky top-0 z-40 bg-white/80 backdrop-blur-xl border-b border-slate-200/70 shadow-xs transition-all">
+    <header className="sticky top-0 z-40 bg-white/85 backdrop-blur-xl border-b border-slate-200/80 shadow-xs transition-all">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
         {/* Brand */}
         <div className="flex items-center gap-8">
           <Link to="/" className="flex items-center gap-3 group">
-            <div className="relative w-11 h-11 rounded-2xl bg-gradient-to-tr from-emerald-600 via-emerald-500 to-teal-400 text-white flex items-center justify-center font-bold shadow-lg shadow-emerald-500/25 group-hover:scale-105 group-hover:rotate-1 transition-all duration-300">
+            <div className="relative w-11 h-11 rounded-2xl bg-gradient-to-tr from-[#047857] via-[#10b981] to-[#06b6d4] text-white flex items-center justify-center font-bold shadow-lg shadow-emerald-500/25 group-hover:scale-105 group-hover:rotate-1 transition-all duration-300">
               <Utensils className="w-5 h-5 transition-transform group-hover:scale-110" />
               <span className="absolute -top-1 -right-1 flex h-3 w-3">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
@@ -51,11 +51,11 @@ export function Navbar() {
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <span className="font-display font-black text-2xl tracking-tight bg-gradient-to-r from-slate-900 via-emerald-950 to-slate-800 bg-clip-text text-transparent">
-                  Meal<span className="text-emerald-600">Bridge</span>
+                <span className="font-display font-black text-2xl tracking-tight text-slate-900">
+                  Meal<span className="bg-gradient-to-r from-[#047857] via-[#10b981] to-[#06b6d4] bg-clip-text text-transparent">Bridge</span>
                 </span>
-                <span className="px-2 py-0.5 bg-gradient-to-r from-emerald-500/10 to-teal-500/10 text-emerald-700 border border-emerald-500/20 text-[10px] font-black rounded-full uppercase tracking-widest shadow-2xs">
-                  Rescue Net
+                <span className="px-2.5 py-0.5 bg-gradient-to-r from-emerald-500/10 via-teal-500/10 to-cyan-500/10 text-emerald-800 border border-emerald-500/25 text-[10px] font-black rounded-full uppercase tracking-widest shadow-2xs">
+                  Zero Waste
                 </span>
               </div>
               <p className="text-[11px] text-slate-500 font-medium tracking-wide">
