@@ -16,6 +16,17 @@ export function FoodSafetyModal({ isOpen, onClose, checklist, setChecklist, onCo
     setChecklist((prev) => ({ ...prev, [field]: !prev[field] }));
   };
 
+  const selectAll = () => {
+    setChecklist((prev) => ({
+      ...prev,
+      safety_checklist_completed: true,
+      hygiene_verified: true,
+      properly_stored: true,
+      tamper_free_sealed: true,
+      safety_disclaimer_accepted: true,
+    }));
+  };
+
   return (
     <AnimatePresence>
       <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/50 backdrop-blur-xs">
@@ -23,7 +34,7 @@ export function FoodSafetyModal({ isOpen, onClose, checklist, setChecklist, onCo
           initial={{ opacity: 0, scale: 0.95, y: 15 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.95, y: 15 }}
-          className="bg-white rounded-2xl shadow-2xl max-w-lg w-full border border-slate-200 overflow-hidden"
+          className="bg-white rounded-2xl shadow-2xl max-w-lg w-full border border-slate-200 overflow-hidden max-h-[90vh] flex flex-col"
         >
           {/* Header */}
           <div className="bg-emerald-600 p-5 text-white flex items-start justify-between">
@@ -33,7 +44,7 @@ export function FoodSafetyModal({ isOpen, onClose, checklist, setChecklist, onCo
               </div>
               <div>
                 <h3 className="font-bold text-lg">Food Safety & Hygiene Protocol</h3>
-                <p className="text-emerald-100 text-xs">Standard Food Rescue Compliance Checklist</p>
+                <p className="text-emerald-100 text-xs">FSSAI / Good Samaritan Compliance Checklist</p>
               </div>
             </div>
             <button
@@ -45,12 +56,37 @@ export function FoodSafetyModal({ isOpen, onClose, checklist, setChecklist, onCo
           </div>
 
           {/* Body */}
-          <div className="p-6 space-y-4">
-            <div className="bg-amber-50 border border-amber-200 p-3.5 rounded-xl flex items-start gap-2.5 text-xs text-amber-900 leading-relaxed">
-              <AlertCircle className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" />
-              <p>
-                <strong>Regulatory Notice:</strong> To safeguard recipient health, only food cooked in commercial/licensed kitchens or sealed commercial packaged food within safe consumption limits may be published. Photographs provide visual context but do not substitute for hygiene protocol adherence.
-              </p>
+          <div className="p-6 space-y-4 overflow-y-auto flex-1">
+            <div className="bg-amber-50 border border-amber-200 p-3.5 rounded-xl flex items-start justify-between gap-2.5 text-xs text-amber-900 leading-relaxed">
+              <div className="flex items-start gap-2">
+                <AlertCircle className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" />
+                <p>
+                  <strong>Compliance Declaration:</strong> Only food prepared under sanitary conditions in commercial or licensed kitchens may be listed.
+                </p>
+              </div>
+              <button
+                type="button"
+                onClick={selectAll}
+                className="shrink-0 px-2.5 py-1 bg-amber-200/70 hover:bg-amber-300 text-amber-900 font-bold rounded-lg transition text-[11px] cursor-pointer"
+              >
+                Select All
+              </button>
+            </div>
+
+            {/* Temperature Standards Reference Mini-Card */}
+            <div className="grid grid-cols-3 gap-2 text-center text-[10px] bg-slate-50 p-2.5 rounded-xl border border-slate-200">
+              <div className="p-1.5 bg-rose-50 rounded-lg border border-rose-100 text-rose-800">
+                <span className="font-bold block">Hot Holding</span>
+                <span>&gt; 63°C</span>
+              </div>
+              <div className="p-1.5 bg-blue-50 rounded-lg border border-blue-100 text-blue-800">
+                <span className="font-bold block">Chilled Storage</span>
+                <span>0°C to 4°C</span>
+              </div>
+              <div className="p-1.5 bg-cyan-50 rounded-lg border border-cyan-100 text-cyan-800">
+                <span className="font-bold block">Deep Frozen</span>
+                <span>&le; -18°C</span>
+              </div>
             </div>
 
             <div className="space-y-3 pt-1">
