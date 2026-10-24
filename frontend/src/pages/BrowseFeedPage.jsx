@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import {
   Search,
@@ -9,7 +9,10 @@ import {
   Grid,
   CheckCircle2,
   X,
-  AlertCircle
+  AlertCircle,
+  MapPin,
+  SlidersHorizontal,
+  Flame
 } from 'lucide-react';
 import { donationsApi } from '../api/donations';
 import { requestsApi } from '../api/requests';
@@ -33,6 +36,27 @@ export function BrowseFeedPage() {
   const [selectedCategory, setSelectedCategory] = useState('');
   const [selectedDietary, setSelectedDietary] = useState('');
   const [selectedStorage, setSelectedStorage] = useState('');
+  const [sortBy, setSortBy] = useState('urgency'); // 'urgency' | 'quantity' | 'newest'
+  const [urgentOnly, setUrgentOnly] = useState(false);
+
+  // User location for distance computation (default to central hub: Mumbai 19.0760, 72.8777)
+  const userLat = 19.0760;
+  const userLon = 72.8777;
+
+  const calculateDistance = (lat, lon) => {
+    if (!lat || !lon) return null;
+    const R = 6371;
+    const dLat = ((lat - userLat) * Math.PI) / 180;
+    const dLon = ((lon - userLon) * Math.PI) / 180;
+    const a =
+      Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+      Math.cos((userLat * Math.PI) / 180) *
+        Math.cos((lat * Math.PI) / 180) *
+        Math.sin(dLon / 2) *
+        Math.sin(dLon / 2);
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    return (R * c).toFixed(1);
+  };
 
   // Request Modal State
   const [selectedDonation, setSelectedDonation] = useState(null);
@@ -75,6 +99,21 @@ export function BrowseFeedPage() {
   useEffect(() => {
     fetchListings();
   }, [selectedCategory, selectedDietary, selectedStorage, searchTerm]);
+
+  const displayedDonations = useMemo(() => {
+    let list = [...donations];
+    if (urgentOnly) {
+      list = list.filter((d) => d.remaining_hours !== undefined && d.remaining_hours <= 4);
+    }
+    if (sortBy === 'urgency') {
+      list.sort((a, b) => (a.remaining_hours ?? 999) - (b.remaining_hours ?? 999));
+    } else if (sortBy === 'quantity') {
+      list.sort((a, b) => (b.available_quantity || 0) - (a.available_quantity || 0));
+    } else if (sortBy === 'newest') {
+      list.sort((a, b) => new Date(b.created_at || 0) - new Date(a.created_at || 0));
+    }
+    return list;
+  }, [donations, urgentOnly, sortBy]);
 
   const handleOpenRequest = (donation) => {
     if (!isAuthenticated) {
@@ -164,63 +203,127 @@ export function BrowseFeedPage() {
       </div>
 
       {/* Filter Controls Bar */}
-      <div className="bg-white p-4 rounded-2xl border border-slate-200 shadow-xs grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
-        {/* Search Input */}
-        <div className="relative">
-          <Search className="w-4 h-4 text-slate-400 absolute left-3 top-3" />
-          <input
-            type="text"
-            placeholder="Search food, dishes, addresses..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full pl-9 pr-3 py-2 text-xs bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-emerald-500 transition outline-none"
-          />
+      <div className="bg-white p-4 rounded-2xl border border-slate-200 shadow-xs space-y-3">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+          {/* Search Input */}
+          <div className="relative">
+            <Search className="w-4 h-4 text-slate-400 absolute left-3 top-3" />
+            <input
+              type="text"
+              placeholder="Search food, dishes, addresses..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="w-full pl-9 pr-3 py-2 text-xs bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-emerald-500 transition outline-none"
+            />
+          </div>
+
+          {/* Category Dropdown */}
+          <div>
+            <select
+              value={selectedCategory}
+              onChange={(e) => setSelectedCategory(e.target.value)}
+              className="w-full px-3 py-2 text-xs bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-emerald-500 transition outline-none text-slate-700 cursor-pointer"
+            >
+              <option value="">All Food Categories</option>
+              {categories.map((c) => (
+                <option key={c.id} value={c.id}>
+                  {c.name}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          {/* Dietary Filter */}
+          <div>
+            <select
+              value={selectedDietary}
+              onChange={(e) => setSelectedDietary(e.target.value)}
+              className="w-full px-3 py-2 text-xs bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-emerald-500 transition outline-none text-slate-700 cursor-pointer"
+            >
+              <option value="">All Dietary Types</option>
+              <option value="VEGETARIAN">Vegetarian Only</option>
+              <option value="VEGAN">Vegan Only</option>
+              <option value="NON_VEGETARIAN">Non-Vegetarian</option>
+              <option value="CONTAINS_EGG">Contains Egg</option>
+            </select>
+          </div>
+
+          {/* Storage Filter */}
+          <div>
+            <select
+              value={selectedStorage}
+              onChange={(e) => setSelectedStorage(e.target.value)}
+              className="w-full px-3 py-2 text-xs bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-emerald-500 transition outline-none text-slate-700 cursor-pointer"
+            >
+              <option value="">All Storage Types</option>
+              <option value="ROOM_TEMPERATURE">Room Temperature</option>
+              <option value="REFRIGERATED">Refrigerated (0°C to 4°C)</option>
+              <option value="FROZEN">Frozen (-18°C)</option>
+              <option value="HOT_HOLDING">Hot Holding (&gt;63°C)</option>
+            </select>
+          </div>
         </div>
 
-        {/* Category Dropdown */}
-        <div>
-          <select
-            value={selectedCategory}
-            onChange={(e) => setSelectedCategory(e.target.value)}
-            className="w-full px-3 py-2 text-xs bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-emerald-500 transition outline-none text-slate-700 cursor-pointer"
-          >
-            <option value="">All Food Categories</option>
-            {categories.map((c) => (
-              <option key={c.id} value={c.id}>
-                {c.name}
-              </option>
-            ))}
-          </select>
-        </div>
+        {/* Quick Filter Chips & Sort Controls */}
+        <div className="pt-2 border-t border-slate-100 flex flex-wrap items-center justify-between gap-2.5">
+          <div className="flex flex-wrap items-center gap-1.5">
+            <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider mr-1">
+              Quick:
+            </span>
+            <button
+              onClick={() => setUrgentOnly(!urgentOnly)}
+              className={`px-2.5 py-1 rounded-lg text-xs font-bold transition flex items-center gap-1 cursor-pointer ${
+                urgentOnly ? 'bg-amber-500 text-white shadow-xs' : 'bg-slate-100 hover:bg-slate-200 text-slate-700'
+              }`}
+            >
+              <Flame className="w-3 h-3" />
+              <span>Expiring &lt;4h</span>
+            </button>
+            <button
+              onClick={() => setSelectedDietary(selectedDietary === 'VEGETARIAN' ? '' : 'VEGETARIAN')}
+              className={`px-2.5 py-1 rounded-lg text-xs font-bold transition cursor-pointer ${
+                selectedDietary === 'VEGETARIAN' ? 'bg-emerald-600 text-white shadow-xs' : 'bg-slate-100 hover:bg-slate-200 text-slate-700'
+              }`}
+            >
+              🌱 Pure Veg
+            </button>
+            <button
+              onClick={() => setSelectedStorage(selectedStorage === 'REFRIGERATED' ? '' : 'REFRIGERATED')}
+              className={`px-2.5 py-1 rounded-lg text-xs font-bold transition cursor-pointer ${
+                selectedStorage === 'REFRIGERATED' ? 'bg-blue-600 text-white shadow-xs' : 'bg-slate-100 hover:bg-slate-200 text-slate-700'
+              }`}
+            >
+              ❄️ Cold Storage
+            </button>
+            {(selectedCategory || selectedDietary || selectedStorage || searchTerm || urgentOnly) && (
+              <button
+                onClick={() => {
+                  setSelectedCategory('');
+                  setSelectedDietary('');
+                  setSelectedStorage('');
+                  setSearchTerm('');
+                  setUrgentOnly(false);
+                }}
+                className="px-2 py-1 rounded-lg text-xs font-bold text-rose-600 hover:bg-rose-50 transition cursor-pointer"
+              >
+                Reset All
+              </button>
+            )}
+          </div>
 
-        {/* Dietary Filter */}
-        <div>
-          <select
-            value={selectedDietary}
-            onChange={(e) => setSelectedDietary(e.target.value)}
-            className="w-full px-3 py-2 text-xs bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-emerald-500 transition outline-none text-slate-700 cursor-pointer"
-          >
-            <option value="">All Dietary Types</option>
-            <option value="VEGETARIAN">Vegetarian</option>
-            <option value="VEGAN">Vegan</option>
-            <option value="NON_VEGETARIAN">Non-Vegetarian</option>
-            <option value="CONTAINS_EGG">Contains Egg</option>
-          </select>
-        </div>
-
-        {/* Storage Filter */}
-        <div>
-          <select
-            value={selectedStorage}
-            onChange={(e) => setSelectedStorage(e.target.value)}
-            className="w-full px-3 py-2 text-xs bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-emerald-500 transition outline-none text-slate-700 cursor-pointer"
-          >
-            <option value="">All Storage Types</option>
-            <option value="ROOM_TEMPERATURE">Room Temperature</option>
-            <option value="REFRIGERATED">Refrigerated (0°C to 4°C)</option>
-            <option value="FROZEN">Frozen (-18°C)</option>
-            <option value="HOT_HOLDING">Hot Holding (&gt;63°C)</option>
-          </select>
+          <div className="flex items-center gap-2">
+            <SlidersHorizontal className="w-3.5 h-3.5 text-slate-400" />
+            <span className="text-[11px] text-slate-500 font-medium">Sort by:</span>
+            <select
+              value={sortBy}
+              onChange={(e) => setSortBy(e.target.value)}
+              className="px-2.5 py-1 bg-slate-50 border border-slate-200 rounded-lg text-xs font-bold text-slate-700 focus:outline-none cursor-pointer"
+            >
+              <option value="urgency">Urgency (Expiring First)</option>
+              <option value="quantity">Largest Quantity</option>
+              <option value="newest">Recently Posted</option>
+            </select>
+          </div>
         </div>
       </div>
 
@@ -229,7 +332,7 @@ export function BrowseFeedPage() {
         <div className="space-y-4">
           <div className="h-[550px] w-full rounded-2xl overflow-hidden border border-slate-200 shadow-md">
             <LeafletMapView
-              donations={donations}
+              donations={displayedDonations}
               zoom={12}
               className="h-full w-full"
               onSelectDonation={(d) => handleOpenRequest(d)}
@@ -246,7 +349,7 @@ export function BrowseFeedPage() {
               <div className="w-8 h-8 border-3 border-emerald-500 border-t-transparent rounded-full animate-spin mx-auto" />
               <p className="text-xs font-medium">Scanning food rescue inventory...</p>
             </div>
-          ) : donations.length === 0 ? (
+          ) : displayedDonations.length === 0 ? (
             <div className="text-center py-20 bg-white rounded-2xl border border-slate-200 p-8 space-y-3">
               <Utensils className="w-12 h-12 text-slate-300 mx-auto" />
               <h3 className="font-bold text-slate-700 text-base">No Matching Donations Found</h3>
@@ -259,6 +362,7 @@ export function BrowseFeedPage() {
                   setSelectedDietary('');
                   setSelectedStorage('');
                   setSearchTerm('');
+                  setUrgentOnly(false);
                 }}
                 className="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold rounded-xl transition cursor-pointer"
               >
@@ -267,7 +371,7 @@ export function BrowseFeedPage() {
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {donations.map((d) => (
+              {displayedDonations.map((d) => (
                 <motion.div
                   key={d.id}
                   layout
@@ -281,10 +385,18 @@ export function BrowseFeedPage() {
                       <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-emerald-100 text-emerald-800">
                         {d.category?.name || 'Cooked Meals'}
                       </span>
-                      <span className="text-[11px] font-bold text-slate-600 flex items-center gap-1">
-                        <Clock className="w-3.5 h-3.5 text-amber-600" />
-                        {d.remaining_hours !== undefined ? `${d.remaining_hours}h left` : 'Active'}
-                      </span>
+                      <div className="flex items-center gap-2">
+                        {d.latitude && d.longitude && calculateDistance(d.latitude, d.longitude) && (
+                          <span className="inline-flex items-center gap-0.5 text-[11px] font-semibold text-slate-600 bg-white px-2 py-0.5 rounded-md border border-slate-200">
+                            <MapPin className="w-3 h-3 text-emerald-600" />
+                            {calculateDistance(d.latitude, d.longitude)} km
+                          </span>
+                        )}
+                        <span className="text-[11px] font-bold text-slate-600 flex items-center gap-1">
+                          <Clock className="w-3.5 h-3.5 text-amber-600" />
+                          {d.remaining_hours !== undefined ? `${d.remaining_hours}h left` : 'Active'}
+                        </span>
+                      </div>
                     </div>
 
                     {/* Content */}
