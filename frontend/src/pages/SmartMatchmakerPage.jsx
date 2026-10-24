@@ -16,6 +16,8 @@ import { requestsApi } from '../api/requests';
 import { useAuth } from '../context/AuthContext';
 import { useToast } from '../context/ToastContext';
 import { Link, useNavigate } from 'react-router-dom';
+import { ExpiryTimerRing } from '../components/ExpiryTimerRing';
+import { SkeletonCard } from '../components/SkeletonLoader';
 
 export function SmartMatchmakerPage() {
   const { isNgo, isAuthenticated } = useAuth();
@@ -202,9 +204,10 @@ export function SmartMatchmakerPage() {
         </div>
 
         {loading ? (
-          <div className="text-center py-20 text-slate-400">
-            <div className="w-8 h-8 border-3 border-emerald-500 border-t-transparent rounded-full animate-spin mx-auto mb-2" />
-            <p className="text-xs">Computing optimal allocations...</p>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <SkeletonCard />
+            <SkeletonCard />
+            <SkeletonCard />
           </div>
         ) : filteredMatches.length === 0 ? (
           <div className="text-center py-16 bg-white rounded-3xl border border-slate-200 text-slate-500 text-xs">
@@ -218,12 +221,12 @@ export function SmartMatchmakerPage() {
                 layout
                 initial={{ opacity: 0, y: 15 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="bg-white rounded-2xl border border-slate-200 shadow-xs hover:shadow-md transition p-5 space-y-4 flex flex-col justify-between"
+                className="stripe-card rounded-2xl border border-slate-200/90 shadow-xs hover:shadow-md transition p-5 space-y-4 flex flex-col justify-between bg-white"
               >
                 <div className="space-y-3">
                   {/* Top Match Badge */}
                   <div className="flex items-center justify-between">
-                    <span className="px-3 py-1 rounded-full text-xs font-black bg-gradient-to-r from-emerald-500 to-teal-600 text-white shadow-xs">
+                    <span className="px-3 py-1 rounded-full text-xs font-black bg-gradient-to-r from-emerald-600 to-teal-600 text-white shadow-xs">
                       {item.match_score}% Match Score
                     </span>
                     <span className="text-xs font-bold text-slate-600 flex items-center gap-1">
@@ -233,21 +236,21 @@ export function SmartMatchmakerPage() {
                   </div>
 
                   <div>
-                    <h3 className="font-bold text-base text-slate-900">{item.title}</h3>
+                    <h3 className="font-bold text-base text-slate-900 line-clamp-1">{item.title}</h3>
                     <p className="text-xs text-slate-500 mt-0.5">
                       Donor: <strong>{item.donor_name}</strong> • {item.pickup_address}
                     </p>
                   </div>
 
                   {/* Quantity & Urgency */}
-                  <div className="bg-slate-50 p-3 rounded-xl border border-slate-100 space-y-1.5 text-xs">
+                  <div className="bg-slate-50 p-3 rounded-xl border border-slate-100 space-y-2 text-xs">
                     <div className="flex justify-between">
                       <span className="text-slate-500">Available Amount:</span>
                       <span className="font-bold text-emerald-700">{item.available_quantity} {item.unit}</span>
                     </div>
-                    <div className="flex justify-between">
-                      <span className="text-slate-500">Time to Expiry:</span>
-                      <span className="font-bold text-amber-700">{item.remaining_hours} hours remaining</span>
+                    <div className="flex items-center justify-between pt-1 border-t border-slate-200/60">
+                      <span className="text-slate-500">Shelf-Life:</span>
+                      <ExpiryTimerRing remainingHours={item.remaining_hours} size="sm" />
                     </div>
                     <div className="flex justify-between">
                       <span className="text-slate-500">Handling:</span>
