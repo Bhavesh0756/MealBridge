@@ -472,7 +472,7 @@ export function BrowseFeedPage() {
                   <div className="p-5 pt-0">
                     <button
                       onClick={() => handleOpenRequest(d)}
-                      className="w-full py-3 px-4 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white rounded-2xl text-xs font-black transition-all flex items-center justify-center gap-2 shadow-md shadow-emerald-600/20 group-hover:scale-[1.01] cursor-pointer"
+                      className="w-full py-3 px-4 bg-gradient-to-r from-[#047857] via-[#10b981] to-[#06b6d4] hover:from-[#065f46] hover:to-[#0891b2] text-white rounded-2xl text-xs font-black transition-all flex items-center justify-center gap-2 shadow-md shadow-emerald-500/25 group-hover:scale-[1.01] cursor-pointer"
                     >
                       <span>Request Food Portion</span>
                     </button>

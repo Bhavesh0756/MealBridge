@@ -122,7 +122,7 @@ export function ImpactAnalyticsPage() {
           {/* Certificate Download Button */}
           <button
             onClick={() => setShowCertificate(true)}
-            className="px-5 py-2.5 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white rounded-2xl text-xs font-black shadow-lg shadow-emerald-600/20 hover:scale-[1.02] transition-all flex items-center gap-2 cursor-pointer"
+            className="px-5 py-2.5 bg-gradient-to-r from-[#047857] via-[#10b981] to-[#06b6d4] hover:from-[#065f46] hover:to-[#0891b2] text-white rounded-2xl text-xs font-black shadow-lg shadow-emerald-500/25 hover:scale-[1.02] transition-all flex items-center gap-2 cursor-pointer"
           >
             <Award className="w-4 h-4 text-emerald-200" />
             <span>Generate ESG Certificate</span>
@@ -130,10 +130,10 @@ export function ImpactAnalyticsPage() {
         </div>
       </div>
 
-      {/* Hero 4 Big Metrics with Glowing Cyber-Nature Cards */}
+      {/* Hero 4 Big Metrics with Glowing Obsidian & Aurora Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-        {/* Metric 1 */}
-        <div className="relative overflow-hidden bg-gradient-to-br from-emerald-600 via-emerald-700 to-teal-800 p-7 rounded-3xl text-white shadow-xl shadow-emerald-600/20 space-y-3 group hover:scale-[1.02] transition-all duration-300">
+        {/* Metric 1 - Aurora Jade */}
+        <div className="relative overflow-hidden bg-gradient-to-br from-[#047857] via-[#10b981] to-[#06b6d4] p-7 rounded-3xl text-white shadow-xl shadow-emerald-500/25 space-y-3 group hover:scale-[1.02] transition-all duration-300">
           <div className="p-3 bg-white/20 backdrop-blur-md rounded-2xl w-fit shadow-xs">
             <Utensils className="w-6 h-6 text-white" />
           </div>
@@ -148,8 +148,8 @@ export function ImpactAnalyticsPage() {
           </p>
         </div>
 
-        {/* Metric 2 */}
-        <div className="relative overflow-hidden bg-gradient-to-br from-amber-500 via-orange-600 to-amber-700 p-7 rounded-3xl text-white shadow-xl shadow-amber-600/20 space-y-3 group hover:scale-[1.02] transition-all duration-300">
+        {/* Metric 2 - Saffron Amber */}
+        <div className="relative overflow-hidden bg-gradient-to-br from-[#d97706] via-[#f59e0b] to-[#b45309] p-7 rounded-3xl text-white shadow-xl shadow-amber-500/25 space-y-3 group hover:scale-[1.02] transition-all duration-300">
           <div className="p-3 bg-white/20 backdrop-blur-md rounded-2xl w-fit shadow-xs">
             <Leaf className="w-6 h-6 text-white" />
           </div>
@@ -164,8 +164,8 @@ export function ImpactAnalyticsPage() {
           </p>
         </div>
 
-        {/* Metric 3 */}
-        <div className="relative overflow-hidden bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 p-7 rounded-3xl text-white shadow-xl shadow-slate-900/30 space-y-3 border border-emerald-500/30 group hover:scale-[1.02] transition-all duration-300">
+        {/* Metric 3 - Obsidian Noir */}
+        <div className="relative overflow-hidden bg-gradient-to-br from-[#0B0F17] via-[#071712] to-[#051C14] p-7 rounded-3xl text-white shadow-xl shadow-slate-900/40 space-y-3 border border-[#10b981]/30 group hover:scale-[1.02] transition-all duration-300">
           <div className="p-3 bg-emerald-500/20 backdrop-blur-md rounded-2xl w-fit shadow-xs border border-emerald-400/30">
             <Award className="w-6 h-6 text-emerald-400" />
           </div>
@@ -180,18 +180,18 @@ export function ImpactAnalyticsPage() {
           </p>
         </div>
 
-        {/* Metric 4 */}
-        <div className="relative overflow-hidden bg-gradient-to-br from-blue-600 via-blue-700 to-cyan-800 p-7 rounded-3xl text-white shadow-xl shadow-blue-600/20 space-y-3 group hover:scale-[1.02] transition-all duration-300">
+        {/* Metric 4 - Luminous Cyan */}
+        <div className="relative overflow-hidden bg-gradient-to-br from-[#0284c7] via-[#06b6d4] to-[#0891b2] p-7 rounded-3xl text-white shadow-xl shadow-cyan-500/25 space-y-3 group hover:scale-[1.02] transition-all duration-300">
           <div className="p-3 bg-white/20 backdrop-blur-md rounded-2xl w-fit shadow-xs">
             <Droplet className="w-6 h-6 text-white" />
           </div>
-          <p className="text-xs text-blue-100 font-extrabold uppercase tracking-widest">
+          <p className="text-xs text-cyan-100 font-extrabold uppercase tracking-widest">
             Embedded Water Saved
           </p>
           <div className="font-display text-4xl sm:text-5xl font-black text-white tracking-tight">
             <ImpactCounter targetValue={impact.water_saved_liters} suffix=" L" />
           </div>
-          <p className="text-[11px] text-blue-100/90 leading-tight">
+          <p className="text-[11px] text-cyan-100/90 leading-tight">
             Preserved virtual agricultural irrigation embedded in produce.
           </p>
         </div>
