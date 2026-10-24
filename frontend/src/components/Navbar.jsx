@@ -37,12 +37,12 @@ export function Navbar() {
   };
 
   return (
-    <header className="sticky top-0 z-40 bg-white/90 backdrop-blur-md border-b border-slate-200">
+    <header className="sticky top-0 z-40 bg-white/85 backdrop-blur-md border-b border-slate-200/80 shadow-2xs">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-18 flex items-center justify-between">
         {/* Brand */}
         <div className="flex items-center gap-8">
           <Link to="/" className="flex items-center gap-2.5 group">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-emerald-600 to-emerald-400 text-white flex items-center justify-center font-bold shadow-md shadow-emerald-500/20 group-hover:scale-105 transition">
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-emerald-600 to-emerald-500 text-white flex items-center justify-center font-bold shadow-md shadow-emerald-500/20 group-hover:scale-105 transition">
               <Utensils className="w-5 h-5" />
             </div>
             <div>
@@ -60,8 +60,10 @@ export function Navbar() {
           <nav className="hidden md:flex items-center gap-1">
             <Link
               to="/browse"
-              className={`px-3 py-1.5 rounded-lg text-sm font-semibold transition ${
-                isActive('/browse') ? 'bg-emerald-50 text-emerald-700' : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100/60'
+              className={`px-3 py-1.5 rounded-lg text-sm font-semibold transition relative ${
+                isActive('/browse')
+                  ? 'bg-emerald-50 text-emerald-800 font-bold'
+                  : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100/70'
               }`}
             >
               Food Feed
@@ -69,7 +71,9 @@ export function Navbar() {
             <Link
               to="/matchmaker"
               className={`px-3 py-1.5 rounded-lg text-sm font-semibold flex items-center gap-1.5 transition ${
-                isActive('/matchmaker') ? 'bg-emerald-50 text-emerald-700' : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100/60'
+                isActive('/matchmaker')
+                  ? 'bg-emerald-50 text-emerald-800 font-bold'
+                  : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100/70'
               }`}
             >
               <Sparkles className="w-3.5 h-3.5 text-amber-500" />
@@ -78,7 +82,9 @@ export function Navbar() {
             <Link
               to="/impact"
               className={`px-3 py-1.5 rounded-lg text-sm font-semibold flex items-center gap-1.5 transition ${
-                isActive('/impact') ? 'bg-emerald-50 text-emerald-700' : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100/60'
+                isActive('/impact')
+                  ? 'bg-emerald-50 text-emerald-800 font-bold'
+                  : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100/70'
               }`}
             >
               <BarChart3 className="w-3.5 h-3.5 text-emerald-600" />
@@ -90,7 +96,7 @@ export function Navbar() {
               <Link
                 to="/dashboard/donor"
                 className={`px-3 py-1.5 rounded-lg text-sm font-semibold transition ${
-                  isActive('/dashboard/donor') ? 'bg-emerald-100/80 text-emerald-900' : 'text-emerald-700 hover:bg-emerald-50'
+                  isActive('/dashboard/donor') ? 'bg-emerald-100 text-emerald-900 font-bold' : 'text-emerald-700 hover:bg-emerald-50'
                 }`}
               >
                 Donor Console
@@ -100,7 +106,7 @@ export function Navbar() {
               <Link
                 to="/dashboard/ngo"
                 className={`px-3 py-1.5 rounded-lg text-sm font-semibold transition ${
-                  isActive('/dashboard/ngo') ? 'bg-blue-100/80 text-blue-900' : 'text-blue-700 hover:bg-blue-50'
+                  isActive('/dashboard/ngo') ? 'bg-blue-100 text-blue-900 font-bold' : 'text-blue-700 hover:bg-blue-50'
                 }`}
               >
                 NGO Console
@@ -110,7 +116,7 @@ export function Navbar() {
               <Link
                 to="/dashboard/volunteer"
                 className={`px-3 py-1.5 rounded-lg text-sm font-semibold transition ${
-                  isActive('/dashboard/volunteer') ? 'bg-amber-100/80 text-amber-900' : 'text-amber-700 hover:bg-amber-50'
+                  isActive('/dashboard/volunteer') ? 'bg-amber-100 text-amber-900 font-bold' : 'text-amber-700 hover:bg-amber-50'
                 }`}
               >
                 Rescue Log
@@ -120,7 +126,7 @@ export function Navbar() {
               <Link
                 to="/dashboard/admin"
                 className={`px-3 py-1.5 rounded-lg text-sm font-semibold transition ${
-                  isActive('/dashboard/admin') ? 'bg-purple-100/80 text-purple-900' : 'text-purple-700 hover:bg-purple-50'
+                  isActive('/dashboard/admin') ? 'bg-purple-100 text-purple-900 font-bold' : 'text-purple-700 hover:bg-purple-50'
                 }`}
               >
                 Admin Panel
