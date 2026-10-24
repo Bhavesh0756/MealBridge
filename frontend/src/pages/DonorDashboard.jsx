@@ -8,6 +8,7 @@ import {
   Sparkles,
   Edit3,
   CheckCheck,
+  Copy,
   X
 } from 'lucide-react';
 import { donationsApi } from '../api/donations';
@@ -215,6 +216,26 @@ export function DonorDashboard() {
       pickup_address: donation.pickup_address || '',
       storage_requirement: donation.storage_requirement || 'ROOM_TEMPERATURE',
     });
+  };
+
+  const handleRelistDonation = (donation) => {
+    setNewListing({
+      title: `${donation.title} (Fresh Batch)`,
+      category: donation.category?.id || donation.category || '',
+      quantity: donation.quantity || '',
+      unit: donation.unit || 'MEALS',
+      description: donation.description || '',
+      preparation_hours_ago: '1',
+      pickup_hours_from_now: '4',
+      storage_requirement: donation.storage_requirement || 'ROOM_TEMPERATURE',
+      dietary_type: donation.dietary_type || 'VEGETARIAN',
+      allergens: donation.allergens || 'None declared',
+      pickup_address: donation.pickup_address || user?.donor_profile?.address || '',
+      contact_phone: donation.contact_phone || user?.phone_number || '',
+      special_instructions: donation.special_instructions || '',
+    });
+    setCreateModalOpen(true);
+    toastInfo(`Created fresh draft from "${donation.title}". Review checklist and publish!`);
   };
 
   const handleSaveEdit = async (e) => {
@@ -489,6 +510,15 @@ export function DonorDashboard() {
                       Cancel Listing
                     </button>
                   )}
+
+                  <button
+                    onClick={() => handleRelistDonation(d)}
+                    className="w-full py-1.5 px-3 bg-slate-50 hover:bg-slate-100 border border-slate-200 text-slate-700 rounded-xl text-xs font-semibold transition flex items-center justify-center gap-1 cursor-pointer"
+                    title="Clone this listing details into a fresh batch"
+                  >
+                    <Copy className="w-3 h-3 text-slate-500" />
+                    <span>Relist Fresh Batch</span>
+                  </button>
                 </div>
               </div>
             ))}
