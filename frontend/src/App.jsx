@@ -7,6 +7,7 @@ import { ToastProvider } from './context/ToastContext';
 import { Navbar } from './components/Navbar';
 import { Footer } from './components/Footer';
 import { NotificationDrawer } from './components/NotificationDrawer';
+import { EntrySplashAnimation } from './components/EntrySplashAnimation';
 
 import { LandingPage } from './pages/LandingPage';
 import { BrowseFeedPage } from './pages/BrowseFeedPage';
@@ -44,6 +45,7 @@ export default function App() {
         <ToastProvider>
           <NotificationProvider>
             <div className="min-h-screen flex flex-col bg-slate-50 text-slate-800 font-sans selection:bg-emerald-500 selection:text-white">
+            <EntrySplashAnimation />
             <Navbar />
             <NotificationDrawer />
             <main className="flex-1">

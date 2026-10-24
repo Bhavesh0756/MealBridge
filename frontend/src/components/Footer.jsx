@@ -100,6 +100,18 @@ export function Footer() {
         <div className="pt-8 border-t border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs">
           <p>© {new Date().getFullYear()} MealBridge Platform. Open food rescue initiative.</p>
           <div className="flex items-center gap-4">
+            <button
+              type="button"
+              onClick={() => {
+                sessionStorage.removeItem('mealbridge_splash_seen');
+                window.location.reload();
+              }}
+              className="text-slate-400 hover:text-emerald-400 text-xs font-semibold transition cursor-pointer flex items-center gap-1"
+              title="Re-watch the brand entrance reveal animation"
+            >
+              <span>🎬 Replay Intro</span>
+            </button>
+            <span className="text-slate-700">•</span>
             <span className="flex items-center gap-1 text-slate-500">
               Built with <Heart className="w-3.5 h-3.5 text-rose-500 fill-rose-500" /> for community resilience
             </span>
