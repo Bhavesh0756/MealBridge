@@ -151,9 +151,9 @@ export function VolunteerDashboard() {
               <span className="w-2 h-2 rounded-full bg-amber-500 animate-ping" />
               Volunteer Courier Dispatch Pool
             </span>
-            <span className="text-xs font-bold text-slate-500 bg-slate-100 px-2.5 py-0.5 rounded-full">{user?.volunteer_profile?.full_name || user?.email}</span>
+            <span className="text-xs font-bold text-slate-500 bg-[#141c25] px-2.5 py-0.5 rounded-full">{user?.volunteer_profile?.full_name || user?.email}</span>
           </div>
-          <h1 className="font-display text-3xl sm:text-4xl font-black text-slate-900 tracking-tight">
+          <h1 className="font-display text-3xl sm:text-4xl font-black text-white tracking-tight">
             Food Rescue Couriers & Dispatch
           </h1>
           <p className="text-xs sm:text-sm text-slate-500 max-w-xl">
@@ -161,7 +161,7 @@ export function VolunteerDashboard() {
           </p>
         </div>
 
-        <div className="flex items-center gap-3 glass-panel px-4 py-2.5 rounded-2xl border border-slate-200/80 shadow-xs text-xs font-bold text-slate-700">
+        <div className="flex items-center gap-3 glass-panel px-4 py-2.5 rounded-2xl border border-slate-200/80 shadow-xs text-xs font-bold text-slate-300">
           <span>Vehicle: <strong className="text-amber-800">{user?.volunteer_profile?.vehicle_type || 'Motorcycle'}</strong></span>
           <span className="text-slate-300">•</span>
           <span>Max Capacity: <strong className="text-emerald-700 font-mono-numbers">{user?.volunteer_profile?.max_transport_capacity_kg || 30} kg</strong></span>
@@ -199,10 +199,10 @@ export function VolunteerDashboard() {
       </div>
 
       {/* Section: My Active Deliveries Tracker */}
-      <div className="bg-white rounded-3xl border border-slate-200 shadow-xs overflow-hidden">
-        <div className="p-5 border-b border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-slate-50">
+      <div className="bg-[#111827] rounded-3xl border border-white/10 shadow-xs overflow-hidden">
+        <div className="p-5 border-b border-white/6 flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-[#0f1923]">
           <div>
-            <h2 className="font-extrabold text-base text-slate-900">
+            <h2 className="font-extrabold text-base text-white">
               {showHistory ? `Missions History (${completedDeliveries.length} Delivered)` : `My Active Deliveries (${activeDeliveries.length})`}
             </h2>
             <p className="text-xs text-slate-500">
@@ -213,7 +213,7 @@ export function VolunteerDashboard() {
           <button
             onClick={() => setShowHistory(!showHistory)}
             className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition flex items-center gap-1.5 cursor-pointer self-start sm:self-auto ${
-              showHistory ? 'bg-amber-600 text-white shadow-xs' : 'bg-white border border-slate-200 text-slate-700 hover:bg-slate-100'
+              showHistory ? 'bg-amber-600 text-white shadow-xs' : 'bg-[#111827] border border-white/10 text-slate-300 hover:bg-[#141c25]'
             }`}
           >
             <History className="w-3.5 h-3.5" />
@@ -240,18 +240,18 @@ export function VolunteerDashboard() {
                     >
                       <div className="space-y-1 text-xs">
                         <div className="flex items-center gap-2">
-                          <span className="font-bold text-slate-900 text-sm">
+                          <span className="font-bold text-white text-sm">
                             Rescue #{p.id}: {donation?.title || 'Food Donation'}
                           </span>
                           <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-teal-100 text-teal-800">
                             DELIVERED ✓
                           </span>
                         </div>
-                        <p className="text-slate-600">
+                        <p className="text-slate-400">
                           Delivered: <strong>{req?.requested_quantity} {donation?.unit}</strong> to <strong>{req?.recipient_organization || 'NGO Shelter'}</strong>
                         </p>
                         <p className="text-slate-500 text-[11px]">
-                          Recipient Signature: <strong className="text-slate-700">{p.recipient_signature_name || 'Verified Staff'}</strong>
+                          Recipient Signature: <strong className="text-slate-300">{p.recipient_signature_name || 'Verified Staff'}</strong>
                         </p>
                         {p.handover_notes && (
                           <p className="text-slate-500 italic text-[11px]">"{p.handover_notes}"</p>
@@ -286,14 +286,14 @@ export function VolunteerDashboard() {
                     <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 pb-3 border-b border-amber-200/60">
                       <div>
                         <div className="flex items-center gap-2">
-                          <span className="font-black text-sm text-slate-900">
+                          <span className="font-black text-sm text-white">
                             Rescue #{p.id}: {donation?.title || 'Food Item'}
                           </span>
                           <span className="px-2.5 py-0.5 rounded-full text-[10px] font-extrabold bg-amber-100 text-amber-900 uppercase">
                             {p.status}
                           </span>
                         </div>
-                        <p className="text-xs text-slate-600 mt-0.5">
+                        <p className="text-xs text-slate-400 mt-0.5">
                           Payload: <strong>{req?.requested_quantity} {donation?.unit}</strong> ({donation?.storage_requirement_display || donation?.storage_requirement})
                         </p>
                       </div>
@@ -327,25 +327,25 @@ export function VolunteerDashboard() {
 
                     {/* Step Timeline Indicator */}
                     <div className="grid grid-cols-4 gap-2 text-center text-[11px] font-bold">
-                      <div className={`p-2 rounded-xl ${['CLAIMED', 'EN_ROUTE_PICKUP', 'FOOD_COLLECTED', 'EN_ROUTE_DELIVERY', 'DELIVERED'].includes(p.status) ? 'bg-emerald-100 text-emerald-800' : 'bg-slate-100 text-slate-400'}`}>
+                      <div className={`p-2 rounded-xl ${['CLAIMED', 'EN_ROUTE_PICKUP', 'FOOD_COLLECTED', 'EN_ROUTE_DELIVERY', 'DELIVERED'].includes(p.status) ? 'bg-emerald-100 text-emerald-800' : 'bg-[#141c25] text-slate-400'}`}>
                         1. Claimed
                       </div>
-                      <div className={`p-2 rounded-xl ${['EN_ROUTE_PICKUP', 'FOOD_COLLECTED', 'EN_ROUTE_DELIVERY', 'DELIVERED'].includes(p.status) ? 'bg-emerald-100 text-emerald-800' : 'bg-slate-100 text-slate-400'}`}>
+                      <div className={`p-2 rounded-xl ${['EN_ROUTE_PICKUP', 'FOOD_COLLECTED', 'EN_ROUTE_DELIVERY', 'DELIVERED'].includes(p.status) ? 'bg-emerald-100 text-emerald-800' : 'bg-[#141c25] text-slate-400'}`}>
                         2. En Route
                       </div>
-                      <div className={`p-2 rounded-xl ${['FOOD_COLLECTED', 'EN_ROUTE_DELIVERY', 'DELIVERED'].includes(p.status) ? 'bg-emerald-100 text-emerald-800' : 'bg-slate-100 text-slate-400'}`}>
+                      <div className={`p-2 rounded-xl ${['FOOD_COLLECTED', 'EN_ROUTE_DELIVERY', 'DELIVERED'].includes(p.status) ? 'bg-emerald-100 text-emerald-800' : 'bg-[#141c25] text-slate-400'}`}>
                         3. Food Collected
                       </div>
-                      <div className={`p-2 rounded-xl ${['EN_ROUTE_DELIVERY', 'DELIVERED'].includes(p.status) ? 'bg-emerald-100 text-emerald-800' : 'bg-slate-100 text-slate-400'}`}>
+                      <div className={`p-2 rounded-xl ${['EN_ROUTE_DELIVERY', 'DELIVERED'].includes(p.status) ? 'bg-emerald-100 text-emerald-800' : 'bg-[#141c25] text-slate-400'}`}>
                         4. To Delivery
                       </div>
                     </div>
 
                     {/* Route Details with Google Maps GPS Navigation */}
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs bg-white p-3.5 rounded-xl border border-slate-200">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs bg-[#111827] p-3.5 rounded-xl border border-white/10">
                       <div className="space-y-1">
                         <span className="text-slate-400 font-medium">Pickup Kitchen:</span>
-                        <p className="font-bold text-slate-800">{donation?.pickup_address}</p>
+                        <p className="font-bold text-slate-100">{donation?.pickup_address}</p>
                         <p className="text-[11px] text-slate-500">Donor: {donation?.donor_organization_name}</p>
                         <div className="flex items-center gap-2 pt-1">
                           <a
@@ -361,7 +361,7 @@ export function VolunteerDashboard() {
                           {donation?.contact_phone && (
                             <a
                               href={`tel:${donation.contact_phone}`}
-                              className="inline-flex items-center gap-1 text-[11px] font-semibold text-slate-700 bg-slate-100 hover:bg-slate-200 px-2 py-1 rounded-lg transition"
+                              className="inline-flex items-center gap-1 text-[11px] font-semibold text-slate-300 bg-[#141c25] hover:bg-slate-200 px-2 py-1 rounded-lg transition"
                             >
                               <Phone className="w-3 h-3 text-slate-500" />
                               <span>Call Kitchen</span>
@@ -372,7 +372,7 @@ export function VolunteerDashboard() {
 
                       <div className="space-y-1">
                         <span className="text-slate-400 font-medium">Deliver To Shelter:</span>
-                        <p className="font-bold text-slate-800">{req?.recipient_organization || 'NGO Shelter'}</p>
+                        <p className="font-bold text-slate-100">{req?.recipient_organization || 'NGO Shelter'}</p>
                         <p className="text-[11px] text-slate-500">Recipient: Verified Distribution Point</p>
                         <div className="flex items-center gap-2 pt-1">
                           <a
@@ -400,7 +400,7 @@ export function VolunteerDashboard() {
       <div className="space-y-4">
         <div className="flex items-center justify-between">
           <div>
-            <h2 className="font-extrabold text-lg text-slate-900">
+            <h2 className="font-extrabold text-lg text-white">
               Available Pickup Assignments ({availablePool.length})
             </h2>
             <p className="text-xs text-slate-500">
@@ -410,7 +410,7 @@ export function VolunteerDashboard() {
         </div>
 
         {availablePool.length === 0 ? (
-          <div className="text-center py-12 bg-white rounded-3xl border border-slate-200 text-xs text-slate-500">
+          <div className="text-center py-12 bg-[#111827] rounded-3xl border border-white/10 text-xs text-slate-500">
             No unclaimed pickups in the dispatch pool right now.
           </div>
         ) : (
@@ -422,7 +422,7 @@ export function VolunteerDashboard() {
               return (
                 <div
                   key={task.id}
-                  className="bg-white rounded-2xl border border-slate-200 shadow-xs hover:shadow-md transition p-5 space-y-4 flex flex-col justify-between"
+                  className="bg-[#111827] rounded-2xl border border-white/10 shadow-xs hover:shadow-md transition p-5 space-y-4 flex flex-col justify-between"
                 >
                   <div className="space-y-3">
                     <div className="flex items-center justify-between">
@@ -434,20 +434,20 @@ export function VolunteerDashboard() {
                       </span>
                     </div>
 
-                    <h3 className="font-bold text-base text-slate-900">{donation?.title || 'Surplus Food'}</h3>
+                    <h3 className="font-bold text-base text-white">{donation?.title || 'Surplus Food'}</h3>
 
-                    <div className="bg-slate-50 p-3 rounded-xl border border-slate-100 space-y-1.5 text-xs">
+                    <div className="bg-[#0f1923] p-3 rounded-xl border border-white/6 space-y-1.5 text-xs">
                       <div>
                         <span className="text-slate-400">From:</span>{' '}
-                        <strong className="text-slate-800">{donation?.pickup_address}</strong>
+                        <strong className="text-slate-100">{donation?.pickup_address}</strong>
                       </div>
                       <div>
                         <span className="text-slate-400">To NGO:</span>{' '}
-                        <strong className="text-slate-800">{req?.recipient_organization}</strong>
+                        <strong className="text-slate-100">{req?.recipient_organization}</strong>
                       </div>
                       <div>
                         <span className="text-slate-400">Handling:</span>{' '}
-                        <span className="text-slate-700">{donation?.storage_requirement_display || donation?.storage_requirement}</span>
+                        <span className="text-slate-300">{donation?.storage_requirement_display || donation?.storage_requirement}</span>
                       </div>
                     </div>
                   </div>
@@ -474,15 +474,15 @@ export function VolunteerDashboard() {
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.95 }}
-              className="bg-white rounded-2xl shadow-2xl max-w-md w-full border border-slate-200 overflow-hidden"
+              className="bg-[#111827] rounded-2xl shadow-2xl max-w-md w-full border border-white/10 overflow-hidden"
             >
-              <div className="p-5 border-b border-slate-100 flex items-center justify-between bg-slate-50">
-                <h3 className="font-bold text-slate-900 text-sm">
+              <div className="p-5 border-b border-white/6 flex items-center justify-between bg-[#0f1923]">
+                <h3 className="font-bold text-white text-sm">
                   {targetStatus === 'FAILED' ? 'Report Failed Pickup' : `Update Status: ${targetStatus}`}
                 </h3>
                 <button
                   onClick={() => setActivePickupForUpdate(null)}
-                  className="p-1 rounded-lg text-slate-400 hover:text-slate-600 cursor-pointer"
+                  className="p-1 rounded-lg text-slate-400 hover:text-slate-400 cursor-pointer"
                 >
                   <X className="w-5 h-5" />
                 </button>
@@ -491,7 +491,7 @@ export function VolunteerDashboard() {
               <form onSubmit={handleSubmitStatusTransition} className="p-5 space-y-4">
                 {targetStatus === 'DELIVERED' && (
                   <div>
-                    <label className="block text-xs font-bold text-slate-700 mb-1">
+                    <label className="block text-xs font-bold text-slate-300 mb-1">
                       Recipient Signature / Name *
                     </label>
                     <input
@@ -500,7 +500,7 @@ export function VolunteerDashboard() {
                       placeholder="e.g. Sister Maria / Director David Dsouza"
                       value={recipientSignature}
                       onChange={(e) => setRecipientSignature(e.target.value)}
-                      className="w-full px-3 py-2 text-xs bg-slate-50 border border-slate-200 rounded-xl outline-none focus:bg-white"
+                      className="w-full px-3 py-2 text-xs bg-[#0f1923] border border-white/10 rounded-xl outline-none focus:bg-[#111827]"
                     />
                   </div>
                 )}
@@ -524,7 +524,7 @@ export function VolunteerDashboard() {
                   </div>
                 ) : (
                   <div>
-                    <label className="block text-xs font-bold text-slate-700 mb-1">
+                    <label className="block text-xs font-bold text-slate-300 mb-1">
                       Handover Notes (Optional)
                     </label>
                     <textarea
@@ -532,16 +532,16 @@ export function VolunteerDashboard() {
                       placeholder="e.g. Insulated thermal bags checked; containers sealed properly."
                       value={notes}
                       onChange={(e) => setNotes(e.target.value)}
-                      className="w-full px-3 py-2 text-xs bg-slate-50 border border-slate-200 rounded-xl outline-none"
+                      className="w-full px-3 py-2 text-xs bg-[#0f1923] border border-white/10 rounded-xl outline-none"
                     />
                   </div>
                 )}
 
-                <div className="pt-3 border-t border-slate-100 flex justify-end gap-2">
+                <div className="pt-3 border-t border-white/6 flex justify-end gap-2">
                   <button
                     type="button"
                     onClick={() => setActivePickupForUpdate(null)}
-                    className="px-4 py-2 text-xs font-bold text-slate-600 hover:bg-slate-100 rounded-xl transition cursor-pointer"
+                    className="px-4 py-2 text-xs font-bold text-slate-400 hover:bg-[#141c25] rounded-xl transition cursor-pointer"
                   >
                     Cancel
                   </button>

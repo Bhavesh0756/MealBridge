@@ -52,7 +52,7 @@ export function LeafletMapView({
   center = [19.076, 72.8777],
   zoom = 12,
   onSelectDonation,
-  className = 'h-96 w-full rounded-2xl shadow-sm border border-slate-200 overflow-hidden',
+  className = 'h-96 w-full rounded-2xl shadow-sm border border-white/10 overflow-hidden',
 }) {
   return (
     <div className={className}>
@@ -78,16 +78,16 @@ export function LeafletMapView({
               icon={donorIcon}
             >
               <Popup className="custom-popup">
-                <div className="p-1 max-w-xs text-slate-800">
+                <div className="p-1 max-w-xs text-slate-100">
                   <div className="flex items-center gap-2 mb-1">
                     <span className="px-2 py-0.5 rounded-full text-xs font-semibold bg-emerald-100 text-emerald-800">
                       Food Available
                     </span>
                     <span className="text-xs text-slate-500">{d.category?.name || d.category_name}</span>
                   </div>
-                  <h4 className="font-bold text-sm text-slate-900 mb-1">{d.title}</h4>
-                  <p className="text-xs text-slate-600 mb-2">{d.pickup_address}</p>
-                  <div className="bg-slate-50 p-2 rounded-lg text-xs space-y-1 mb-2 border border-slate-100">
+                  <h4 className="font-bold text-sm text-white mb-1">{d.title}</h4>
+                  <p className="text-xs text-slate-400 mb-2">{d.pickup_address}</p>
+                  <div className="bg-[#0f1923] p-2 rounded-lg text-xs space-y-1 mb-2 border border-white/6">
                     <div className="flex justify-between font-semibold">
                       <span>Available:</span>
                       <span className="text-emerald-700">{d.available_quantity} {d.unit}</span>
@@ -123,14 +123,14 @@ export function LeafletMapView({
               icon={ngoIcon}
             >
               <Popup>
-                <div className="p-1 max-w-xs text-slate-800">
+                <div className="p-1 max-w-xs text-slate-100">
                   <span className="px-2 py-0.5 rounded-full text-xs font-semibold bg-blue-100 text-blue-800">
                     NGO Recipient
                   </span>
-                  <h4 className="font-bold text-sm text-slate-900 mt-1">{ngo.organization_name}</h4>
-                  <p className="text-xs text-slate-600 mb-1">{ngo.address}</p>
+                  <h4 className="font-bold text-sm text-white mt-1">{ngo.organization_name}</h4>
+                  <p className="text-xs text-slate-400 mb-1">{ngo.address}</p>
                   <p className="text-xs text-slate-500">
-                    Daily Capacity: <strong className="text-slate-800">{ngo.daily_capacity_meals} meals</strong>
+                    Daily Capacity: <strong className="text-slate-100">{ngo.daily_capacity_meals} meals</strong>
                   </p>
                   {ngo.cold_storage_available && (
                     <span className="inline-block mt-1 text-xs text-cyan-700 font-medium">
@@ -153,10 +153,10 @@ export function LeafletMapView({
               icon={volunteerIcon}
             >
               <Popup>
-                <div className="p-1 text-slate-800 text-xs">
+                <div className="p-1 text-slate-100 text-xs">
                   <span className="font-semibold text-amber-800">🚚 Active Volunteer</span>
                   <p className="font-bold mt-0.5">{vol.full_name}</p>
-                  <p className="text-slate-600">Capacity: {vol.max_transport_capacity_kg} kg</p>
+                  <p className="text-slate-400">Capacity: {vol.max_transport_capacity_kg} kg</p>
                 </div>
               </Popup>
             </Marker>

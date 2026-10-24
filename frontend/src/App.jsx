@@ -43,7 +43,7 @@ export default function App() {
       <AuthProvider>
         <ToastProvider>
           <NotificationProvider>
-            <div className="min-h-screen flex flex-col bg-slate-50 text-slate-800 font-sans selection:bg-emerald-500 selection:text-white">
+            <div className="min-h-screen flex flex-col bg-[#0b0f17] text-slate-100 font-sans selection:bg-emerald-500 selection:text-white">
             <Navbar />
             <NotificationDrawer />
             <main className="flex-1">

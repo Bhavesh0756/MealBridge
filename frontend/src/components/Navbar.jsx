@@ -37,116 +37,128 @@ export function Navbar() {
   };
 
   return (
-    <header className="sticky top-0 z-40 bg-white/85 backdrop-blur-xl border-b border-slate-200/80 shadow-xs transition-all relative">
+    <header className="sticky top-0 z-40 transition-all relative"
+      style={{
+        background: 'rgba(11, 15, 23, 0.88)',
+        backdropFilter: 'blur(24px)',
+        WebkitBackdropFilter: 'blur(24px)',
+        borderBottom: '1px solid rgba(16, 185, 129, 0.12)',
+        boxShadow: '0 1px 30px rgba(0,0,0,0.4)',
+      }}>
+
       {/* Aurora Laser Underline */}
-      <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-[#10b981] to-transparent opacity-80 pointer-events-none" />
+      <div className="absolute bottom-0 left-0 right-0 h-[1.5px] pointer-events-none"
+        style={{ background: 'linear-gradient(90deg, transparent 0%, rgba(16,185,129,0.8) 40%, rgba(6,182,212,0.6) 60%, transparent 100%)' }} />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
         {/* Brand */}
         <div className="flex items-center gap-8">
           <Link to="/" className="flex items-center gap-3 group">
-            <div className="relative w-11 h-11 rounded-2xl bg-gradient-to-tr from-[#047857] via-[#10b981] to-[#06b6d4] text-white flex items-center justify-center font-bold shadow-lg shadow-emerald-500/25 group-hover:scale-105 group-hover:rotate-1 transition-all duration-300">
+            <div className="relative w-11 h-11 rounded-2xl text-white flex items-center justify-center font-bold transition-all duration-300 group-hover:scale-105 group-hover:rotate-1"
+              style={{ background: 'linear-gradient(135deg, #047857, #10b981, #06b6d4)', boxShadow: '0 0 20px rgba(16,185,129,0.4)' }}>
               <Utensils className="w-5 h-5 transition-transform group-hover:scale-110" />
               <span className="absolute -top-1 -right-1 flex h-3 w-3">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-3 w-3 bg-emerald-500 border-2 border-white"></span>
+                <span className="relative inline-flex rounded-full h-3 w-3 bg-emerald-500"
+                  style={{ border: '2px solid #0b0f17' }}></span>
               </span>
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <span className="font-display font-black text-2xl tracking-tight text-slate-900">
-                  Meal<span className="bg-gradient-to-r from-[#047857] via-[#10b981] to-[#06b6d4] bg-clip-text text-transparent">Bridge</span>
+                <span className="font-display font-black text-2xl tracking-tight text-white">
+                  Meal<span className="text-aurora-animated">Bridge</span>
                 </span>
-                <span className="px-2.5 py-0.5 bg-gradient-to-r from-emerald-500/10 via-teal-500/10 to-cyan-500/10 text-emerald-800 border border-emerald-500/25 text-[10px] font-black rounded-full uppercase tracking-widest shadow-2xs">
+                <span className="px-2.5 py-0.5 text-emerald-300 text-[10px] font-black rounded-full uppercase tracking-widest"
+                  style={{ background: 'rgba(16,185,129,0.12)', border: '1px solid rgba(16,185,129,0.3)' }}>
                   Zero Waste
                 </span>
               </div>
-              <p className="text-[11px] text-slate-500 font-medium tracking-wide">
+              <p className="text-[11px] font-medium tracking-wide" style={{ color: 'rgba(100,116,139,0.85)' }}>
                 Hyperlocal Surplus Redistribution
               </p>
             </div>
           </Link>
 
           {/* Desktop Nav Links */}
-          <nav className="hidden md:flex items-center gap-1.5 bg-slate-100/60 p-1 rounded-2xl border border-slate-200/50">
+          <nav className="hidden md:flex items-center gap-1 p-1 rounded-2xl"
+            style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.07)' }}>
             <Link
               to="/browse"
               className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all duration-200 ${
                 isActive('/browse')
-                  ? 'bg-white text-emerald-700 shadow-xs border border-slate-200/50 scale-[1.02]'
-                  : 'text-slate-600 hover:text-slate-900 hover:bg-white/60'
+                  ? 'text-emerald-300'
+                  : 'hover:text-white'
               }`}
+              style={isActive('/browse')
+                ? { background: 'rgba(16,185,129,0.15)', border: '1px solid rgba(16,185,129,0.3)', color: '#6ee7b7' }
+                : { color: 'rgba(148,163,184,0.9)' }
+              }
             >
               Live Feed
             </Link>
             <Link
               to="/matchmaker"
-              className={`px-3.5 py-1.5 rounded-xl text-xs font-bold flex items-center gap-1.5 transition-all duration-200 ${
-                isActive('/matchmaker')
-                  ? 'bg-white text-emerald-700 shadow-xs border border-slate-200/50 scale-[1.02]'
-                  : 'text-slate-600 hover:text-slate-900 hover:bg-white/60'
-              }`}
+              className={`px-3.5 py-1.5 rounded-xl text-xs font-bold flex items-center gap-1.5 transition-all duration-200`}
+              style={isActive('/matchmaker')
+                ? { background: 'rgba(16,185,129,0.15)', border: '1px solid rgba(16,185,129,0.3)', color: '#6ee7b7' }
+                : { color: 'rgba(148,163,184,0.9)' }
+              }
             >
-              <Sparkles className="w-3.5 h-3.5 text-amber-500 animate-pulse" />
+              <Sparkles className="w-3.5 h-3.5 text-amber-400 animate-pulse" />
               Smart Match
             </Link>
             <Link
               to="/impact"
-              className={`px-3.5 py-1.5 rounded-xl text-xs font-bold flex items-center gap-1.5 transition-all duration-200 ${
-                isActive('/impact')
-                  ? 'bg-white text-emerald-700 shadow-xs border border-slate-200/50 scale-[1.02]'
-                  : 'text-slate-600 hover:text-slate-900 hover:bg-white/60'
-              }`}
+              className={`px-3.5 py-1.5 rounded-xl text-xs font-bold flex items-center gap-1.5 transition-all duration-200`}
+              style={isActive('/impact')
+                ? { background: 'rgba(16,185,129,0.15)', border: '1px solid rgba(16,185,129,0.3)', color: '#6ee7b7' }
+                : { color: 'rgba(148,163,184,0.9)' }
+              }
             >
-              <BarChart3 className="w-3.5 h-3.5 text-teal-600" />
+              <BarChart3 className="w-3.5 h-3.5 text-teal-400" />
               ESG Analytics
             </Link>
 
-            {/* Role-Specific Dashboard quicklink */}
             {isDonor && (
-              <Link
-                to="/dashboard/donor"
-                className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all duration-200 ${
-                  isActive('/dashboard/donor')
-                    ? 'bg-gradient-to-r from-[#047857] via-[#10b981] to-[#06b6d4] text-white shadow-md shadow-emerald-600/20'
-                    : 'text-emerald-700 hover:bg-emerald-50'
-                }`}
+              <Link to="/dashboard/donor"
+                className="px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all duration-200"
+                style={isActive('/dashboard/donor')
+                  ? { background: 'linear-gradient(135deg, #047857, #10b981)', color: '#fff', boxShadow: '0 0 15px rgba(16,185,129,0.4)' }
+                  : { color: '#34d399' }
+                }
               >
                 Donor Console
               </Link>
             )}
             {isNgo && (
-              <Link
-                to="/dashboard/ngo"
-                className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all duration-200 ${
-                  isActive('/dashboard/ngo')
-                    ? 'bg-gradient-to-r from-[#0284c7] via-[#0ea5e9] to-[#06b6d4] text-white shadow-md shadow-blue-600/20'
-                    : 'text-blue-700 hover:bg-blue-50'
-                }`}
+              <Link to="/dashboard/ngo"
+                className="px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all duration-200"
+                style={isActive('/dashboard/ngo')
+                  ? { background: 'linear-gradient(135deg, #0284c7, #06b6d4)', color: '#fff', boxShadow: '0 0 15px rgba(6,182,212,0.4)' }
+                  : { color: '#38bdf8' }
+                }
               >
                 NGO Console
               </Link>
             )}
             {isVolunteer && (
-              <Link
-                to="/dashboard/volunteer"
-                className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all duration-200 ${
-                  isActive('/dashboard/volunteer')
-                    ? 'bg-gradient-to-r from-[#d97706] via-[#f59e0b] to-[#10b981] text-white shadow-md shadow-amber-600/20'
-                    : 'text-amber-800 hover:bg-amber-50'
-                }`}
+              <Link to="/dashboard/volunteer"
+                className="px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all duration-200"
+                style={isActive('/dashboard/volunteer')
+                  ? { background: 'linear-gradient(135deg, #d97706, #f59e0b)', color: '#fff', boxShadow: '0 0 15px rgba(245,158,11,0.4)' }
+                  : { color: '#fbbf24' }
+                }
               >
                 Courier Ops
               </Link>
             )}
             {isAdmin && (
-              <Link
-                to="/dashboard/admin"
-                className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all duration-200 ${
-                  isActive('/dashboard/admin')
-                    ? 'bg-gradient-to-r from-[#4f46e5] via-[#7c3aed] to-[#10b981] text-white shadow-md shadow-purple-600/20'
-                    : 'text-purple-700 hover:bg-purple-50'
-                }`}
+              <Link to="/dashboard/admin"
+                className="px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all duration-200"
+                style={isActive('/dashboard/admin')
+                  ? { background: 'linear-gradient(135deg, #4f46e5, #7c3aed)', color: '#fff', boxShadow: '0 0 15px rgba(124,58,237,0.4)' }
+                  : { color: '#a78bfa' }
+                }
               >
                 Admin Shield
               </Link>
@@ -156,47 +168,61 @@ export function Navbar() {
 
         {/* Right Actions */}
         <div className="flex items-center gap-2.5">
-          {/* Quick Demo Switcher Button */}
+          {/* Quick Demo Switcher */}
           <div className="relative">
             <button
               onClick={() => setDemoMenuOpen(!demoMenuOpen)}
-              className="flex items-center gap-2 px-3 py-1.5 rounded-xl text-xs font-bold bg-gradient-to-r from-amber-500/10 to-orange-500/10 hover:from-amber-500/20 hover:to-orange-500/20 text-amber-900 border border-amber-300/60 shadow-2xs transition-all duration-200 cursor-pointer"
+              className="flex items-center gap-2 px-3 py-1.5 rounded-xl text-xs font-bold transition-all duration-200 cursor-pointer"
+              style={{
+                background: 'rgba(245,158,11,0.1)',
+                border: '1px solid rgba(245,158,11,0.3)',
+                color: '#fbbf24',
+              }}
               title="Switch demo roles instantly"
             >
-              <span className="w-2 h-2 rounded-full bg-amber-500 animate-ping" />
-              <span className="hidden sm:inline text-amber-700 font-medium">Role:</span>
-              <span className="font-extrabold uppercase tracking-wide">
-                {user ? user.role : 'Demo Switcher'}
-              </span>
-              <ChevronDown className="w-3.5 h-3.5 text-amber-700" />
+              <span className="w-2 h-2 rounded-full bg-amber-400 animate-ping" />
+              <span className="hidden sm:inline font-medium" style={{ color: 'rgba(251,191,36,0.7)' }}>Role:</span>
+              <span className="font-extrabold uppercase tracking-wide">{user ? user.role : 'Demo'}</span>
+              <ChevronDown className="w-3.5 h-3.5" style={{ color: 'rgba(251,191,36,0.8)' }} />
             </button>
 
             {demoMenuOpen && (
-              <div className="absolute right-0 mt-2 w-72 bg-white/95 backdrop-blur-xl rounded-2xl shadow-2xl border border-slate-200/80 p-2.5 z-50 animate-in fade-in zoom-in-95 duration-150">
-                <div className="px-3 py-1.5 text-[10px] font-black text-slate-400 uppercase tracking-widest border-b border-slate-100 mb-1">
+              <div className="absolute right-0 mt-2 w-72 rounded-2xl shadow-2xl p-2.5 z-50"
+                style={{
+                  background: 'rgba(11,15,23,0.97)',
+                  backdropFilter: 'blur(24px)',
+                  border: '1px solid rgba(16,185,129,0.2)',
+                  boxShadow: '0 25px 50px rgba(0,0,0,0.7)',
+                }}>
+                <div className="px-3 py-1.5 text-[10px] font-black uppercase tracking-widest mb-1"
+                  style={{ color: 'rgba(100,116,139,0.7)', borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
                   Instant Role Simulation
                 </div>
                 {DEMO_ACCOUNTS.map((acc) => (
                   <button
                     key={acc.role}
                     onClick={() => handleDemoSwitch(acc)}
-                    className={`w-full text-left p-2.5 rounded-xl text-xs transition-all flex items-center justify-between cursor-pointer ${
-                      user?.email === acc.email
-                        ? 'bg-emerald-50/80 text-emerald-900 font-bold border border-emerald-200/60'
-                        : 'hover:bg-slate-50 text-slate-700'
-                    }`}
+                    className={`w-full text-left p-2.5 rounded-xl text-xs transition-all flex items-center justify-between cursor-pointer`}
+                    style={user?.email === acc.email
+                      ? { background: 'rgba(16,185,129,0.12)', color: '#6ee7b7', border: '1px solid rgba(16,185,129,0.3)' }
+                      : { color: 'rgba(148,163,184,0.9)' }
+                    }
+                    onMouseEnter={e => { if (user?.email !== acc.email) e.currentTarget.style.background = 'rgba(255,255,255,0.04)'; }}
+                    onMouseLeave={e => { if (user?.email !== acc.email) e.currentTarget.style.background = 'transparent'; }}
                   >
                     <div>
                       <div className="font-bold flex items-center gap-1.5">
                         {acc.label}
-                        <span className="text-[10px] px-1.5 py-0.2 bg-slate-100 text-slate-600 rounded font-semibold">
+                        <span className="text-[10px] px-1.5 rounded font-semibold"
+                          style={{ background: 'rgba(255,255,255,0.07)', color: 'rgba(148,163,184,0.7)' }}>
                           {acc.role}
                         </span>
                       </div>
-                      <div className="text-[11px] text-slate-400 mt-0.5">{acc.org}</div>
+                      <div className="text-[11px] mt-0.5" style={{ color: 'rgba(100,116,139,0.7)' }}>{acc.org}</div>
                     </div>
                     {user?.email === acc.email && (
-                      <span className="text-[10px] px-2 py-0.5 bg-emerald-600 text-white rounded-full font-black shadow-xs">
+                      <span className="text-[10px] px-2 py-0.5 rounded-full font-black"
+                        style={{ background: 'rgba(16,185,129,0.8)', color: '#fff' }}>
                         ACTIVE
                       </span>
                     )}
@@ -210,48 +236,58 @@ export function Navbar() {
           {isAuthenticated && (
             <button
               onClick={() => setDrawerOpen(true)}
-              className="relative p-2.5 rounded-xl text-slate-600 hover:text-slate-900 hover:bg-slate-100 border border-transparent hover:border-slate-200 transition-all cursor-pointer"
+              className="relative p-2.5 rounded-xl transition-all cursor-pointer"
+              style={{ color: 'rgba(148,163,184,0.8)', border: '1px solid rgba(255,255,255,0.07)' }}
+              onMouseEnter={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.06)'; e.currentTarget.style.color = '#e2e8f0'; }}
+              onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = 'rgba(148,163,184,0.8)'; }}
               title="View notifications"
             >
               <Bell className="w-5 h-5" />
               {unreadCount > 0 && (
-                <span className="absolute -top-1 -right-1 px-1.5 py-0.2 bg-gradient-to-r from-rose-500 to-red-600 text-white text-[10px] font-black rounded-full shadow-md shadow-rose-500/30 animate-pulse">
+                <span className="absolute -top-1 -right-1 px-1.5 text-white text-[10px] font-black rounded-full animate-pulse"
+                  style={{ background: 'linear-gradient(135deg, #f43f5e, #e11d48)', boxShadow: '0 0 10px rgba(244,63,94,0.5)', paddingTop: '1px', paddingBottom: '1px' }}>
                   {unreadCount}
                 </span>
               )}
             </button>
           )}
 
-          {/* User Profile / Auth State */}
+          {/* User Profile */}
           {isAuthenticated ? (
             <div className="flex items-center gap-2">
               <button
                 onClick={() => setProfileOpen(true)}
-                className="hidden lg:flex items-center gap-2.5 px-3 py-1.5 rounded-xl bg-slate-50 hover:bg-slate-100/80 border border-slate-200/60 transition-all text-right cursor-pointer group hover:ring-2 hover:ring-emerald-400/30"
-                title="View & Edit Profile Settings"
+                className="hidden lg:flex items-center gap-2.5 px-3 py-1.5 rounded-xl transition-all text-right cursor-pointer group"
+                style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)' }}
+                onMouseEnter={e => { e.currentTarget.style.borderColor = 'rgba(16,185,129,0.35)'; e.currentTarget.style.background = 'rgba(16,185,129,0.06)'; }}
+                onMouseLeave={e => { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.08)'; e.currentTarget.style.background = 'rgba(255,255,255,0.04)'; }}
+                title="View & Edit Profile"
               >
-                <div className="w-8 h-8 rounded-xl bg-gradient-to-tr from-emerald-600 to-teal-500 text-white flex items-center justify-center font-bold text-xs shadow-xs group-hover:scale-105 transition">
+                <div className="w-8 h-8 rounded-xl text-white flex items-center justify-center font-bold text-xs group-hover:scale-105 transition"
+                  style={{ background: 'linear-gradient(135deg, #047857, #10b981)' }}>
                   <User className="w-4 h-4" />
                 </div>
                 <div>
-                  <p className="text-xs font-black text-slate-900 leading-tight">
-                    {user.username}
-                  </p>
-                  <span className="text-[10px] text-emerald-600 font-bold flex items-center gap-1 justify-end">
+                  <p className="text-xs font-black text-white leading-tight">{user.username}</p>
+                  <span className="text-[10px] font-bold flex items-center gap-1 justify-end" style={{ color: '#34d399' }}>
                     {user.role} {user.is_verified && '✓'}
                   </span>
                 </div>
               </button>
               <button
                 onClick={() => setProfileOpen(true)}
-                className="lg:hidden p-2.5 text-slate-600 hover:bg-slate-100 rounded-xl transition cursor-pointer"
+                className="lg:hidden p-2.5 rounded-xl transition cursor-pointer"
+                style={{ color: 'rgba(148,163,184,0.8)' }}
                 title="Profile Settings"
               >
                 <User className="w-5 h-5" />
               </button>
               <button
                 onClick={logout}
-                className="p-2.5 text-slate-400 hover:text-rose-600 hover:bg-rose-50 rounded-xl transition cursor-pointer"
+                className="p-2.5 rounded-xl transition cursor-pointer"
+                style={{ color: 'rgba(148,163,184,0.6)' }}
+                onMouseEnter={e => { e.currentTarget.style.color = '#f43f5e'; e.currentTarget.style.background = 'rgba(244,63,94,0.1)'; }}
+                onMouseLeave={e => { e.currentTarget.style.color = 'rgba(148,163,184,0.6)'; e.currentTarget.style.background = 'transparent'; }}
                 title="Logout"
               >
                 <LogOut className="w-5 h-5" />
@@ -259,15 +295,16 @@ export function Navbar() {
             </div>
           ) : (
             <div className="flex items-center gap-2">
-              <Link
-                to="/login"
-                className="px-4 py-2 text-xs font-bold text-slate-700 hover:text-slate-900 rounded-xl hover:bg-slate-100 transition"
+              <Link to="/login" className="px-4 py-2 text-xs font-bold rounded-xl transition"
+                style={{ color: 'rgba(148,163,184,0.9)' }}
+                onMouseEnter={e => { e.currentTarget.style.color = '#fff'; e.currentTarget.style.background = 'rgba(255,255,255,0.06)'; }}
+                onMouseLeave={e => { e.currentTarget.style.color = 'rgba(148,163,184,0.9)'; e.currentTarget.style.background = 'transparent'; }}
               >
                 Sign In
               </Link>
-              <Link
-                to="/register"
-                className="px-4 py-2 text-xs font-bold bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white rounded-xl shadow-md shadow-emerald-500/20 transition-all hover:scale-105"
+              <Link to="/register"
+                className="px-4 py-2 text-xs font-bold text-white rounded-xl transition-all hover:scale-105 shimmer-sweep-hover"
+                style={{ background: 'linear-gradient(135deg, #047857, #10b981, #06b6d4)', boxShadow: '0 0 20px rgba(16,185,129,0.35)' }}
               >
                 Get Started
               </Link>
@@ -277,7 +314,10 @@ export function Navbar() {
           {/* Mobile menu button */}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="md:hidden p-2 text-slate-600 hover:bg-slate-100 rounded-xl cursor-pointer"
+            className="md:hidden p-2 rounded-xl cursor-pointer transition"
+            style={{ color: 'rgba(148,163,184,0.8)' }}
+            onMouseEnter={e => e.currentTarget.style.background = 'rgba(255,255,255,0.06)'}
+            onMouseLeave={e => e.currentTarget.style.background = 'transparent'}
           >
             {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
           </button>
@@ -286,68 +326,32 @@ export function Navbar() {
 
       {/* Mobile Menu Dropdown */}
       {mobileMenuOpen && (
-        <div className="md:hidden border-t border-slate-200 bg-white px-4 pt-2 pb-4 space-y-1">
-          <Link
-            to="/browse"
-            onClick={() => setMobileMenuOpen(false)}
-            className="block px-3 py-2 rounded-lg text-sm font-semibold text-slate-700 hover:bg-slate-50"
-          >
-            Food Feed
-          </Link>
-          <Link
-            to="/matchmaker"
-            onClick={() => setMobileMenuOpen(false)}
-            className="block px-3 py-2 rounded-lg text-sm font-semibold text-slate-700 hover:bg-slate-50"
-          >
-            Smart Matchmaker
-          </Link>
-          <Link
-            to="/impact"
-            onClick={() => setMobileMenuOpen(false)}
-            className="block px-3 py-2 rounded-lg text-sm font-semibold text-slate-700 hover:bg-slate-50"
-          >
-            Impact Analytics
-          </Link>
-          {isDonor && (
+        <div className="md:hidden px-4 pt-2 pb-4 space-y-1"
+          style={{ borderTop: '1px solid rgba(255,255,255,0.06)', background: 'rgba(11,15,23,0.97)' }}>
+          {[
+            { to: '/browse', label: 'Food Feed' },
+            { to: '/matchmaker', label: 'Smart Matchmaker' },
+            { to: '/impact', label: 'Impact Analytics' },
+          ].map(link => (
             <Link
-              to="/dashboard/donor"
+              key={link.to}
+              to={link.to}
               onClick={() => setMobileMenuOpen(false)}
-              className="block px-3 py-2 rounded-lg text-sm font-semibold text-emerald-700 bg-emerald-50"
+              className="block px-3 py-2 rounded-lg text-sm font-semibold transition"
+              style={{ color: 'rgba(148,163,184,0.9)' }}
+              onMouseEnter={e => e.currentTarget.style.background = 'rgba(255,255,255,0.05)'}
+              onMouseLeave={e => e.currentTarget.style.background = 'transparent'}
             >
-              Donor Console
+              {link.label}
             </Link>
-          )}
-          {isNgo && (
-            <Link
-              to="/dashboard/ngo"
-              onClick={() => setMobileMenuOpen(false)}
-              className="block px-3 py-2 rounded-lg text-sm font-semibold text-blue-700 bg-blue-50"
-            >
-              NGO Console
-            </Link>
-          )}
-          {isVolunteer && (
-            <Link
-              to="/dashboard/volunteer"
-              onClick={() => setMobileMenuOpen(false)}
-              className="block px-3 py-2 rounded-lg text-sm font-semibold text-amber-700 bg-amber-50"
-            >
-              Volunteer Console
-            </Link>
-          )}
-          {isAdmin && (
-            <Link
-              to="/dashboard/admin"
-              onClick={() => setMobileMenuOpen(false)}
-              className="block px-3 py-2 rounded-lg text-sm font-semibold text-purple-700 bg-purple-50"
-            >
-              Admin Panel
-            </Link>
-          )}
+          ))}
+          {isDonor && <Link to="/dashboard/donor" onClick={() => setMobileMenuOpen(false)} className="block px-3 py-2 rounded-lg text-sm font-semibold" style={{ color: '#34d399', background: 'rgba(16,185,129,0.08)' }}>Donor Console</Link>}
+          {isNgo && <Link to="/dashboard/ngo" onClick={() => setMobileMenuOpen(false)} className="block px-3 py-2 rounded-lg text-sm font-semibold" style={{ color: '#38bdf8', background: 'rgba(6,182,212,0.08)' }}>NGO Console</Link>}
+          {isVolunteer && <Link to="/dashboard/volunteer" onClick={() => setMobileMenuOpen(false)} className="block px-3 py-2 rounded-lg text-sm font-semibold" style={{ color: '#fbbf24', background: 'rgba(245,158,11,0.08)' }}>Volunteer Console</Link>}
+          {isAdmin && <Link to="/dashboard/admin" onClick={() => setMobileMenuOpen(false)} className="block px-3 py-2 rounded-lg text-sm font-semibold" style={{ color: '#a78bfa', background: 'rgba(124,58,237,0.08)' }}>Admin Panel</Link>}
         </div>
       )}
 
-      {/* Profile & Organization Settings Modal */}
       <ProfileModal isOpen={profileOpen} onClose={() => setProfileOpen(false)} />
     </header>
   );

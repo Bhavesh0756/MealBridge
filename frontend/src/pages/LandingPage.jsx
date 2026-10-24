@@ -123,7 +123,7 @@ export function LandingPage() {
               </div>
 
               {/* Main Headline with Animated Aurora Flow */}
-              <h1 className="font-display text-4xl sm:text-6xl lg:text-7xl font-black text-slate-900 tracking-tight leading-[1.08]">
+              <h1 className="font-display text-4xl sm:text-6xl lg:text-7xl font-black text-white tracking-tight leading-[1.08]">
                 Rescuing Surplus.{' '}
                 <span className="block text-aurora-animated">
                   Nourishing Lives.
@@ -131,7 +131,7 @@ export function LandingPage() {
               </h1>
 
               {/* Tagline */}
-              <p className="text-base sm:text-xl text-slate-600 max-w-2xl mx-auto lg:mx-0 leading-relaxed font-normal">
+              <p className="text-base sm:text-xl text-slate-400 max-w-2xl mx-auto lg:mx-0 leading-relaxed font-normal">
                 Connecting commercial kitchens, hotels, and banquets directly with verified hunger relief NGOs and agile volunteer couriers. Safe, audited, and real-time.
               </p>
 
@@ -147,7 +147,7 @@ export function LandingPage() {
                 </Link>
                 <Link
                   to="/register"
-                  className="w-full sm:w-auto px-7 py-4 rounded-2xl bg-white/90 hover:bg-white text-slate-800 font-extrabold text-sm border border-slate-200/90 shadow-md shadow-slate-200/50 hover:shadow-lg hover:border-emerald-400/60 hover:scale-[1.02] transition-all flex items-center justify-center gap-2.5 cursor-pointer backdrop-blur-sm"
+                  className="w-full sm:w-auto px-7 py-4 rounded-2xl bg-[#0d1117]/90 hover:bg-[#111827] text-slate-100 font-extrabold text-sm border border-slate-200/90 shadow-md shadow-slate-200/50 hover:shadow-lg hover:border-emerald-400/60 hover:scale-[1.02] transition-all flex items-center justify-center gap-2.5 cursor-pointer backdrop-blur-sm"
                 >
                   <Utensils className="w-4 h-4 text-emerald-600" />
                   <span>Join as Food Donor</span>
@@ -155,16 +155,16 @@ export function LandingPage() {
               </div>
 
               {/* Trust Badges */}
-              <div className="pt-3 flex flex-wrap items-center justify-center lg:justify-start gap-4 sm:gap-6 text-xs text-slate-600 font-semibold">
-                <div className="flex items-center gap-2 bg-white/80 backdrop-blur-sm px-3.5 py-2 rounded-xl border border-slate-200/70 shadow-2xs hover:border-emerald-300 transition-colors">
+              <div className="pt-3 flex flex-wrap items-center justify-center lg:justify-start gap-4 sm:gap-6 text-xs text-slate-400 font-semibold">
+                <div className="flex items-center gap-2 bg-[#0d1117]/80 backdrop-blur-sm px-3.5 py-2 rounded-xl border border-slate-200/70 shadow-2xs hover:border-emerald-300 transition-colors">
                   <ShieldCheck className="w-4 h-4 text-emerald-600" />
                   <span>100% Verified Partners</span>
                 </div>
-                <div className="flex items-center gap-2 bg-white/80 backdrop-blur-sm px-3.5 py-2 rounded-xl border border-slate-200/70 shadow-2xs hover:border-amber-300 transition-colors">
+                <div className="flex items-center gap-2 bg-[#0d1117]/80 backdrop-blur-sm px-3.5 py-2 rounded-xl border border-slate-200/70 shadow-2xs hover:border-amber-300 transition-colors">
                   <Clock className="w-4 h-4 text-amber-500" />
                   <span>Real-time Cold Chain Timers</span>
                 </div>
-                <div className="flex items-center gap-2 bg-white/80 backdrop-blur-sm px-3.5 py-2 rounded-xl border border-slate-200/70 shadow-2xs hover:border-teal-300 transition-colors">
+                <div className="flex items-center gap-2 bg-[#0d1117]/80 backdrop-blur-sm px-3.5 py-2 rounded-xl border border-slate-200/70 shadow-2xs hover:border-teal-300 transition-colors">
                   <Truck className="w-4 h-4 text-teal-600" />
                   <span>Live Courier Dispatch</span>
                 </div>
@@ -181,20 +181,22 @@ export function LandingPage() {
               {/* Pulsing Backlight glow */}
               <div className="absolute -inset-1.5 bg-gradient-to-r from-emerald-500 via-teal-400 to-cyan-500 rounded-3xl blur-xl opacity-35 animate-float-slow -z-10" />
               
-              <div className="bg-white/95 backdrop-blur-2xl p-4 sm:p-5 rounded-3xl shadow-2xl border border-emerald-500/20 relative overflow-hidden group">
+              <div className="backdrop-blur-2xl p-4 sm:p-5 rounded-3xl shadow-2xl relative overflow-hidden group"
+                style={{ background: 'rgba(11,15,23,0.88)', border: '1px solid rgba(16,185,129,0.25)', boxShadow: '0 25px 50px rgba(0,0,0,0.6)' }}>
                 {/* Radar Top Header */}
-                <div className="flex items-center justify-between pb-3 px-1 border-b border-slate-100">
+                <div className="flex items-center justify-between pb-3 px-1" style={{ borderBottom: '1px solid rgba(255,255,255,0.07)' }}>
                   <div className="flex items-center gap-2.5">
                     <span className="relative flex h-3 w-3">
                       <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
                       <span className="relative inline-flex rounded-full h-3 w-3 bg-emerald-500"></span>
                     </span>
-                    <span className="text-xs font-black text-slate-900 uppercase tracking-widest font-display">
+                    <span className="text-xs font-black text-white uppercase tracking-widest font-display">
                       Live Metro Dispatch Radar
                     </span>
                   </div>
-                  <span className="inline-flex items-center gap-1.5 text-[11px] px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-800 font-bold border border-emerald-300/60 shadow-2xs">
-                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                  <span className="inline-flex items-center gap-1.5 text-[11px] px-2.5 py-0.5 rounded-full font-bold"
+                    style={{ background: 'rgba(16,185,129,0.12)', color: '#6ee7b7', border: '1px solid rgba(16,185,129,0.3)' }}>
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
                     Realtime Active
                   </span>
                 </div>
@@ -216,7 +218,7 @@ export function LandingPage() {
                 </div>
 
                 {/* Map Legend */}
-                <div className="mt-3.5 px-2 flex items-center justify-between text-[11px] font-bold text-slate-600">
+                <div className="mt-3.5 px-2 flex items-center justify-between text-[11px] font-bold text-slate-400">
                   <span className="flex items-center gap-1.5 hover:text-emerald-700 transition">
                     <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 shadow-xs"></span> Surplus Ready
                   </span>
@@ -302,10 +304,10 @@ export function LandingPage() {
           <span className="text-xs font-black uppercase tracking-widest text-emerald-700 bg-emerald-100/80 px-3.5 py-1.5 rounded-full border border-emerald-300/50">
             End-to-End Coordination Flow
           </span>
-          <h2 className="font-display text-3xl sm:text-5xl font-black text-slate-900 tracking-tight">
+          <h2 className="font-display text-3xl sm:text-5xl font-black text-white tracking-tight">
             How The Rescue Engine Operates
           </h2>
-          <p className="text-slate-600 text-sm sm:text-base max-w-xl mx-auto">
+          <p className="text-slate-400 text-sm sm:text-base max-w-xl mx-auto">
             From commercial kitchen surplus to the plates of families in need, backed by digital health declarations and atomic reservation security.
           </p>
         </div>
@@ -316,8 +318,8 @@ export function LandingPage() {
             <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-[#047857] to-[#10b981] text-white flex items-center justify-center font-black text-base shadow-lg shadow-emerald-500/25 group-hover:scale-110 transition-transform">
               01
             </div>
-            <h3 className="font-display font-bold text-lg text-slate-900 group-hover:text-emerald-700 transition-colors">1. Donor Lists Food</h3>
-            <p className="text-xs text-slate-600 leading-relaxed font-normal">
+            <h3 className="font-display font-bold text-lg text-white group-hover:text-emerald-700 transition-colors">1. Donor Lists Food</h3>
+            <p className="text-xs text-slate-400 leading-relaxed font-normal">
               Commercial kitchens post batches with portion counts, temperature requirements, and safety compliance sign-offs.
             </p>
           </div>
@@ -327,8 +329,8 @@ export function LandingPage() {
             <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-[#10b981] to-[#06b6d4] text-white flex items-center justify-center font-black text-base shadow-lg shadow-cyan-500/25 group-hover:scale-110 transition-transform">
               02
             </div>
-            <h3 className="font-display font-bold text-lg text-slate-900 group-hover:text-cyan-700 transition-colors">2. Smart Matching</h3>
-            <p className="text-xs text-slate-600 leading-relaxed font-normal">
+            <h3 className="font-display font-bold text-lg text-white group-hover:text-cyan-700 transition-colors">2. Smart Matching</h3>
+            <p className="text-xs text-slate-400 leading-relaxed font-normal">
               Our intelligent engine scores local NGOs based on proximity, refrigerated storage capability, and urgent beneficiary demand.
             </p>
           </div>
@@ -338,8 +340,8 @@ export function LandingPage() {
             <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-[#f59e0b] to-[#d97706] text-white flex items-center justify-center font-black text-base shadow-lg shadow-amber-500/25 group-hover:scale-110 transition-transform">
               03
             </div>
-            <h3 className="font-display font-bold text-lg text-slate-900 group-hover:text-amber-700 transition-colors">3. Safe Reservation</h3>
-            <p className="text-xs text-slate-600 leading-relaxed font-normal">
+            <h3 className="font-display font-bold text-lg text-white group-hover:text-amber-700 transition-colors">3. Safe Reservation</h3>
+            <p className="text-xs text-slate-400 leading-relaxed font-normal">
               NGOs request meals. On donor approval, row-level locks instantly reserve portions, preventing race conditions or double-claims.
             </p>
           </div>
@@ -349,8 +351,8 @@ export function LandingPage() {
             <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-[#06b6d4] to-[#047857] text-white flex items-center justify-center font-black text-base shadow-lg shadow-teal-500/25 group-hover:scale-110 transition-transform">
               04
             </div>
-            <h3 className="font-display font-bold text-lg text-slate-900 group-hover:text-emerald-700 transition-colors">4. Courier Logistics</h3>
-            <p className="text-xs text-slate-600 leading-relaxed font-normal">
+            <h3 className="font-display font-bold text-lg text-white group-hover:text-emerald-700 transition-colors">4. Courier Logistics</h3>
+            <p className="text-xs text-slate-400 leading-relaxed font-normal">
               Volunteer dispatch drivers navigate with one-tap GPS, verify transport temperatures, and secure final delivery signoff.
             </p>
           </div>
@@ -365,7 +367,7 @@ export function LandingPage() {
               <span className="w-2 h-2 rounded-full bg-emerald-500 animate-ping" />
               Verified Active Feeds
             </div>
-            <h2 className="font-display text-2xl sm:text-4xl font-black text-slate-900 tracking-tight">
+            <h2 className="font-display text-2xl sm:text-4xl font-black text-white tracking-tight">
               Live Food Listings Awaiting Rescue
             </h2>
             <p className="text-xs sm:text-sm text-slate-500">
@@ -387,7 +389,7 @@ export function LandingPage() {
               key={d.id}
               className="glass-panel rounded-3xl border border-slate-200/90 shadow-md card-interactive shimmer-sweep-hover transition-all duration-300 overflow-hidden flex flex-col group"
             >
-              <div className="p-4 bg-gradient-to-r from-slate-50 to-emerald-50/40 border-b border-slate-100 flex items-center justify-between">
+              <div className="p-4 bg-gradient-to-r from-slate-50 to-emerald-50/40 border-b border-white/6 flex items-center justify-between">
                 <span className="px-3 py-1 rounded-full text-[11px] font-black bg-emerald-100 text-emerald-800 border border-emerald-300/60">
                   {d.category?.name || 'Cooked Feasts'}
                 </span>
@@ -403,13 +405,13 @@ export function LandingPage() {
 
               <div className="p-5 flex-1 flex flex-col justify-between space-y-4">
                 <div>
-                  <h3 className="font-display font-bold text-base text-slate-900 mb-1.5 group-hover:text-emerald-700 transition">
+                  <h3 className="font-display font-bold text-base text-white mb-1.5 group-hover:text-emerald-700 transition">
                     {d.title}
                   </h3>
                   <p className="text-xs text-slate-500 line-clamp-2 leading-relaxed">{d.description}</p>
                 </div>
 
-                <div className="bg-slate-50/80 p-3.5 rounded-2xl border border-slate-100 space-y-2 text-xs">
+                <div className="bg-slate-50/80 p-3.5 rounded-2xl border border-white/6 space-y-2 text-xs">
                   <div className="flex justify-between items-center">
                     <span className="text-slate-500 font-medium">Available:</span>
                     <span className="font-extrabold text-emerald-700 text-sm font-mono-numbers">
@@ -418,13 +420,13 @@ export function LandingPage() {
                   </div>
                   <div className="flex justify-between items-center">
                     <span className="text-slate-500 font-medium">Storage:</span>
-                    <span className="font-semibold text-slate-800 text-[11px]">
+                    <span className="font-semibold text-slate-100 text-[11px]">
                       {d.storage_requirement_display || d.storage_requirement}
                     </span>
                   </div>
                   <div className="flex justify-between items-center">
                     <span className="text-slate-500 font-medium">Location:</span>
-                    <span className="font-semibold text-slate-800 truncate max-w-[140px] text-[11px]">
+                    <span className="font-semibold text-slate-100 truncate max-w-[140px] text-[11px]">
                       {d.pickup_address}
                     </span>
                   </div>
@@ -449,7 +451,7 @@ export function LandingPage() {
             <HelpCircle className="w-3.5 h-3.5" />
             <span>Common Questions & Answers</span>
           </div>
-          <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900">
+          <h2 className="text-2xl sm:text-3xl font-extrabold text-white">
             Frequently Asked Questions
           </h2>
           <p className="text-xs sm:text-sm text-slate-500">
@@ -482,7 +484,7 @@ export function LandingPage() {
             >
               <button
                 onClick={() => setOpenFaq(openFaq === idx ? null : idx)}
-                className="w-full p-4 sm:p-5 text-left flex items-center justify-between gap-4 font-bold text-xs sm:text-sm text-slate-900 hover:bg-slate-50/60 transition cursor-pointer"
+                className="w-full p-4 sm:p-5 text-left flex items-center justify-between gap-4 font-bold text-xs sm:text-sm text-white hover:bg-white/5/60 transition cursor-pointer"
               >
                 <span>{faq.q}</span>
                 <ChevronDown
@@ -500,7 +502,7 @@ export function LandingPage() {
                     transition={{ duration: 0.2 }}
                     className="overflow-hidden"
                   >
-                    <div className="p-4 sm:p-5 pt-0 text-xs text-slate-600 leading-relaxed border-t border-slate-100 bg-white/40">
+                    <div className="p-4 sm:p-5 pt-0 text-xs text-slate-400 leading-relaxed border-t border-white/6 bg-white/40">
                       {faq.a}
                     </div>
                   </motion.div>

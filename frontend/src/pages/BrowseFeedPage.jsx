@@ -175,7 +175,7 @@ export function BrowseFeedPage() {
             <span className="w-2 h-2 rounded-full bg-emerald-500 animate-ping" />
             Live Hyperlocal Network
           </div>
-          <h1 className="font-display text-3xl sm:text-4xl font-black text-slate-900 tracking-tight">
+          <h1 className="font-display text-3xl sm:text-4xl font-black text-white tracking-tight">
             Surplus Food Rescue Feed
           </h1>
           <p className="text-xs sm:text-sm text-slate-500 max-w-xl">
@@ -189,8 +189,8 @@ export function BrowseFeedPage() {
             onClick={() => setViewMode('grid')}
             className={`px-4 py-2 rounded-xl text-xs font-black flex items-center gap-2 transition-all cursor-pointer ${
               viewMode === 'grid'
-                ? 'bg-white text-emerald-800 shadow-xs border border-slate-200/60 scale-[1.02]'
-                : 'text-slate-600 hover:text-slate-900'
+                ? 'bg-[#111827] text-emerald-800 shadow-xs border border-slate-200/60 scale-[1.02]'
+                : 'text-slate-400 hover:text-white'
             }`}
           >
             <Grid className="w-4 h-4" />
@@ -200,8 +200,8 @@ export function BrowseFeedPage() {
             onClick={() => setViewMode('map')}
             className={`px-4 py-2 rounded-xl text-xs font-black flex items-center gap-2 transition-all cursor-pointer ${
               viewMode === 'map'
-                ? 'bg-white text-emerald-800 shadow-xs border border-slate-200/60 scale-[1.02]'
-                : 'text-slate-600 hover:text-slate-900'
+                ? 'bg-[#111827] text-emerald-800 shadow-xs border border-slate-200/60 scale-[1.02]'
+                : 'text-slate-400 hover:text-white'
             }`}
           >
             <MapIcon className="w-4 h-4" />
@@ -221,7 +221,7 @@ export function BrowseFeedPage() {
               placeholder="Search dishes, venues, kitchens..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full pl-10 pr-3.5 py-2.5 text-xs font-medium bg-slate-50/80 border border-slate-200 rounded-2xl focus:bg-white focus:ring-2 focus:ring-emerald-500/30 focus:border-emerald-500 transition-all outline-none"
+              className="w-full pl-10 pr-3.5 py-2.5 text-xs font-medium bg-slate-50/80 border border-white/10 rounded-2xl focus:bg-[#111827] focus:ring-2 focus:ring-emerald-500/30 focus:border-emerald-500 transition-all outline-none"
             />
           </div>
 
@@ -230,7 +230,7 @@ export function BrowseFeedPage() {
             <select
               value={selectedCategory}
               onChange={(e) => setSelectedCategory(e.target.value)}
-              className="w-full px-3.5 py-2.5 text-xs font-bold bg-slate-50/80 border border-slate-200 rounded-2xl focus:bg-white focus:ring-2 focus:ring-emerald-500/30 focus:border-emerald-500 transition-all outline-none text-slate-700 cursor-pointer"
+              className="w-full px-3.5 py-2.5 text-xs font-bold bg-slate-50/80 border border-white/10 rounded-2xl focus:bg-[#111827] focus:ring-2 focus:ring-emerald-500/30 focus:border-emerald-500 transition-all outline-none text-slate-300 cursor-pointer"
             >
               <option value="">All Food Categories</option>
               {categories.map((c) => (
@@ -246,7 +246,7 @@ export function BrowseFeedPage() {
             <select
               value={selectedDietary}
               onChange={(e) => setSelectedDietary(e.target.value)}
-              className="w-full px-3.5 py-2.5 text-xs font-bold bg-slate-50/80 border border-slate-200 rounded-2xl focus:bg-white focus:ring-2 focus:ring-emerald-500/30 focus:border-emerald-500 transition-all outline-none text-slate-700 cursor-pointer"
+              className="w-full px-3.5 py-2.5 text-xs font-bold bg-slate-50/80 border border-white/10 rounded-2xl focus:bg-[#111827] focus:ring-2 focus:ring-emerald-500/30 focus:border-emerald-500 transition-all outline-none text-slate-300 cursor-pointer"
             >
               <option value="">All Dietary Types</option>
               <option value="VEGETARIAN">Vegetarian Only</option>
@@ -261,7 +261,7 @@ export function BrowseFeedPage() {
             <select
               value={selectedStorage}
               onChange={(e) => setSelectedStorage(e.target.value)}
-              className="w-full px-3.5 py-2.5 text-xs font-bold bg-slate-50/80 border border-slate-200 rounded-2xl focus:bg-white focus:ring-2 focus:ring-emerald-500/30 focus:border-emerald-500 transition-all outline-none text-slate-700 cursor-pointer"
+              className="w-full px-3.5 py-2.5 text-xs font-bold bg-slate-50/80 border border-white/10 rounded-2xl focus:bg-[#111827] focus:ring-2 focus:ring-emerald-500/30 focus:border-emerald-500 transition-all outline-none text-slate-300 cursor-pointer"
             >
               <option value="">All Storage Types</option>
               <option value="ROOM_TEMPERATURE">Room Temperature</option>
@@ -273,7 +273,7 @@ export function BrowseFeedPage() {
         </div>
 
         {/* Quick Filter Chips & Sort Controls */}
-        <div className="pt-3 border-t border-slate-100 flex flex-wrap items-center justify-between gap-3">
+        <div className="pt-3 border-t border-white/6 flex flex-wrap items-center justify-between gap-3">
           <div className="flex flex-wrap items-center gap-2">
             <span className="text-[11px] font-black text-slate-400 uppercase tracking-widest mr-1">
               Filter:
@@ -283,7 +283,7 @@ export function BrowseFeedPage() {
               className={`px-3 py-1.5 rounded-xl text-xs font-extrabold transition-all flex items-center gap-1.5 cursor-pointer ${
                 urgentOnly
                   ? 'bg-gradient-to-r from-amber-500 to-rose-500 text-white shadow-md shadow-amber-500/20'
-                  : 'bg-slate-100 hover:bg-slate-200/80 text-slate-700'
+                  : 'bg-[#141c25] hover:bg-slate-200/80 text-slate-300'
               }`}
             >
               <Flame className="w-3.5 h-3.5 text-amber-300" />
@@ -294,7 +294,7 @@ export function BrowseFeedPage() {
               className={`px-3 py-1.5 rounded-xl text-xs font-extrabold transition-all cursor-pointer ${
                 selectedDietary === 'VEGETARIAN'
                   ? 'bg-emerald-600 text-white shadow-md shadow-emerald-600/20'
-                  : 'bg-slate-100 hover:bg-slate-200/80 text-slate-700'
+                  : 'bg-[#141c25] hover:bg-slate-200/80 text-slate-300'
               }`}
             >
               🌱 Pure Veg
@@ -304,7 +304,7 @@ export function BrowseFeedPage() {
               className={`px-3 py-1.5 rounded-xl text-xs font-extrabold transition-all cursor-pointer ${
                 selectedStorage === 'REFRIGERATED'
                   ? 'bg-blue-600 text-white shadow-md shadow-blue-600/20'
-                  : 'bg-slate-100 hover:bg-slate-200/80 text-slate-700'
+                  : 'bg-[#141c25] hover:bg-slate-200/80 text-slate-300'
               }`}
             >
               ❄️ Cold Chain
@@ -331,7 +331,7 @@ export function BrowseFeedPage() {
             <select
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value)}
-              className="px-3 py-1.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-bold text-slate-800 focus:outline-none cursor-pointer"
+              className="px-3 py-1.5 bg-[#0f1923] border border-white/10 rounded-xl text-xs font-bold text-slate-100 focus:outline-none cursor-pointer"
             >
               <option value="urgency">Urgency (Expiring First)</option>
               <option value="quantity">Largest Quantity</option>
@@ -364,11 +364,11 @@ export function BrowseFeedPage() {
               <p className="text-xs font-bold text-slate-500">Scanning real-time food rescue inventory...</p>
             </div>
           ) : displayedDonations.length === 0 ? (
-            <div className="text-center py-20 bg-white/90 backdrop-blur-md rounded-3xl border border-slate-200/80 p-8 space-y-4 shadow-sm">
-              <div className="w-14 h-14 rounded-2xl bg-slate-100 flex items-center justify-center mx-auto text-slate-400">
+            <div className="text-center py-20 bg-[#0d1117]/90 backdrop-blur-md rounded-3xl border border-slate-200/80 p-8 space-y-4 shadow-sm">
+              <div className="w-14 h-14 rounded-2xl bg-[#141c25] flex items-center justify-center mx-auto text-slate-400">
                 <Utensils className="w-7 h-7" />
               </div>
-              <h3 className="font-display font-black text-slate-800 text-lg">No Matching Donations Found</h3>
+              <h3 className="font-display font-black text-slate-100 text-lg">No Matching Donations Found</h3>
               <p className="text-xs text-slate-500 max-w-sm mx-auto leading-relaxed">
                 No active listings match the selected filters. Try clearing some criteria or search queries.
               </p>
@@ -397,13 +397,13 @@ export function BrowseFeedPage() {
                 >
                   <div>
                     {/* Top Tag Header */}
-                    <div className="p-4 bg-gradient-to-r from-slate-50 to-emerald-50/30 border-b border-slate-100 flex items-center justify-between">
+                    <div className="p-4 bg-gradient-to-r from-slate-50 to-emerald-50/30 border-b border-white/6 flex items-center justify-between">
                       <span className="px-3 py-1 rounded-full text-[11px] font-black bg-emerald-100 text-emerald-800 border border-emerald-300/60">
                         {d.category?.name || 'Cooked Meals'}
                       </span>
                       <div className="flex items-center gap-2">
                         {d.latitude && d.longitude && calculateDistance(d.latitude, d.longitude) && (
-                          <span className="inline-flex items-center gap-1 text-[11px] font-bold text-slate-600 bg-white px-2.5 py-0.5 rounded-full border border-slate-200 shadow-2xs font-mono-numbers">
+                          <span className="inline-flex items-center gap-1 text-[11px] font-bold text-slate-400 bg-[#111827] px-2.5 py-0.5 rounded-full border border-white/10 shadow-2xs font-mono-numbers">
                             <MapPin className="w-3 h-3 text-emerald-600" />
                             {calculateDistance(d.latitude, d.longitude)} km
                           </span>
@@ -422,13 +422,13 @@ export function BrowseFeedPage() {
                     {/* Content */}
                     <div className="p-6 space-y-4">
                       <div>
-                        <h3 className="font-display font-bold text-lg text-slate-900 leading-snug group-hover:text-emerald-700 transition">
+                        <h3 className="font-display font-bold text-lg text-white leading-snug group-hover:text-emerald-700 transition">
                           {d.title}
                         </h3>
                         <p className="text-xs text-slate-500 mt-1 line-clamp-2 leading-relaxed">{d.description}</p>
                       </div>
 
-                      <div className="bg-slate-50/80 p-3.5 rounded-2xl border border-slate-100 space-y-2 text-xs">
+                      <div className="bg-slate-50/80 p-3.5 rounded-2xl border border-white/6 space-y-2 text-xs">
                         <div className="flex justify-between items-center">
                           <span className="text-slate-500 font-medium">Available:</span>
                           <span className="font-black text-emerald-700 text-sm font-mono-numbers">
@@ -437,25 +437,25 @@ export function BrowseFeedPage() {
                         </div>
                         <div className="flex justify-between items-center">
                           <span className="text-slate-500 font-medium">Storage:</span>
-                          <span className="font-bold text-slate-800 text-[11px]">
+                          <span className="font-bold text-slate-100 text-[11px]">
                             {d.storage_requirement_display || d.storage_requirement}
                           </span>
                         </div>
                         <div className="flex justify-between items-center">
                           <span className="text-slate-500 font-medium">Dietary:</span>
-                          <span className="font-bold text-slate-800 text-[11px]">
+                          <span className="font-bold text-slate-100 text-[11px]">
                             {d.dietary_type_display || d.dietary_type}
                           </span>
                         </div>
                         <div className="flex justify-between items-center">
                           <span className="text-slate-500 font-medium">Allergens:</span>
-                          <span className="font-medium text-slate-700 truncate max-w-[150px] text-[11px]">
+                          <span className="font-medium text-slate-300 truncate max-w-[150px] text-[11px]">
                             {d.allergens || 'None declared'}
                           </span>
                         </div>
                         <div className="flex justify-between items-center pt-1.5 border-t border-slate-200/60">
                           <span className="text-slate-500 font-medium">Location:</span>
-                          <span className="font-bold text-slate-800 truncate max-w-[150px] text-[11px]">
+                          <span className="font-bold text-slate-100 truncate max-w-[150px] text-[11px]">
                             {d.pickup_address}
                           </span>
                         </div>
@@ -463,7 +463,7 @@ export function BrowseFeedPage() {
 
                       {/* Donor Attribution */}
                       <div className="flex items-center justify-between text-[11px] text-slate-500 pt-1">
-                        <span>Donor: <strong className="text-slate-800">{d.donor_organization_name || 'Verified Donor'}</strong></span>
+                        <span>Donor: <strong className="text-slate-100">{d.donor_organization_name || 'Verified Donor'}</strong></span>
                         <span className="flex items-center gap-1 text-emerald-600 font-bold">
                           <ShieldCheck className="w-3.5 h-3.5" />
                           Hygiene Verified
@@ -496,19 +496,19 @@ export function BrowseFeedPage() {
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.95 }}
-              className="bg-white rounded-2xl shadow-2xl max-w-lg w-full border border-slate-200 overflow-hidden"
+              className="bg-[#111827] rounded-2xl shadow-2xl max-w-lg w-full border border-white/10 overflow-hidden"
             >
               {/* Header */}
-              <div className="p-5 border-b border-slate-100 flex items-center justify-between bg-slate-50">
+              <div className="p-5 border-b border-white/6 flex items-center justify-between bg-[#0f1923]">
                 <div>
                   <span className="text-[10px] font-bold uppercase tracking-wider text-emerald-600">
                     NGO Food Allocation
                   </span>
-                  <h3 className="font-bold text-slate-900 text-base">Request Food Donation</h3>
+                  <h3 className="font-bold text-white text-base">Request Food Donation</h3>
                 </div>
                 <button
                   onClick={() => setSelectedDonation(null)}
-                  className="p-1 rounded-lg text-slate-400 hover:text-slate-600 hover:bg-slate-200/50 transition cursor-pointer"
+                  className="p-1 rounded-lg text-slate-400 hover:text-slate-400 hover:bg-slate-200/50 transition cursor-pointer"
                 >
                   <X className="w-5 h-5" />
                 </button>
@@ -520,15 +520,15 @@ export function BrowseFeedPage() {
                     <CheckCircle2 className="w-6 h-6" />
                   </div>
                   <div>
-                    <h4 className="font-bold text-slate-900 text-lg">Request Submitted Successfully!</h4>
-                    <p className="text-xs text-slate-600 mt-1 max-w-sm mx-auto">
+                    <h4 className="font-bold text-white text-lg">Request Submitted Successfully!</h4>
+                    <p className="text-xs text-slate-400 mt-1 max-w-sm mx-auto">
                       The donor has received your request. Upon acceptance, the requested quantity will be reserved and a volunteer pickup will be scheduled.
                     </p>
                   </div>
                   <div className="pt-2 flex justify-center gap-3">
                     <button
                       onClick={() => setSelectedDonation(null)}
-                      className="px-4 py-2 text-xs font-bold bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl transition cursor-pointer"
+                      className="px-4 py-2 text-xs font-bold bg-[#141c25] hover:bg-slate-200 text-slate-300 rounded-xl transition cursor-pointer"
                     >
                       Close
                     </button>
@@ -542,13 +542,13 @@ export function BrowseFeedPage() {
                 </div>
               ) : (
                 <form onSubmit={handleSubmitRequest} className="p-6 space-y-4">
-                  <div className="bg-slate-50 p-3 rounded-xl border border-slate-100 space-y-1 text-xs">
-                    <div className="font-bold text-slate-800">{selectedDonation.title}</div>
+                  <div className="bg-[#0f1923] p-3 rounded-xl border border-white/6 space-y-1 text-xs">
+                    <div className="font-bold text-slate-100">{selectedDonation.title}</div>
                     <div className="text-slate-500">
                       Available Stock: <strong className="text-emerald-700">{selectedDonation.available_quantity} {selectedDonation.unit}</strong>
                     </div>
                     <div className="text-slate-500">
-                      Pickup Address: <strong className="text-slate-700">{selectedDonation.pickup_address}</strong>
+                      Pickup Address: <strong className="text-slate-300">{selectedDonation.pickup_address}</strong>
                     </div>
                   </div>
 
@@ -560,7 +560,7 @@ export function BrowseFeedPage() {
                   )}
 
                   <div>
-                    <label className="block text-xs font-bold text-slate-700 mb-1">
+                    <label className="block text-xs font-bold text-slate-300 mb-1">
                       Quantity to Request ({selectedDonation.unit})
                     </label>
                     <input
@@ -571,7 +571,7 @@ export function BrowseFeedPage() {
                       value={requestQty}
                       onChange={(e) => setRequestQty(e.target.value)}
                       required
-                      className="w-full px-3 py-2 text-xs bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-emerald-500 transition outline-none"
+                      className="w-full px-3 py-2 text-xs bg-[#0f1923] border border-white/10 rounded-xl focus:bg-[#111827] focus:ring-2 focus:ring-emerald-500 transition outline-none"
                     />
                     <p className="text-[11px] text-slate-400 mt-1">
                       You can request partial amounts or the full batch.
@@ -579,7 +579,7 @@ export function BrowseFeedPage() {
                   </div>
 
                   <div>
-                    <label className="block text-xs font-bold text-slate-700 mb-1">
+                    <label className="block text-xs font-bold text-slate-300 mb-1">
                       Beneficiary & Distribution Notes (Optional)
                     </label>
                     <textarea
@@ -587,15 +587,15 @@ export function BrowseFeedPage() {
                       value={beneficiaryNotes}
                       onChange={(e) => setBeneficiaryNotes(e.target.value)}
                       placeholder="e.g. For dinner distribution at Kurla shelter home for 40 children..."
-                      className="w-full px-3 py-2 text-xs bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-emerald-500 transition outline-none"
+                      className="w-full px-3 py-2 text-xs bg-[#0f1923] border border-white/10 rounded-xl focus:bg-[#111827] focus:ring-2 focus:ring-emerald-500 transition outline-none"
                     />
                   </div>
 
-                  <div className="pt-2 flex justify-end gap-3 border-t border-slate-100">
+                  <div className="pt-2 flex justify-end gap-3 border-t border-white/6">
                     <button
                       type="button"
                       onClick={() => setSelectedDonation(null)}
-                      className="px-4 py-2 text-xs font-semibold text-slate-600 hover:text-slate-800 rounded-xl transition cursor-pointer"
+                      className="px-4 py-2 text-xs font-semibold text-slate-400 hover:text-slate-100 rounded-xl transition cursor-pointer"
                     >
                       Cancel
                     </button>

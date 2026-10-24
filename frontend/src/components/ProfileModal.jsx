@@ -72,16 +72,16 @@ export function ProfileModal({ isOpen, onClose }) {
           initial={{ opacity: 0, scale: 0.95, y: 15 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.95, y: 10 }}
-          className="bg-white rounded-3xl shadow-2xl max-w-xl w-full max-h-[90vh] flex flex-col overflow-hidden border border-slate-200"
+          className="bg-[#111827] rounded-3xl shadow-2xl max-w-xl w-full max-h-[90vh] flex flex-col overflow-hidden border border-white/10"
         >
           {/* Header */}
-          <div className="p-6 border-b border-slate-100 flex items-center justify-between bg-slate-50">
+          <div className="p-6 border-b border-white/6 flex items-center justify-between bg-[#0f1923]">
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 rounded-2xl bg-emerald-100 text-emerald-800 flex items-center justify-center font-bold">
                 <User className="w-5 h-5" />
               </div>
               <div>
-                <h3 className="font-extrabold text-base text-slate-900">Account Profile & Settings</h3>
+                <h3 className="font-extrabold text-base text-white">Account Profile & Settings</h3>
                 <p className="text-xs text-slate-500">
                   Manage your organization credentials, contact details, and rescue capabilities.
                 </p>
@@ -89,7 +89,7 @@ export function ProfileModal({ isOpen, onClose }) {
             </div>
             <button
               onClick={onClose}
-              className="p-2 text-slate-400 hover:text-slate-700 hover:bg-slate-200/60 rounded-xl transition cursor-pointer"
+              className="p-2 text-slate-400 hover:text-slate-300 hover:bg-slate-200/60 rounded-xl transition cursor-pointer"
             >
               <X className="w-5 h-5" />
             </button>
@@ -98,10 +98,10 @@ export function ProfileModal({ isOpen, onClose }) {
           {/* Form */}
           <form onSubmit={handleSave} className="p-6 overflow-y-auto space-y-5 text-xs flex-1">
             {/* Account Status Badge */}
-            <div className="p-3.5 bg-slate-50 rounded-2xl border border-slate-100 flex items-center justify-between">
+            <div className="p-3.5 bg-[#0f1923] rounded-2xl border border-white/6 flex items-center justify-between">
               <div>
                 <span className="text-slate-400 font-medium">Logged in as</span>
-                <p className="font-bold text-slate-800 text-sm">{user.email}</p>
+                <p className="font-bold text-slate-100 text-sm">{user.email}</p>
                 <span className="text-[10px] text-slate-400">Username: @{user.username}</span>
               </div>
               <div className="text-right">
@@ -117,7 +117,7 @@ export function ProfileModal({ isOpen, onClose }) {
 
             {/* Direct Contact Phone */}
             <div>
-              <label className="block font-bold text-slate-700 mb-1 flex items-center gap-1">
+              <label className="block font-bold text-slate-300 mb-1 flex items-center gap-1">
                 <Phone className="w-3.5 h-3.5 text-slate-400" />
                 <span>Primary Contact Phone Number</span>
               </label>
@@ -126,35 +126,35 @@ export function ProfileModal({ isOpen, onClose }) {
                 value={phoneNumber}
                 onChange={(e) => setPhoneNumber(e.target.value)}
                 placeholder="+91 98000 12345"
-                className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-emerald-500 outline-none transition"
+                className="w-full px-3 py-2 bg-[#0f1923] border border-white/10 rounded-xl focus:bg-[#111827] focus:ring-2 focus:ring-emerald-500 outline-none transition"
               />
             </div>
 
             {/* Role Specific Configuration */}
             {user.role === 'DONOR' && (
-              <div className="space-y-4 pt-2 border-t border-slate-100">
-                <h4 className="font-extrabold text-slate-800 flex items-center gap-1.5">
+              <div className="space-y-4 pt-2 border-t border-white/6">
+                <h4 className="font-extrabold text-slate-100 flex items-center gap-1.5">
                   <Building className="w-4 h-4 text-emerald-600" />
                   <span>Food Donor Kitchen Profile</span>
                 </h4>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div>
-                    <label className="block font-semibold text-slate-600 mb-1">Organization / Brand Name</label>
+                    <label className="block font-semibold text-slate-400 mb-1">Organization / Brand Name</label>
                     <input
                       type="text"
                       value={profileData.organization_name}
                       onChange={(e) => handleProfileFieldChange('organization_name', e.target.value)}
-                      className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-emerald-500 outline-none transition"
+                      className="w-full px-3 py-2 bg-[#0f1923] border border-white/10 rounded-xl focus:bg-[#111827] focus:ring-2 focus:ring-emerald-500 outline-none transition"
                     />
                   </div>
 
                   <div>
-                    <label className="block font-semibold text-slate-600 mb-1">Establishment Type</label>
+                    <label className="block font-semibold text-slate-400 mb-1">Establishment Type</label>
                     <select
                       value={profileData.donor_type}
                       onChange={(e) => handleProfileFieldChange('donor_type', e.target.value)}
-                      className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-emerald-500 outline-none transition"
+                      className="w-full px-3 py-2 bg-[#0f1923] border border-white/10 rounded-xl focus:bg-[#111827] focus:ring-2 focus:ring-emerald-500 outline-none transition"
                     >
                       <option value="RESTAURANT">Restaurant</option>
                       <option value="CATERER">Banquet Caterer</option>
@@ -168,27 +168,27 @@ export function ProfileModal({ isOpen, onClose }) {
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div>
-                    <label className="block font-semibold text-slate-600 mb-1">FSSAI / Food License</label>
+                    <label className="block font-semibold text-slate-400 mb-1">FSSAI / Food License</label>
                     <input
                       type="text"
                       value={profileData.license_number}
                       onChange={(e) => handleProfileFieldChange('license_number', e.target.value)}
-                      className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-emerald-500 outline-none transition"
+                      className="w-full px-3 py-2 bg-[#0f1923] border border-white/10 rounded-xl focus:bg-[#111827] focus:ring-2 focus:ring-emerald-500 outline-none transition"
                     />
                   </div>
                   <div>
-                    <label className="block font-semibold text-slate-600 mb-1">City / Region</label>
+                    <label className="block font-semibold text-slate-400 mb-1">City / Region</label>
                     <input
                       type="text"
                       value={profileData.city}
                       onChange={(e) => handleProfileFieldChange('city', e.target.value)}
-                      className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-emerald-500 outline-none transition"
+                      className="w-full px-3 py-2 bg-[#0f1923] border border-white/10 rounded-xl focus:bg-[#111827] focus:ring-2 focus:ring-emerald-500 outline-none transition"
                     />
                   </div>
                 </div>
 
                 <div>
-                  <label className="block font-semibold text-slate-600 mb-1 flex items-center gap-1">
+                  <label className="block font-semibold text-slate-400 mb-1 flex items-center gap-1">
                     <MapPin className="w-3.5 h-3.5 text-slate-400" />
                     <span>Kitchen / Dispatch Pickup Address</span>
                   </label>
@@ -196,49 +196,49 @@ export function ProfileModal({ isOpen, onClose }) {
                     type="text"
                     value={profileData.address}
                     onChange={(e) => handleProfileFieldChange('address', e.target.value)}
-                    className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-emerald-500 outline-none transition"
+                    className="w-full px-3 py-2 bg-[#0f1923] border border-white/10 rounded-xl focus:bg-[#111827] focus:ring-2 focus:ring-emerald-500 outline-none transition"
                   />
                 </div>
               </div>
             )}
 
             {user.role === 'NGO' && (
-              <div className="space-y-4 pt-2 border-t border-slate-100">
-                <h4 className="font-extrabold text-slate-800 flex items-center gap-1.5">
+              <div className="space-y-4 pt-2 border-t border-white/6">
+                <h4 className="font-extrabold text-slate-100 flex items-center gap-1.5">
                   <HeartHandshake className="w-4 h-4 text-blue-600" />
                   <span>NGO / Shelter Profile</span>
                 </h4>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div>
-                    <label className="block font-semibold text-slate-600 mb-1">Organization / Shelter Name</label>
+                    <label className="block font-semibold text-slate-400 mb-1">Organization / Shelter Name</label>
                     <input
                       type="text"
                       value={profileData.organization_name}
                       onChange={(e) => handleProfileFieldChange('organization_name', e.target.value)}
-                      className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-blue-500 outline-none transition"
+                      className="w-full px-3 py-2 bg-[#0f1923] border border-white/10 rounded-xl focus:bg-[#111827] focus:ring-2 focus:ring-blue-500 outline-none transition"
                     />
                   </div>
 
                   <div>
-                    <label className="block font-semibold text-slate-600 mb-1">Registration / 80G Number</label>
+                    <label className="block font-semibold text-slate-400 mb-1">Registration / 80G Number</label>
                     <input
                       type="text"
                       value={profileData.registration_number}
                       onChange={(e) => handleProfileFieldChange('registration_number', e.target.value)}
-                      className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-blue-500 outline-none transition"
+                      className="w-full px-3 py-2 bg-[#0f1923] border border-white/10 rounded-xl focus:bg-[#111827] focus:ring-2 focus:ring-blue-500 outline-none transition"
                     />
                   </div>
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div>
-                    <label className="block font-semibold text-slate-600 mb-1">Daily Meal Intake Capacity</label>
+                    <label className="block font-semibold text-slate-400 mb-1">Daily Meal Intake Capacity</label>
                     <input
                       type="number"
                       value={profileData.daily_capacity_meals}
                       onChange={(e) => handleProfileFieldChange('daily_capacity_meals', parseInt(e.target.value) || 0)}
-                      className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-blue-500 outline-none transition"
+                      className="w-full px-3 py-2 bg-[#0f1923] border border-white/10 rounded-xl focus:bg-[#111827] focus:ring-2 focus:ring-blue-500 outline-none transition"
                     />
                   </div>
 
@@ -250,13 +250,13 @@ export function ProfileModal({ isOpen, onClose }) {
                         onChange={(e) => handleProfileFieldChange('cold_storage_available', e.target.checked)}
                         className="w-4 h-4 accent-blue-600 rounded"
                       />
-                      <span className="font-semibold text-slate-700">Equipped with Cold Storage ❄️</span>
+                      <span className="font-semibold text-slate-300">Equipped with Cold Storage ❄️</span>
                     </label>
                   </div>
                 </div>
 
                 <div>
-                  <label className="block font-semibold text-slate-600 mb-1 flex items-center gap-1">
+                  <label className="block font-semibold text-slate-400 mb-1 flex items-center gap-1">
                     <MapPin className="w-3.5 h-3.5 text-slate-400" />
                     <span>Shelter Delivery Address</span>
                   </label>
@@ -264,36 +264,36 @@ export function ProfileModal({ isOpen, onClose }) {
                     type="text"
                     value={profileData.address}
                     onChange={(e) => handleProfileFieldChange('address', e.target.value)}
-                    className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-blue-500 outline-none transition"
+                    className="w-full px-3 py-2 bg-[#0f1923] border border-white/10 rounded-xl focus:bg-[#111827] focus:ring-2 focus:ring-blue-500 outline-none transition"
                   />
                 </div>
               </div>
             )}
 
             {user.role === 'VOLUNTEER' && (
-              <div className="space-y-4 pt-2 border-t border-slate-100">
-                <h4 className="font-extrabold text-slate-800 flex items-center gap-1.5">
+              <div className="space-y-4 pt-2 border-t border-white/6">
+                <h4 className="font-extrabold text-slate-100 flex items-center gap-1.5">
                   <Truck className="w-4 h-4 text-amber-600" />
                   <span>Courier & Transport Capabilities</span>
                 </h4>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div>
-                    <label className="block font-semibold text-slate-600 mb-1">Volunteer Full Name</label>
+                    <label className="block font-semibold text-slate-400 mb-1">Volunteer Full Name</label>
                     <input
                       type="text"
                       value={profileData.full_name}
                       onChange={(e) => handleProfileFieldChange('full_name', e.target.value)}
-                      className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-amber-500 outline-none transition"
+                      className="w-full px-3 py-2 bg-[#0f1923] border border-white/10 rounded-xl focus:bg-[#111827] focus:ring-2 focus:ring-amber-500 outline-none transition"
                     />
                   </div>
 
                   <div>
-                    <label className="block font-semibold text-slate-600 mb-1">Vehicle Mode</label>
+                    <label className="block font-semibold text-slate-400 mb-1">Vehicle Mode</label>
                     <select
                       value={profileData.vehicle_type}
                       onChange={(e) => handleProfileFieldChange('vehicle_type', e.target.value)}
-                      className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-amber-500 outline-none transition"
+                      className="w-full px-3 py-2 bg-[#0f1923] border border-white/10 rounded-xl focus:bg-[#111827] focus:ring-2 focus:ring-amber-500 outline-none transition"
                     >
                       <option value="MOTORCYCLE">Motorcycle / Scooter</option>
                       <option value="BICYCLE">Bicycle</option>
@@ -305,23 +305,23 @@ export function ProfileModal({ isOpen, onClose }) {
                 </div>
 
                 <div>
-                  <label className="block font-semibold text-slate-600 mb-1">Max Transport Payload (kg)</label>
+                  <label className="block font-semibold text-slate-400 mb-1">Max Transport Payload (kg)</label>
                   <input
                     type="number"
                     value={profileData.max_transport_capacity_kg}
                     onChange={(e) => handleProfileFieldChange('max_transport_capacity_kg', parseFloat(e.target.value) || 0)}
-                    className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-amber-500 outline-none transition"
+                    className="w-full px-3 py-2 bg-[#0f1923] border border-white/10 rounded-xl focus:bg-[#111827] focus:ring-2 focus:ring-amber-500 outline-none transition"
                   />
                 </div>
               </div>
             )}
 
             {/* Footer Buttons */}
-            <div className="pt-4 border-t border-slate-100 flex items-center justify-end gap-2">
+            <div className="pt-4 border-t border-white/6 flex items-center justify-end gap-2">
               <button
                 type="button"
                 onClick={onClose}
-                className="px-4 py-2 rounded-xl text-slate-600 hover:bg-slate-100 font-semibold transition cursor-pointer"
+                className="px-4 py-2 rounded-xl text-slate-400 hover:bg-[#141c25] font-semibold transition cursor-pointer"
               >
                 Cancel
               </button>

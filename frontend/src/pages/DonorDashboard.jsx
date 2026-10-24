@@ -286,9 +286,9 @@ export function DonorDashboard() {
               <span className="w-2 h-2 rounded-full bg-emerald-500 animate-ping" />
               Donor Operational Console
             </span>
-            <span className="text-xs font-bold text-slate-500 bg-slate-100 px-2.5 py-0.5 rounded-full">{user?.donor_profile?.organization_name || 'Verified Kitchen'}</span>
+            <span className="text-xs font-bold text-slate-500 bg-[#141c25] px-2.5 py-0.5 rounded-full">{user?.donor_profile?.organization_name || 'Verified Kitchen'}</span>
           </div>
-          <h1 className="font-display text-3xl sm:text-4xl font-black text-slate-900 tracking-tight">
+          <h1 className="font-display text-3xl sm:text-4xl font-black text-white tracking-tight">
             Kitchen Surplus & Dispatch Hub
           </h1>
           <p className="text-xs sm:text-sm text-slate-500 max-w-xl">
@@ -321,7 +321,7 @@ export function DonorDashboard() {
 
         <div className="glass-panel p-6 rounded-3xl border border-slate-200/80 shadow-md card-interactive shimmer-sweep-hover space-y-1 group">
           <p className="text-xs font-extrabold uppercase tracking-widest text-slate-400">Total Batches</p>
-          <p className="font-display text-3xl sm:text-4xl font-black text-slate-900 mt-1 font-mono-numbers">{myDonations.length}</p>
+          <p className="font-display text-3xl sm:text-4xl font-black text-white mt-1 font-mono-numbers">{myDonations.length}</p>
           <p className="text-[11px] text-slate-500 font-medium">Lifetime rescue postings</p>
         </div>
 
@@ -336,10 +336,10 @@ export function DonorDashboard() {
       </div>
 
       {/* Incoming Requests Section */}
-      <div className="bg-white rounded-3xl border border-slate-200 shadow-xs overflow-hidden">
-        <div className="p-5 border-b border-slate-100 flex items-center justify-between bg-slate-50/50">
+      <div className="bg-[#111827] rounded-3xl border border-white/10 shadow-xs overflow-hidden">
+        <div className="p-5 border-b border-white/6 flex items-center justify-between bg-slate-50/50">
           <div>
-            <h2 className="font-extrabold text-base text-slate-900">
+            <h2 className="font-extrabold text-base text-white">
               Incoming NGO Allocation Requests ({pendingRequests.length} Pending)
             </h2>
             <p className="text-xs text-slate-500">
@@ -363,12 +363,12 @@ export function DonorDashboard() {
                 >
                   <div className="space-y-1">
                     <div className="flex items-center gap-2">
-                      <span className="font-bold text-sm text-slate-900">{req.recipient_organization || 'Verified Shelter'}</span>
+                      <span className="font-bold text-sm text-white">{req.recipient_organization || 'Verified Shelter'}</span>
                       <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-amber-100 text-amber-800">
                         {req.status}
                       </span>
                     </div>
-                    <p className="text-xs text-slate-600">
+                    <p className="text-xs text-slate-400">
                       Requested: <strong className="text-emerald-700">{req.requested_quantity} {req.donation?.unit}</strong> of <em>'{req.donation?.title}'</em>
                     </p>
                     {req.beneficiary_notes && (
@@ -402,16 +402,16 @@ export function DonorDashboard() {
       {/* My Food Listings Section */}
       <div className="space-y-4">
         <div className="flex items-center justify-between">
-          <h2 className="font-extrabold text-lg text-slate-900">
+          <h2 className="font-extrabold text-lg text-white">
             My Published Food Listings
           </h2>
           <span className="text-xs text-slate-500">{myDonations.length} total</span>
         </div>
 
         {myDonations.length === 0 ? (
-          <div className="text-center py-16 bg-white rounded-3xl border border-slate-200 p-8 space-y-3">
+          <div className="text-center py-16 bg-[#111827] rounded-3xl border border-white/10 p-8 space-y-3">
             <Utensils className="w-12 h-12 text-slate-300 mx-auto" />
-            <h3 className="font-bold text-slate-700">No Food Listings Yet</h3>
+            <h3 className="font-bold text-slate-300">No Food Listings Yet</h3>
             <p className="text-xs text-slate-500 max-w-sm mx-auto">
               Start by publishing your first surplus meal batch to make it discoverable to nearby community shelters.
             </p>
@@ -427,11 +427,11 @@ export function DonorDashboard() {
             {myDonations.map((d) => (
               <div
                 key={d.id}
-                className="bg-white rounded-2xl border border-slate-200 shadow-xs hover:shadow-md transition overflow-hidden flex flex-col justify-between"
+                className="bg-[#111827] rounded-2xl border border-white/10 shadow-xs hover:shadow-md transition overflow-hidden flex flex-col justify-between"
               >
                 <div>
-                  <div className="p-4 bg-slate-50 border-b border-slate-100 flex items-center justify-between">
-                    <span className="px-2 py-0.5 rounded text-xs font-bold bg-slate-200 text-slate-700">
+                  <div className="p-4 bg-[#0f1923] border-b border-white/6 flex items-center justify-between">
+                    <span className="px-2 py-0.5 rounded text-xs font-bold bg-slate-200 text-slate-300">
                       {d.category?.name || 'Cooked Food'}
                     </span>
                     <span
@@ -442,7 +442,7 @@ export function DonorDashboard() {
                           ? 'bg-blue-100 text-blue-800'
                           : d.status === 'COMPLETED'
                           ? 'bg-teal-100 text-teal-800'
-                          : 'bg-slate-200 text-slate-600'
+                          : 'bg-slate-200 text-slate-400'
                       }`}
                     >
                       {d.status}
@@ -450,10 +450,10 @@ export function DonorDashboard() {
                   </div>
 
                   <div className="p-5 space-y-3">
-                    <h3 className="font-bold text-base text-slate-900">{d.title}</h3>
+                    <h3 className="font-bold text-base text-white">{d.title}</h3>
                     <p className="text-xs text-slate-500 line-clamp-2">{d.description}</p>
 
-                    <div className="bg-slate-50 p-3 rounded-xl border border-slate-100 space-y-1.5 text-xs">
+                    <div className="bg-[#0f1923] p-3 rounded-xl border border-white/6 space-y-1.5 text-xs">
                       <div className="flex justify-between">
                         <span className="text-slate-500">Available:</span>
                         <span className="font-bold text-emerald-700">
@@ -462,15 +462,15 @@ export function DonorDashboard() {
                       </div>
                       <div className="flex justify-between">
                         <span className="text-slate-500">Reserved:</span>
-                        <span className="font-medium text-slate-800">{d.reserved_quantity} {d.unit}</span>
+                        <span className="font-medium text-slate-100">{d.reserved_quantity} {d.unit}</span>
                       </div>
                       <div className="flex justify-between">
                         <span className="text-slate-500">Storage:</span>
-                        <span className="font-medium text-slate-800">{d.storage_requirement_display || d.storage_requirement}</span>
+                        <span className="font-medium text-slate-100">{d.storage_requirement_display || d.storage_requirement}</span>
                       </div>
                       <div className="flex justify-between">
                         <span className="text-slate-500">Pickup Deadline:</span>
-                        <span className="font-medium text-slate-800">
+                        <span className="font-medium text-slate-100">
                           {new Date(d.pickup_deadline).toLocaleString([], { dateStyle: 'short', timeStyle: 'short' })}
                         </span>
                       </div>
@@ -491,7 +491,7 @@ export function DonorDashboard() {
                     <div className="grid grid-cols-2 gap-2">
                       <button
                         onClick={() => handleOpenEdit(d)}
-                        className="py-1.5 px-2 bg-slate-50 hover:bg-slate-100 border border-slate-200 text-slate-700 rounded-xl text-xs font-semibold transition flex items-center justify-center gap-1 cursor-pointer"
+                        className="py-1.5 px-2 bg-[#0f1923] hover:bg-[#141c25] border border-white/10 text-slate-300 rounded-xl text-xs font-semibold transition flex items-center justify-center gap-1 cursor-pointer"
                       >
                         <Edit3 className="w-3 h-3 text-slate-500" />
                         <span>Edit</span>
@@ -509,7 +509,7 @@ export function DonorDashboard() {
                   {['AVAILABLE', 'PARTIALLY_RESERVED'].includes(d.status) && (
                     <button
                       onClick={() => handleCancelDonation(d.id)}
-                      className="w-full py-1.5 px-3 border border-slate-200 hover:border-rose-300 text-slate-500 hover:text-rose-600 rounded-xl text-xs font-medium transition cursor-pointer"
+                      className="w-full py-1.5 px-3 border border-white/10 hover:border-rose-300 text-slate-500 hover:text-rose-600 rounded-xl text-xs font-medium transition cursor-pointer"
                     >
                       Cancel Listing
                     </button>
@@ -517,7 +517,7 @@ export function DonorDashboard() {
 
                   <button
                     onClick={() => handleRelistDonation(d)}
-                    className="w-full py-1.5 px-3 bg-slate-50 hover:bg-slate-100 border border-slate-200 text-slate-700 rounded-xl text-xs font-semibold transition flex items-center justify-center gap-1 cursor-pointer"
+                    className="w-full py-1.5 px-3 bg-[#0f1923] hover:bg-[#141c25] border border-white/10 text-slate-300 rounded-xl text-xs font-semibold transition flex items-center justify-center gap-1 cursor-pointer"
                     title="Clone this listing details into a fresh batch"
                   >
                     <Copy className="w-3 h-3 text-slate-500" />
@@ -538,18 +538,18 @@ export function DonorDashboard() {
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.95 }}
-              className="bg-white rounded-3xl shadow-2xl max-w-2xl w-full border border-slate-200 overflow-hidden my-8"
+              className="bg-[#111827] rounded-3xl shadow-2xl max-w-2xl w-full border border-white/10 overflow-hidden my-8"
             >
-              <div className="p-6 border-b border-slate-100 flex items-center justify-between bg-slate-50">
+              <div className="p-6 border-b border-white/6 flex items-center justify-between bg-[#0f1923]">
                 <div>
                   <span className="text-[10px] font-bold uppercase tracking-wider text-emerald-600">
                     Food Rescue Protocol
                   </span>
-                  <h3 className="font-bold text-slate-900 text-lg">Publish Surplus Food Donation</h3>
+                  <h3 className="font-bold text-white text-lg">Publish Surplus Food Donation</h3>
                 </div>
                 <button
                   onClick={() => setCreateModalOpen(false)}
-                  className="p-1 rounded-lg text-slate-400 hover:text-slate-600 cursor-pointer"
+                  className="p-1 rounded-lg text-slate-400 hover:text-slate-400 cursor-pointer"
                 >
                   <X className="w-5 h-5" />
                 </button>
@@ -563,25 +563,25 @@ export function DonorDashboard() {
                 )}
 
                 <div>
-                  <label className="block text-xs font-bold text-slate-700 mb-1">Food Batch Title *</label>
+                  <label className="block text-xs font-bold text-slate-300 mb-1">Food Batch Title *</label>
                   <input
                     type="text"
                     required
                     placeholder="e.g. Vegetarian Buffet Surplus - Rice, Paneer Butter Masala, Roti"
                     value={newListing.title}
                     onChange={(e) => setNewListing({ ...newListing, title: e.target.value })}
-                    className="w-full px-3 py-2 text-xs bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-emerald-500 transition outline-none"
+                    className="w-full px-3 py-2 text-xs bg-[#0f1923] border border-white/10 rounded-xl focus:bg-[#111827] focus:ring-2 focus:ring-emerald-500 transition outline-none"
                   />
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                   <div>
-                    <label className="block text-xs font-bold text-slate-700 mb-1">Category *</label>
+                    <label className="block text-xs font-bold text-slate-300 mb-1">Category *</label>
                     <select
                       value={newListing.category}
                       onChange={(e) => setNewListing({ ...newListing, category: e.target.value })}
                       required
-                      className="w-full px-3 py-2 text-xs bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-emerald-500 transition outline-none"
+                      className="w-full px-3 py-2 text-xs bg-[#0f1923] border border-white/10 rounded-xl focus:bg-[#111827] focus:ring-2 focus:ring-emerald-500 transition outline-none"
                     >
                       <option value="">Select Category</option>
                       {categories.map((c) => (
@@ -592,7 +592,7 @@ export function DonorDashboard() {
                     </select>
                   </div>
                   <div>
-                    <label className="block text-xs font-bold text-slate-700 mb-1">Quantity *</label>
+                    <label className="block text-xs font-bold text-slate-300 mb-1">Quantity *</label>
                     <input
                       type="number"
                       step="any"
@@ -601,15 +601,15 @@ export function DonorDashboard() {
                       placeholder="e.g. 50"
                       value={newListing.quantity}
                       onChange={(e) => setNewListing({ ...newListing, quantity: e.target.value })}
-                      className="w-full px-3 py-2 text-xs bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-emerald-500 transition outline-none"
+                      className="w-full px-3 py-2 text-xs bg-[#0f1923] border border-white/10 rounded-xl focus:bg-[#111827] focus:ring-2 focus:ring-emerald-500 transition outline-none"
                     />
                   </div>
                   <div>
-                    <label className="block text-xs font-bold text-slate-700 mb-1">Unit</label>
+                    <label className="block text-xs font-bold text-slate-300 mb-1">Unit</label>
                     <select
                       value={newListing.unit}
                       onChange={(e) => setNewListing({ ...newListing, unit: e.target.value })}
-                      className="w-full px-3 py-2 text-xs bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-emerald-500 transition outline-none"
+                      className="w-full px-3 py-2 text-xs bg-[#0f1923] border border-white/10 rounded-xl focus:bg-[#111827] focus:ring-2 focus:ring-emerald-500 transition outline-none"
                     >
                       <option value="MEALS">Meals / Portions</option>
                       <option value="KG">Kilograms (kg)</option>
@@ -621,11 +621,11 @@ export function DonorDashboard() {
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div>
-                    <label className="block text-xs font-bold text-slate-700 mb-1">Storage Requirement *</label>
+                    <label className="block text-xs font-bold text-slate-300 mb-1">Storage Requirement *</label>
                     <select
                       value={newListing.storage_requirement}
                       onChange={(e) => setNewListing({ ...newListing, storage_requirement: e.target.value })}
-                      className="w-full px-3 py-2 text-xs bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-emerald-500 transition outline-none"
+                      className="w-full px-3 py-2 text-xs bg-[#0f1923] border border-white/10 rounded-xl focus:bg-[#111827] focus:ring-2 focus:ring-emerald-500 transition outline-none"
                     >
                       <option value="ROOM_TEMPERATURE">Room Temperature (Dry / Packaged)</option>
                       <option value="REFRIGERATED">Refrigerated (0°C to 4°C)</option>
@@ -634,11 +634,11 @@ export function DonorDashboard() {
                     </select>
                   </div>
                   <div>
-                    <label className="block text-xs font-bold text-slate-700 mb-1">Dietary Classification *</label>
+                    <label className="block text-xs font-bold text-slate-300 mb-1">Dietary Classification *</label>
                     <select
                       value={newListing.dietary_type}
                       onChange={(e) => setNewListing({ ...newListing, dietary_type: e.target.value })}
-                      className="w-full px-3 py-2 text-xs bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-emerald-500 transition outline-none"
+                      className="w-full px-3 py-2 text-xs bg-[#0f1923] border border-white/10 rounded-xl focus:bg-[#111827] focus:ring-2 focus:ring-emerald-500 transition outline-none"
                     >
                       <option value="VEGETARIAN">Vegetarian</option>
                       <option value="VEGAN">Vegan</option>
@@ -650,18 +650,18 @@ export function DonorDashboard() {
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div>
-                    <label className="block text-xs font-bold text-slate-700 mb-1">Prepared How Many Hours Ago?</label>
+                    <label className="block text-xs font-bold text-slate-300 mb-1">Prepared How Many Hours Ago?</label>
                     <input
                       type="number"
                       step="0.5"
                       min="0"
                       value={newListing.preparation_hours_ago}
                       onChange={(e) => setNewListing({ ...newListing, preparation_hours_ago: e.target.value })}
-                      className="w-full px-3 py-2 text-xs bg-slate-50 border border-slate-200 rounded-xl outline-none"
+                      className="w-full px-3 py-2 text-xs bg-[#0f1923] border border-white/10 rounded-xl outline-none"
                     />
                   </div>
                   <div>
-                    <label className="block text-xs font-bold text-slate-700 mb-1">Pickup Deadline (Hours From Now) *</label>
+                    <label className="block text-xs font-bold text-slate-300 mb-1">Pickup Deadline (Hours From Now) *</label>
                     <input
                       type="number"
                       step="0.5"
@@ -669,45 +669,45 @@ export function DonorDashboard() {
                       required
                       value={newListing.pickup_hours_from_now}
                       onChange={(e) => setNewListing({ ...newListing, pickup_hours_from_now: e.target.value })}
-                      className="w-full px-3 py-2 text-xs bg-slate-50 border border-slate-200 rounded-xl outline-none"
+                      className="w-full px-3 py-2 text-xs bg-[#0f1923] border border-white/10 rounded-xl outline-none"
                     />
                   </div>
                 </div>
 
                 <div>
-                  <label className="block text-xs font-bold text-slate-700 mb-1">Allergens Declared</label>
+                  <label className="block text-xs font-bold text-slate-300 mb-1">Allergens Declared</label>
                   <input
                     type="text"
                     placeholder="e.g. Milk (Paneer), Wheat Gluten, Cashews"
                     value={newListing.allergens}
                     onChange={(e) => setNewListing({ ...newListing, allergens: e.target.value })}
-                    className="w-full px-3 py-2 text-xs bg-slate-50 border border-slate-200 rounded-xl outline-none"
+                    className="w-full px-3 py-2 text-xs bg-[#0f1923] border border-white/10 rounded-xl outline-none"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs font-bold text-slate-700 mb-1">Pickup Kitchen Address</label>
+                  <label className="block text-xs font-bold text-slate-300 mb-1">Pickup Kitchen Address</label>
                   <input
                     type="text"
                     required
                     value={newListing.pickup_address}
                     onChange={(e) => setNewListing({ ...newListing, pickup_address: e.target.value })}
-                    className="w-full px-3 py-2 text-xs bg-slate-50 border border-slate-200 rounded-xl outline-none"
+                    className="w-full px-3 py-2 text-xs bg-[#0f1923] border border-white/10 rounded-xl outline-none"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs font-bold text-slate-700 mb-1">Description & Packing Details</label>
+                  <label className="block text-xs font-bold text-slate-300 mb-1">Description & Packing Details</label>
                   <textarea
                     rows="2"
                     placeholder="Packed in 3 sealed stainless steel gastro containers, kept in warming cabinet."
                     value={newListing.description}
                     onChange={(e) => setNewListing({ ...newListing, description: e.target.value })}
-                    className="w-full px-3 py-2 text-xs bg-slate-50 border border-slate-200 rounded-xl outline-none"
+                    className="w-full px-3 py-2 text-xs bg-[#0f1923] border border-white/10 rounded-xl outline-none"
                   />
                 </div>
 
-                <div className="pt-3 border-t border-slate-100 flex items-center justify-between">
+                <div className="pt-3 border-t border-white/6 flex items-center justify-between">
                   <div className="text-[11px] text-amber-700 font-medium flex items-center gap-1">
                     <ShieldCheck className="w-4 h-4 text-emerald-600" />
                     <span>Food safety declaration step follows</span>
@@ -716,7 +716,7 @@ export function DonorDashboard() {
                     <button
                       type="button"
                       onClick={() => setCreateModalOpen(false)}
-                      className="px-4 py-2 text-xs font-bold text-slate-600 hover:bg-slate-100 rounded-xl transition cursor-pointer"
+                      className="px-4 py-2 text-xs font-bold text-slate-400 hover:bg-[#141c25] rounded-xl transition cursor-pointer"
                     >
                       Cancel
                     </button>
@@ -751,20 +751,20 @@ export function DonorDashboard() {
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.95 }}
-              className="bg-white rounded-3xl shadow-2xl max-w-lg w-full border border-slate-200 overflow-hidden"
+              className="bg-[#111827] rounded-3xl shadow-2xl max-w-lg w-full border border-white/10 overflow-hidden"
             >
-              <div className="p-5 border-b border-slate-100 flex items-center justify-between bg-slate-50">
+              <div className="p-5 border-b border-white/6 flex items-center justify-between bg-[#0f1923]">
                 <div>
                   <span className="text-[10px] font-bold uppercase tracking-wider text-amber-600">
                     Smart Match Algorithm
                   </span>
-                  <h3 className="font-bold text-slate-900 text-base">
+                  <h3 className="font-bold text-white text-base">
                     Matched NGOs for '{matchedNgosModal.donationTitle}'
                   </h3>
                 </div>
                 <button
                   onClick={() => setMatchedNgosModal(null)}
-                  className="p-1 rounded-lg text-slate-400 hover:text-slate-600 cursor-pointer"
+                  className="p-1 rounded-lg text-slate-400 hover:text-slate-400 cursor-pointer"
                 >
                   <X className="w-5 h-5" />
                 </button>
@@ -779,22 +779,22 @@ export function DonorDashboard() {
                   matchedNgosModal.matches.map((m) => (
                     <div
                       key={m.ngo_id}
-                      className="p-3.5 rounded-2xl border border-slate-200 bg-slate-50/50 space-y-1.5"
+                      className="p-3.5 rounded-2xl border border-white/10 bg-slate-50/50 space-y-1.5"
                     >
                       <div className="flex items-center justify-between">
-                        <span className="font-bold text-xs text-slate-900">{m.organization_name}</span>
+                        <span className="font-bold text-xs text-white">{m.organization_name}</span>
                         <span className="px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-emerald-100 text-emerald-800">
                           {m.match_score}% Match
                         </span>
                       </div>
-                      <p className="text-[11px] text-slate-600">
+                      <p className="text-[11px] text-slate-400">
                         {m.address} • <strong>{m.distance_km} km away</strong>
                       </p>
                       <div className="flex flex-wrap gap-1 pt-1">
                         {m.reasons?.map((r, idx) => (
                           <span
                             key={idx}
-                            className="text-[10px] bg-white border border-slate-200 text-slate-700 px-2 py-0.5 rounded-md"
+                            className="text-[10px] bg-[#111827] border border-white/10 text-slate-300 px-2 py-0.5 rounded-md"
                           >
                             ✓ {r}
                           </span>
@@ -805,10 +805,10 @@ export function DonorDashboard() {
                 )}
               </div>
 
-              <div className="p-4 bg-slate-50 border-t border-slate-100 text-right">
+              <div className="p-4 bg-[#0f1923] border-t border-white/6 text-right">
                 <button
                   onClick={() => setMatchedNgosModal(null)}
-                  className="px-4 py-2 bg-slate-200 hover:bg-slate-300 text-slate-800 rounded-xl text-xs font-bold transition cursor-pointer"
+                  className="px-4 py-2 bg-slate-200 hover:bg-slate-300 text-slate-100 rounded-xl text-xs font-bold transition cursor-pointer"
                 >
                   Done
                 </button>
@@ -826,18 +826,18 @@ export function DonorDashboard() {
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.95 }}
-              className="bg-white rounded-3xl shadow-2xl max-w-lg w-full border border-slate-200 overflow-hidden my-8"
+              className="bg-[#111827] rounded-3xl shadow-2xl max-w-lg w-full border border-white/10 overflow-hidden my-8"
             >
-              <div className="p-5 border-b border-slate-100 flex items-center justify-between bg-slate-50">
+              <div className="p-5 border-b border-white/6 flex items-center justify-between bg-[#0f1923]">
                 <div>
                   <span className="text-[10px] font-bold uppercase tracking-wider text-emerald-600">
                     Update Details
                   </span>
-                  <h3 className="font-bold text-slate-900 text-base">Edit Donation Listing</h3>
+                  <h3 className="font-bold text-white text-base">Edit Donation Listing</h3>
                 </div>
                 <button
                   onClick={() => setEditingDonation(null)}
-                  className="p-1 rounded-lg text-slate-400 hover:text-slate-600 cursor-pointer"
+                  className="p-1 rounded-lg text-slate-400 hover:text-slate-400 cursor-pointer"
                 >
                   <X className="w-5 h-5" />
                 </button>
@@ -845,33 +845,33 @@ export function DonorDashboard() {
 
               <form onSubmit={handleSaveEdit} className="p-5 space-y-4 text-xs">
                 <div>
-                  <label className="block font-bold text-slate-700 mb-1">Food Title</label>
+                  <label className="block font-bold text-slate-300 mb-1">Food Title</label>
                   <input
                     type="text"
                     value={editFormData.title}
                     onChange={(e) => setEditFormData({ ...editFormData, title: e.target.value })}
-                    className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-emerald-500 outline-none"
+                    className="w-full px-3 py-2 bg-[#0f1923] border border-white/10 rounded-xl focus:bg-[#111827] focus:ring-2 focus:ring-emerald-500 outline-none"
                     required
                   />
                 </div>
 
                 <div>
-                  <label className="block font-bold text-slate-700 mb-1">Description / Dish Details</label>
+                  <label className="block font-bold text-slate-300 mb-1">Description / Dish Details</label>
                   <textarea
                     rows={2}
                     value={editFormData.description}
                     onChange={(e) => setEditFormData({ ...editFormData, description: e.target.value })}
-                    className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-emerald-500 outline-none"
+                    className="w-full px-3 py-2 bg-[#0f1923] border border-white/10 rounded-xl focus:bg-[#111827] focus:ring-2 focus:ring-emerald-500 outline-none"
                   />
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div>
-                    <label className="block font-bold text-slate-700 mb-1">Storage Condition</label>
+                    <label className="block font-bold text-slate-300 mb-1">Storage Condition</label>
                     <select
                       value={editFormData.storage_requirement}
                       onChange={(e) => setEditFormData({ ...editFormData, storage_requirement: e.target.value })}
-                      className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-emerald-500 outline-none"
+                      className="w-full px-3 py-2 bg-[#0f1923] border border-white/10 rounded-xl focus:bg-[#111827] focus:ring-2 focus:ring-emerald-500 outline-none"
                     >
                       <option value="ROOM_TEMPERATURE">Room Temperature</option>
                       <option value="REFRIGERATED">Refrigerated (Cold Chain)</option>
@@ -881,31 +881,31 @@ export function DonorDashboard() {
                   </div>
 
                   <div>
-                    <label className="block font-bold text-slate-700 mb-1">Contact Phone</label>
+                    <label className="block font-bold text-slate-300 mb-1">Contact Phone</label>
                     <input
                       type="text"
                       value={editFormData.contact_phone}
                       onChange={(e) => setEditFormData({ ...editFormData, contact_phone: e.target.value })}
-                      className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-emerald-500 outline-none"
+                      className="w-full px-3 py-2 bg-[#0f1923] border border-white/10 rounded-xl focus:bg-[#111827] focus:ring-2 focus:ring-emerald-500 outline-none"
                     />
                   </div>
                 </div>
 
                 <div>
-                  <label className="block font-bold text-slate-700 mb-1">Special Handling / Dispatch Instructions</label>
+                  <label className="block font-bold text-slate-300 mb-1">Special Handling / Dispatch Instructions</label>
                   <input
                     type="text"
                     value={editFormData.special_instructions}
                     onChange={(e) => setEditFormData({ ...editFormData, special_instructions: e.target.value })}
-                    className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-emerald-500 outline-none"
+                    className="w-full px-3 py-2 bg-[#0f1923] border border-white/10 rounded-xl focus:bg-[#111827] focus:ring-2 focus:ring-emerald-500 outline-none"
                   />
                 </div>
 
-                <div className="pt-3 border-t border-slate-100 flex items-center justify-end gap-2">
+                <div className="pt-3 border-t border-white/6 flex items-center justify-end gap-2">
                   <button
                     type="button"
                     onClick={() => setEditingDonation(null)}
-                    className="px-4 py-2 rounded-xl text-slate-600 hover:bg-slate-100 font-semibold cursor-pointer"
+                    className="px-4 py-2 rounded-xl text-slate-400 hover:bg-[#141c25] font-semibold cursor-pointer"
                   >
                     Cancel
                   </button>

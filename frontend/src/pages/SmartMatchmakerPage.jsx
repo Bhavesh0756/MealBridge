@@ -103,10 +103,10 @@ export function SmartMatchmakerPage() {
           <Sparkles className="w-3.5 h-3.5 text-amber-500 animate-pulse" />
           <span>Algorithmic Allocation Intelligence</span>
         </div>
-        <h1 className="font-display text-3xl sm:text-5xl font-black text-slate-900 tracking-tight">
+        <h1 className="font-display text-3xl sm:text-5xl font-black text-white tracking-tight">
           Smart Food Rescue Allocation Engine
         </h1>
-        <p className="text-sm text-slate-600 max-w-2xl leading-relaxed">
+        <p className="text-sm text-slate-400 max-w-2xl leading-relaxed">
           MealBridge prioritizes donations using verified physical parameters: great-circle distance (Haversine formula), remaining food safety window, recipient daily capacity, and certified storage compatibility.
         </p>
       </div>
@@ -115,7 +115,7 @@ export function SmartMatchmakerPage() {
       <div className="glass-panel p-6 sm:p-8 rounded-3xl border border-slate-200/80 shadow-md space-y-6">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
-            <h3 className="font-display font-bold text-base text-slate-900">Search Radius & Feasibility Filter</h3>
+            <h3 className="font-display font-bold text-base text-white">Search Radius & Feasibility Filter</h3>
             <p className="text-xs text-slate-500">Adjust the transport range to explore nearby surplus matches.</p>
           </div>
           <div className="flex items-center gap-4 flex-wrap">
@@ -124,7 +124,7 @@ export function SmartMatchmakerPage() {
               <button
                 onClick={() => setMinScore(0)}
                 className={`px-3 py-1.5 rounded-xl text-xs font-black transition-all cursor-pointer ${
-                  minScore === 0 ? 'bg-white text-emerald-800 shadow-xs border border-slate-200/60 scale-[1.02]' : 'text-slate-600 hover:text-slate-900'
+                  minScore === 0 ? 'bg-[#111827] text-emerald-800 shadow-xs border border-slate-200/60 scale-[1.02]' : 'text-slate-400 hover:text-white'
                 }`}
               >
                 All
@@ -132,7 +132,7 @@ export function SmartMatchmakerPage() {
               <button
                 onClick={() => setMinScore(60)}
                 className={`px-3 py-1.5 rounded-xl text-xs font-black transition-all cursor-pointer ${
-                  minScore === 60 ? 'bg-white text-emerald-800 shadow-xs border border-slate-200/60 scale-[1.02]' : 'text-slate-600 hover:text-slate-900'
+                  minScore === 60 ? 'bg-[#111827] text-emerald-800 shadow-xs border border-slate-200/60 scale-[1.02]' : 'text-slate-400 hover:text-white'
                 }`}
               >
                 &ge;60% Score
@@ -140,15 +140,15 @@ export function SmartMatchmakerPage() {
               <button
                 onClick={() => setMinScore(80)}
                 className={`px-3 py-1.5 rounded-xl text-xs font-black transition-all cursor-pointer ${
-                  minScore === 80 ? 'bg-white text-emerald-800 shadow-xs border border-slate-200/60 scale-[1.02]' : 'text-slate-600 hover:text-slate-900'
+                  minScore === 80 ? 'bg-[#111827] text-emerald-800 shadow-xs border border-slate-200/60 scale-[1.02]' : 'text-slate-400 hover:text-white'
                 }`}
               >
                 &ge;80% Elite
               </button>
             </div>
 
-            <div className="flex items-center gap-2.5 bg-slate-50 px-3.5 py-1.5 rounded-2xl border border-slate-200">
-              <span className="text-xs font-black text-slate-800">{radius} km</span>
+            <div className="flex items-center gap-2.5 bg-[#0f1923] px-3.5 py-1.5 rounded-2xl border border-white/10">
+              <span className="text-xs font-black text-slate-100">{radius} km</span>
               <input
                 type="range"
                 min="5"
@@ -163,30 +163,30 @@ export function SmartMatchmakerPage() {
         </div>
 
         {/* 5-Pillar Score Formula */}
-        <div className="grid grid-cols-2 sm:grid-cols-5 gap-3.5 pt-4 border-t border-slate-100 text-center">
+        <div className="grid grid-cols-2 sm:grid-cols-5 gap-3.5 pt-4 border-t border-white/6 text-center">
           <div className="p-4 bg-emerald-50/70 rounded-2xl border border-emerald-200/60 card-interactive shadow-xs hover:border-emerald-400">
             <div className="font-display font-black text-base text-emerald-800">30 Pts</div>
-            <div className="text-[11px] text-slate-800 font-bold mt-1">Geographic Proximity</div>
+            <div className="text-[11px] text-slate-100 font-bold mt-1">Geographic Proximity</div>
             <div className="text-[10px] text-slate-500 mt-0.5">Haversine formula &lt;3km</div>
           </div>
           <div className="p-4 bg-amber-50/70 rounded-2xl border border-amber-200/60 card-interactive shadow-xs hover:border-amber-400">
             <div className="font-display font-black text-base text-amber-800">25 Pts</div>
-            <div className="text-[11px] text-slate-800 font-bold mt-1">Rescue Urgency</div>
+            <div className="text-[11px] text-slate-100 font-bold mt-1">Rescue Urgency</div>
             <div className="text-[10px] text-slate-500 mt-0.5">Expiry deadline &lt;3 hrs</div>
           </div>
           <div className="p-4 bg-blue-50/70 rounded-2xl border border-blue-200/60 card-interactive shadow-xs hover:border-blue-400">
             <div className="font-display font-black text-base text-blue-800">20 Pts</div>
-            <div className="text-[11px] text-slate-800 font-bold mt-1">Capacity Match</div>
+            <div className="text-[11px] text-slate-100 font-bold mt-1">Capacity Match</div>
             <div className="text-[10px] text-slate-500 mt-0.5">Within daily intake</div>
           </div>
           <div className="p-4 bg-cyan-50/70 rounded-2xl border border-cyan-200/60 card-interactive shadow-xs hover:border-cyan-400">
             <div className="font-display font-black text-base text-cyan-800">15 Pts</div>
-            <div className="text-[11px] text-slate-800 font-bold mt-1">Storage Safe</div>
+            <div className="text-[11px] text-slate-100 font-bold mt-1">Storage Safe</div>
             <div className="text-[10px] text-slate-500 mt-0.5">Cold chain verified</div>
           </div>
           <div className="p-4 bg-purple-50/70 rounded-2xl border border-purple-200/60 card-interactive shadow-xs hover:border-purple-400">
             <div className="font-display font-black text-base text-purple-800">10 Pts</div>
-            <div className="text-[11px] text-slate-800 font-bold mt-1">Trust Score</div>
+            <div className="text-[11px] text-slate-100 font-bold mt-1">Trust Score</div>
             <div className="text-[10px] text-slate-500 mt-0.5">Verified donor partner</div>
           </div>
         </div>
@@ -195,7 +195,7 @@ export function SmartMatchmakerPage() {
       {/* Match Results */}
       <div className="space-y-4">
         <div className="flex items-center justify-between">
-          <h2 className="font-extrabold text-lg text-slate-900">
+          <h2 className="font-extrabold text-lg text-white">
             Ranked Recommendations ({filteredMatches.length})
           </h2>
           <span className="text-xs text-slate-500 font-medium">Sorted by algorithmic rescue score</span>
@@ -207,7 +207,7 @@ export function SmartMatchmakerPage() {
             <p className="text-xs">Computing optimal allocations...</p>
           </div>
         ) : filteredMatches.length === 0 ? (
-          <div className="text-center py-16 bg-white rounded-3xl border border-slate-200 text-slate-500 text-xs">
+          <div className="text-center py-16 bg-[#111827] rounded-3xl border border-white/10 text-slate-500 text-xs">
             No active food listings match the {radius} km radius and minimum score criteria. Try extending the radius or lowering the score threshold.
           </div>
         ) : (
@@ -230,21 +230,21 @@ export function SmartMatchmakerPage() {
                     }`}>
                       {item.match_score}% Match Score
                     </span>
-                    <span className="text-xs font-bold text-slate-600 flex items-center gap-1 font-mono-numbers">
+                    <span className="text-xs font-bold text-slate-400 flex items-center gap-1 font-mono-numbers">
                       <MapPin className="w-3.5 h-3.5 text-rose-500" />
                       {item.distance_km} km away
                     </span>
                   </div>
 
                   <div>
-                    <h3 className="font-display font-bold text-base text-slate-900 group-hover:text-emerald-700 transition">{item.title}</h3>
+                    <h3 className="font-display font-bold text-base text-white group-hover:text-emerald-700 transition">{item.title}</h3>
                     <p className="text-xs text-slate-500 mt-0.5">
-                      Donor: <strong className="text-slate-700">{item.donor_name}</strong> • {item.pickup_address}
+                      Donor: <strong className="text-slate-300">{item.donor_name}</strong> • {item.pickup_address}
                     </p>
                   </div>
 
                   {/* Quantity & Urgency */}
-                  <div className="bg-slate-50/80 p-3.5 rounded-2xl border border-slate-100 space-y-2 text-xs">
+                  <div className="bg-slate-50/80 p-3.5 rounded-2xl border border-white/6 space-y-2 text-xs">
                     <div className="flex justify-between items-center">
                       <span className="text-slate-500 font-medium">Available Amount:</span>
                       <span className="font-black text-emerald-700 font-mono-numbers text-sm">{item.available_quantity} {item.unit}</span>
@@ -259,7 +259,7 @@ export function SmartMatchmakerPage() {
                     </div>
                     <div className="flex justify-between items-center">
                       <span className="text-slate-500 font-medium">Handling:</span>
-                      <span className="font-semibold text-slate-800 text-[11px]">{item.storage_requirement}</span>
+                      <span className="font-semibold text-slate-100 text-[11px]">{item.storage_requirement}</span>
                     </div>
                   </div>
 
@@ -283,7 +283,7 @@ export function SmartMatchmakerPage() {
                   </div>
                 </div>
 
-                <div className="space-y-2 pt-2 border-t border-slate-100">
+                <div className="space-y-2 pt-2 border-t border-white/6">
                   <button
                     onClick={() => handleOpenRequest(item)}
                     className="w-full py-2.5 bg-gradient-to-r from-[#047857] via-[#10b981] to-[#06b6d4] hover:brightness-110 text-white rounded-xl text-xs font-black text-center transition flex items-center justify-center gap-1.5 shadow-md shadow-emerald-500/20 cursor-pointer"
@@ -293,7 +293,7 @@ export function SmartMatchmakerPage() {
                   </button>
                   <Link
                     to="/browse"
-                    className="w-full py-1.5 text-slate-500 hover:text-slate-800 text-[11px] font-semibold text-center transition block"
+                    className="w-full py-1.5 text-slate-500 hover:text-slate-100 text-[11px] font-semibold text-center transition block"
                   >
                     View in Browse Feed →
                   </Link>
@@ -312,20 +312,20 @@ export function SmartMatchmakerPage() {
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.95 }}
-              className="bg-white rounded-3xl shadow-2xl max-w-md w-full border border-slate-200 overflow-hidden"
+              className="bg-[#111827] rounded-3xl shadow-2xl max-w-md w-full border border-white/10 overflow-hidden"
             >
-              <div className="p-5 border-b border-slate-100 flex items-center justify-between bg-slate-50">
+              <div className="p-5 border-b border-white/6 flex items-center justify-between bg-[#0f1923]">
                 <div>
                   <span className="px-2.5 py-0.5 rounded-full text-[10px] font-extrabold bg-emerald-100 text-emerald-800">
                     Smart Match Claim
                   </span>
-                  <h3 className="font-extrabold text-base text-slate-900 mt-1">
+                  <h3 className="font-extrabold text-base text-white mt-1">
                     Request {selectedMatch.title}
                   </h3>
                 </div>
                 <button
                   onClick={() => setSelectedMatch(null)}
-                  className="p-1 rounded-lg text-slate-400 hover:text-slate-600 hover:bg-slate-200/50 transition cursor-pointer"
+                  className="p-1 rounded-lg text-slate-400 hover:text-slate-400 hover:bg-slate-200/50 transition cursor-pointer"
                 >
                   <X className="w-5 h-5" />
                 </button>
@@ -337,18 +337,18 @@ export function SmartMatchmakerPage() {
                     <span>Available Quantity:</span>
                     <span>{selectedMatch.available_quantity} {selectedMatch.unit}</span>
                   </div>
-                  <div className="flex justify-between text-slate-600">
+                  <div className="flex justify-between text-slate-400">
                     <span>Algorithm Score:</span>
                     <span className="font-bold text-emerald-700">{selectedMatch.match_score}%</span>
                   </div>
-                  <div className="flex justify-between text-slate-600">
+                  <div className="flex justify-between text-slate-400">
                     <span>Donor Kitchen:</span>
                     <span>{selectedMatch.donor_name}</span>
                   </div>
                 </div>
 
                 <div>
-                  <label className="block text-xs font-bold text-slate-700 mb-1">
+                  <label className="block text-xs font-bold text-slate-300 mb-1">
                     Quantity to Rescue ({selectedMatch.unit}) *
                   </label>
                   <input
@@ -359,7 +359,7 @@ export function SmartMatchmakerPage() {
                     value={requestQty}
                     onChange={(e) => setRequestQty(e.target.value)}
                     required
-                    className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold focus:outline-none focus:ring-2 focus:ring-emerald-500/20"
+                    className="w-full px-3 py-2 bg-[#0f1923] border border-white/10 rounded-xl text-xs font-semibold focus:outline-none focus:ring-2 focus:ring-emerald-500/20"
                   />
                   <span className="text-[10px] text-slate-400">
                     Max: {selectedMatch.available_quantity} {selectedMatch.unit}
@@ -367,7 +367,7 @@ export function SmartMatchmakerPage() {
                 </div>
 
                 <div>
-                  <label className="block text-xs font-bold text-slate-700 mb-1">
+                  <label className="block text-xs font-bold text-slate-300 mb-1">
                     Beneficiary & Transport Notes
                   </label>
                   <textarea
@@ -375,15 +375,15 @@ export function SmartMatchmakerPage() {
                     value={beneficiaryNotes}
                     onChange={(e) => setBeneficiaryNotes(e.target.value)}
                     placeholder="E.g., Serving 80 homeless community members at evening community table."
-                    className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-emerald-500/20"
+                    className="w-full px-3 py-2 bg-[#0f1923] border border-white/10 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-emerald-500/20"
                   />
                 </div>
 
-                <div className="pt-2 flex items-center justify-end gap-2 border-t border-slate-100">
+                <div className="pt-2 flex items-center justify-end gap-2 border-t border-white/6">
                   <button
                     type="button"
                     onClick={() => setSelectedMatch(null)}
-                    className="px-4 py-2 text-xs font-bold text-slate-600 hover:bg-slate-100 rounded-xl transition cursor-pointer"
+                    className="px-4 py-2 text-xs font-bold text-slate-400 hover:bg-[#141c25] rounded-xl transition cursor-pointer"
                   >
                     Cancel
                   </button>

@@ -34,7 +34,7 @@ export function FoodSafetyModal({ isOpen, onClose, checklist, setChecklist, onCo
           initial={{ opacity: 0, scale: 0.95, y: 15 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.95, y: 15 }}
-          className="bg-white rounded-2xl shadow-2xl max-w-lg w-full border border-slate-200 overflow-hidden max-h-[90vh] flex flex-col"
+          className="bg-[#111827] rounded-2xl shadow-2xl max-w-lg w-full border border-white/10 overflow-hidden max-h-[90vh] flex flex-col"
         >
           {/* Header */}
           <div className="bg-emerald-600 p-5 text-white flex items-start justify-between">
@@ -74,7 +74,7 @@ export function FoodSafetyModal({ isOpen, onClose, checklist, setChecklist, onCo
             </div>
 
             {/* Temperature Standards Reference Mini-Card */}
-            <div className="grid grid-cols-3 gap-2 text-center text-[10px] bg-slate-50 p-2.5 rounded-xl border border-slate-200">
+            <div className="grid grid-cols-3 gap-2 text-center text-[10px] bg-[#0f1923] p-2.5 rounded-xl border border-white/10">
               <div className="p-1.5 bg-rose-50 rounded-lg border border-rose-100 text-rose-800">
                 <span className="font-bold block">Hot Holding</span>
                 <span>&gt; 63°C</span>
@@ -90,50 +90,50 @@ export function FoodSafetyModal({ isOpen, onClose, checklist, setChecklist, onCo
             </div>
 
             <div className="space-y-3 pt-1">
-              <label className="flex items-start gap-3 p-2.5 rounded-xl hover:bg-slate-50 border border-slate-100 cursor-pointer transition">
+              <label className="flex items-start gap-3 p-2.5 rounded-xl hover:bg-[#0f1923] border border-white/6 cursor-pointer transition">
                 <input
                   type="checkbox"
                   checked={checklist.hygiene_verified}
                   onChange={() => toggle('hygiene_verified')}
                   className="mt-1 w-4 h-4 rounded text-emerald-600 focus:ring-emerald-500 cursor-pointer"
                 />
-                <span className="text-xs text-slate-700">
+                <span className="text-xs text-slate-300">
                   <strong>Hygiene & Preparation Standards:</strong> Food was prepared under verified sanitary conditions by staff wearing appropriate hairnets, gloves, and protective gear.
                 </span>
               </label>
 
-              <label className="flex items-start gap-3 p-2.5 rounded-xl hover:bg-slate-50 border border-slate-100 cursor-pointer transition">
+              <label className="flex items-start gap-3 p-2.5 rounded-xl hover:bg-[#0f1923] border border-white/6 cursor-pointer transition">
                 <input
                   type="checkbox"
                   checked={checklist.properly_stored}
                   onChange={() => toggle('properly_stored')}
                   className="mt-1 w-4 h-4 rounded text-emerald-600 focus:ring-emerald-500 cursor-pointer"
                 />
-                <span className="text-xs text-slate-700">
+                <span className="text-xs text-slate-300">
                   <strong>Temperature Control:</strong> Food has been stored at safe temperatures (chilled food below 4°C, hot food kept above 63°C, or dry groceries in cool storage).
                 </span>
               </label>
 
-              <label className="flex items-start gap-3 p-2.5 rounded-xl hover:bg-slate-50 border border-slate-100 cursor-pointer transition">
+              <label className="flex items-start gap-3 p-2.5 rounded-xl hover:bg-[#0f1923] border border-white/6 cursor-pointer transition">
                 <input
                   type="checkbox"
                   checked={checklist.tamper_free_sealed}
                   onChange={() => toggle('tamper_free_sealed')}
                   className="mt-1 w-4 h-4 rounded text-emerald-600 focus:ring-emerald-500 cursor-pointer"
                 />
-                <span className="text-xs text-slate-700">
+                <span className="text-xs text-slate-300">
                   <strong>Secure Packaging:</strong> Food is packed in food-grade, leak-proof, tamper-evident containers or sealed stainless catering trays ready for transit.
                 </span>
               </label>
 
-              <label className="flex items-start gap-3 p-2.5 rounded-xl hover:bg-slate-50 border border-slate-100 cursor-pointer transition">
+              <label className="flex items-start gap-3 p-2.5 rounded-xl hover:bg-[#0f1923] border border-white/6 cursor-pointer transition">
                 <input
                   type="checkbox"
                   checked={checklist.safety_checklist_completed}
                   onChange={() => toggle('safety_checklist_completed')}
                   className="mt-1 w-4 h-4 rounded text-emerald-600 focus:ring-emerald-500 cursor-pointer"
                 />
-                <span className="text-xs text-slate-700">
+                <span className="text-xs text-slate-300">
                   <strong>Accurate Timing & Allergens:</strong> The stated preparation time and pickup deadline are strictly accurate, and declared allergens are complete.
                 </span>
               </label>
@@ -145,7 +145,7 @@ export function FoodSafetyModal({ isOpen, onClose, checklist, setChecklist, onCo
                   onChange={() => toggle('safety_disclaimer_accepted')}
                   className="mt-1 w-4 h-4 rounded text-emerald-600 focus:ring-emerald-500 cursor-pointer"
                 />
-                <span className="text-xs text-slate-800 font-medium">
+                <span className="text-xs text-slate-100 font-medium">
                   I solemnly declare that the food listed is wholesome, unadulterated, and safe for human consumption at the time of listing.
                 </span>
               </label>
@@ -153,10 +153,10 @@ export function FoodSafetyModal({ isOpen, onClose, checklist, setChecklist, onCo
           </div>
 
           {/* Footer */}
-          <div className="p-4 bg-slate-50 border-t border-slate-200 flex justify-end gap-3">
+          <div className="p-4 bg-[#0f1923] border-t border-white/10 flex justify-end gap-3">
             <button
               onClick={onClose}
-              className="px-4 py-2 text-xs font-semibold text-slate-600 hover:text-slate-800 hover:bg-slate-200/50 rounded-xl transition cursor-pointer"
+              className="px-4 py-2 text-xs font-semibold text-slate-400 hover:text-slate-100 hover:bg-slate-200/50 rounded-xl transition cursor-pointer"
             >
               Cancel
             </button>

@@ -128,9 +128,9 @@ export function NgoDashboard() {
               <span className="w-2 h-2 rounded-full bg-blue-500 animate-ping" />
               NGO Community Intake Console
             </span>
-            <span className="text-xs font-bold text-slate-500 bg-slate-100 px-2.5 py-0.5 rounded-full">{user?.ngo_profile?.organization_name || 'Community Recipient'}</span>
+            <span className="text-xs font-bold text-slate-500 bg-[#141c25] px-2.5 py-0.5 rounded-full">{user?.ngo_profile?.organization_name || 'Community Recipient'}</span>
           </div>
-          <h1 className="font-display text-3xl sm:text-4xl font-black text-slate-900 tracking-tight">
+          <h1 className="font-display text-3xl sm:text-4xl font-black text-white tracking-tight">
             Food Intake & Community Distribution
           </h1>
           <p className="text-xs sm:text-sm text-slate-500 max-w-xl">
@@ -141,7 +141,7 @@ export function NgoDashboard() {
         <div className="flex items-center gap-3">
           <button
             onClick={loadData}
-            className="p-3 glass-panel border border-slate-200 hover:bg-slate-50 rounded-2xl text-slate-600 transition-all shadow-2xs cursor-pointer"
+            className="p-3 glass-panel border border-white/10 hover:bg-[#0f1923] rounded-2xl text-slate-400 transition-all shadow-2xs cursor-pointer"
             title="Refresh dashboard"
           >
             <RefreshCw className="w-4 h-4" />
@@ -197,7 +197,7 @@ export function NgoDashboard() {
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
             <Sparkles className="w-5 h-5 text-amber-500" />
-            <h2 className="font-extrabold text-lg text-slate-900">
+            <h2 className="font-extrabold text-lg text-white">
               Smart-Matched Food For Your Facility
             </h2>
           </div>
@@ -207,7 +207,7 @@ export function NgoDashboard() {
         </div>
 
         {recommendations.length === 0 ? (
-          <div className="text-center py-10 bg-white rounded-2xl border border-slate-200 text-xs text-slate-500">
+          <div className="text-center py-10 bg-[#111827] rounded-2xl border border-white/10 text-xs text-slate-500">
             No active batches matched your shelter radius currently. Check the general feed!
           </div>
         ) : (
@@ -215,7 +215,7 @@ export function NgoDashboard() {
             {recommendations.slice(0, 3).map((rec) => (
               <div
                 key={rec.donation_id}
-                className="bg-white rounded-2xl border border-blue-200 shadow-xs p-5 space-y-3 flex flex-col justify-between"
+                className="bg-[#111827] rounded-2xl border border-blue-200 shadow-xs p-5 space-y-3 flex flex-col justify-between"
               >
                 <div>
                   <div className="flex items-center justify-between mb-1.5">
@@ -226,10 +226,10 @@ export function NgoDashboard() {
                       {rec.distance_km} km away
                     </span>
                   </div>
-                  <h3 className="font-bold text-sm text-slate-900">{rec.title}</h3>
+                  <h3 className="font-bold text-sm text-white">{rec.title}</h3>
                   <p className="text-xs text-slate-500">{rec.donor_name} • {rec.pickup_address}</p>
 
-                  <div className="bg-slate-50 p-2.5 rounded-xl border border-slate-100 my-2 space-y-1 text-xs">
+                  <div className="bg-[#0f1923] p-2.5 rounded-xl border border-white/6 my-2 space-y-1 text-xs">
                     <div className="flex justify-between">
                       <span className="text-slate-500">Available:</span>
                       <span className="font-bold text-emerald-700">{rec.available_quantity} {rec.unit}</span>
@@ -264,11 +264,11 @@ export function NgoDashboard() {
       </div>
 
       {/* Section: My Food Requests Tracking Table */}
-      <div className="bg-white rounded-3xl border border-slate-200 shadow-xs overflow-hidden">
-        <div className="p-5 border-b border-slate-100 flex flex-col md:flex-row md:items-center justify-between gap-4 bg-slate-50">
+      <div className="bg-[#111827] rounded-3xl border border-white/10 shadow-xs overflow-hidden">
+        <div className="p-5 border-b border-white/6 flex flex-col md:flex-row md:items-center justify-between gap-4 bg-[#0f1923]">
           <div>
             <div className="flex items-center gap-2">
-              <h2 className="font-extrabold text-base text-slate-900">
+              <h2 className="font-extrabold text-base text-white">
                 My Requests & Delivery Status Tracker
               </h2>
               {totalMealsRescued > 0 && (
@@ -291,15 +291,15 @@ export function NgoDashboard() {
                 placeholder="Search requests..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-8 pr-3 py-1.5 text-xs bg-white border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/20"
+                className="w-full pl-8 pr-3 py-1.5 text-xs bg-[#111827] border border-white/10 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/20"
               />
             </div>
 
-            <div className="flex items-center gap-1 bg-white p-1 rounded-xl border border-slate-200 text-xs font-bold">
+            <div className="flex items-center gap-1 bg-[#111827] p-1 rounded-xl border border-white/10 text-xs font-bold">
               <button
                 onClick={() => setRequestFilter('all')}
                 className={`px-2.5 py-1 rounded-lg transition cursor-pointer ${
-                  requestFilter === 'all' ? 'bg-blue-600 text-white shadow-xs' : 'text-slate-500 hover:text-slate-800'
+                  requestFilter === 'all' ? 'bg-blue-600 text-white shadow-xs' : 'text-slate-500 hover:text-slate-100'
                 }`}
               >
                 All ({requests.length})
@@ -307,7 +307,7 @@ export function NgoDashboard() {
               <button
                 onClick={() => setRequestFilter('active')}
                 className={`px-2.5 py-1 rounded-lg transition cursor-pointer ${
-                  requestFilter === 'active' ? 'bg-blue-600 text-white shadow-xs' : 'text-slate-500 hover:text-slate-800'
+                  requestFilter === 'active' ? 'bg-blue-600 text-white shadow-xs' : 'text-slate-500 hover:text-slate-100'
                 }`}
               >
                 Active ({activeRequests.length})
@@ -315,7 +315,7 @@ export function NgoDashboard() {
               <button
                 onClick={() => setRequestFilter('fulfilled')}
                 className={`px-2.5 py-1 rounded-lg transition cursor-pointer ${
-                  requestFilter === 'fulfilled' ? 'bg-blue-600 text-white shadow-xs' : 'text-slate-500 hover:text-slate-800'
+                  requestFilter === 'fulfilled' ? 'bg-blue-600 text-white shadow-xs' : 'text-slate-500 hover:text-slate-100'
                 }`}
               >
                 Fulfilled ({fulfilledRequests.length})
@@ -350,13 +350,13 @@ export function NgoDashboard() {
                       ? 'border-teal-200 bg-teal-50/20'
                       : req.status === 'REJECTED'
                       ? 'border-rose-200 bg-rose-50/20'
-                      : 'border-slate-200 bg-white'
+                      : 'border-white/10 bg-[#111827]'
                   }`}
                 >
-                  <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 pb-3 border-b border-slate-100">
+                  <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 pb-3 border-b border-white/6">
                     <div>
                       <div className="flex items-center gap-2">
-                        <h3 className="font-bold text-sm text-slate-900">
+                        <h3 className="font-bold text-sm text-white">
                           {req.donation?.title || 'Donation Item'}
                         </h3>
                         <span
@@ -368,7 +368,7 @@ export function NgoDashboard() {
                               : req.status === 'REJECTED'
                               ? 'bg-rose-100 text-rose-800'
                               : req.status === 'CANCELLED'
-                              ? 'bg-slate-200 text-slate-600'
+                              ? 'bg-slate-200 text-slate-400'
                               : 'bg-amber-100 text-amber-800'
                           }`}
                         >
@@ -412,19 +412,19 @@ export function NgoDashboard() {
                   {/* Visual Live Logistics Tracker */}
                   <div className="py-2">
                     <div className="grid grid-cols-5 gap-1 text-center text-[10px] font-bold">
-                      <div className={`p-1.5 rounded-lg ${['PENDING', 'ACCEPTED', 'FULFILLED'].includes(req.status) ? 'bg-blue-100 text-blue-900' : 'bg-slate-100 text-slate-400'}`}>
+                      <div className={`p-1.5 rounded-lg ${['PENDING', 'ACCEPTED', 'FULFILLED'].includes(req.status) ? 'bg-blue-100 text-blue-900' : 'bg-[#141c25] text-slate-400'}`}>
                         1. Requested
                       </div>
-                      <div className={`p-1.5 rounded-lg ${['ACCEPTED', 'FULFILLED'].includes(req.status) ? 'bg-emerald-100 text-emerald-900' : 'bg-slate-100 text-slate-400'}`}>
+                      <div className={`p-1.5 rounded-lg ${['ACCEPTED', 'FULFILLED'].includes(req.status) ? 'bg-emerald-100 text-emerald-900' : 'bg-[#141c25] text-slate-400'}`}>
                         2. Accepted
                       </div>
-                      <div className={`p-1.5 rounded-lg ${req.has_pickup_assignment ? 'bg-amber-100 text-amber-900' : 'bg-slate-100 text-slate-400'}`}>
+                      <div className={`p-1.5 rounded-lg ${req.has_pickup_assignment ? 'bg-amber-100 text-amber-900' : 'bg-[#141c25] text-slate-400'}`}>
                         3. Dispatched
                       </div>
-                      <div className={`p-1.5 rounded-lg ${['FOOD_COLLECTED', 'EN_ROUTE_DELIVERY', 'DELIVERED'].includes(req.pickup_status) || req.status === 'FULFILLED' ? 'bg-purple-100 text-purple-900' : 'bg-slate-100 text-slate-400'}`}>
+                      <div className={`p-1.5 rounded-lg ${['FOOD_COLLECTED', 'EN_ROUTE_DELIVERY', 'DELIVERED'].includes(req.pickup_status) || req.status === 'FULFILLED' ? 'bg-purple-100 text-purple-900' : 'bg-[#141c25] text-slate-400'}`}>
                         4. Collected
                       </div>
-                      <div className={`p-1.5 rounded-lg ${req.status === 'FULFILLED' || req.pickup_status === 'DELIVERED' ? 'bg-teal-100 text-teal-900' : 'bg-slate-100 text-slate-400'}`}>
+                      <div className={`p-1.5 rounded-lg ${req.status === 'FULFILLED' || req.pickup_status === 'DELIVERED' ? 'bg-teal-100 text-teal-900' : 'bg-[#141c25] text-slate-400'}`}>
                         5. Delivered ✓
                       </div>
                     </div>
@@ -432,13 +432,13 @@ export function NgoDashboard() {
 
                   {/* Assigned Volunteer Courier Card (if active) */}
                   {req.volunteer_details && (
-                    <div className="p-2.5 bg-white rounded-xl border border-amber-200 flex items-center justify-between text-xs">
+                    <div className="p-2.5 bg-[#111827] rounded-xl border border-amber-200 flex items-center justify-between text-xs">
                       <div className="flex items-center gap-2">
                         <div className="w-7 h-7 rounded-lg bg-amber-100 text-amber-800 flex items-center justify-center font-bold text-xs">
                           🚚
                         </div>
                         <div>
-                          <span className="font-bold text-slate-900">{req.volunteer_details.name}</span>
+                          <span className="font-bold text-white">{req.volunteer_details.name}</span>
                           <span className="text-[11px] text-slate-500 ml-1.5">({req.volunteer_details.vehicle})</span>
                         </div>
                       </div>
@@ -452,10 +452,10 @@ export function NgoDashboard() {
                   )}
 
                   {/* Notes / Details Footer */}
-                  <div className="pt-2 text-xs flex flex-wrap gap-4 text-slate-600">
+                  <div className="pt-2 text-xs flex flex-wrap gap-4 text-slate-400">
                     {req.donor_notes && (
                       <div>
-                        Donor Note: <strong className="text-slate-800">{req.donor_notes}</strong>
+                        Donor Note: <strong className="text-slate-100">{req.donor_notes}</strong>
                       </div>
                     )}
                     {req.rejection_reason && (
@@ -488,20 +488,20 @@ export function NgoDashboard() {
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.95 }}
-              className="bg-white rounded-3xl shadow-2xl max-w-md w-full border border-slate-200 overflow-hidden"
+              className="bg-[#111827] rounded-3xl shadow-2xl max-w-md w-full border border-white/10 overflow-hidden"
             >
-              <div className="p-5 border-b border-slate-100 flex items-center justify-between bg-slate-50">
+              <div className="p-5 border-b border-white/6 flex items-center justify-between bg-[#0f1923]">
                 <div>
                   <span className="text-[10px] font-bold uppercase tracking-wider text-emerald-600">
                     Proof of Delivery
                   </span>
-                  <h3 className="font-bold text-slate-900 text-base">
+                  <h3 className="font-bold text-white text-base">
                     Confirm Food Receipt & Quality
                   </h3>
                 </div>
                 <button
                   onClick={() => setConfirmModalReq(null)}
-                  className="p-1 rounded-lg text-slate-400 hover:text-slate-600 cursor-pointer"
+                  className="p-1 rounded-lg text-slate-400 hover:text-slate-400 cursor-pointer"
                 >
                   <X className="w-5 h-5" />
                 </button>
@@ -519,7 +519,7 @@ export function NgoDashboard() {
 
                 {/* Rating 1-5 */}
                 <div>
-                  <label className="block font-bold text-slate-700 mb-1.5">
+                  <label className="block font-bold text-slate-300 mb-1.5">
                     Food Quality & Temperature Rating
                   </label>
                   <div className="flex items-center gap-2">
@@ -539,7 +539,7 @@ export function NgoDashboard() {
                         />
                       </button>
                     ))}
-                    <span className="text-xs font-bold text-slate-600 ml-2">
+                    <span className="text-xs font-bold text-slate-400 ml-2">
                       {feedbackRating === 5
                         ? 'Excellent (Fresh & Safe)'
                         : feedbackRating === 4
@@ -553,7 +553,7 @@ export function NgoDashboard() {
 
                 {/* Feedback Note */}
                 <div>
-                  <label className="block font-bold text-slate-700 mb-1">
+                  <label className="block font-bold text-slate-300 mb-1">
                     Beneficiary Distribution Note / Feedback
                   </label>
                   <textarea
@@ -561,16 +561,16 @@ export function NgoDashboard() {
                     placeholder="e.g. Received warm in tamper-evident sealed pans. Distributed immediately to 65 children at evening meal service."
                     value={feedbackNotes}
                     onChange={(e) => setFeedbackNotes(e.target.value)}
-                    className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-emerald-500 outline-none"
+                    className="w-full px-3 py-2 bg-[#0f1923] border border-white/10 rounded-xl focus:bg-[#111827] focus:ring-2 focus:ring-emerald-500 outline-none"
                     required
                   />
                 </div>
 
-                <div className="pt-3 border-t border-slate-100 flex items-center justify-end gap-2">
+                <div className="pt-3 border-t border-white/6 flex items-center justify-end gap-2">
                   <button
                     type="button"
                     onClick={() => setConfirmModalReq(null)}
-                    className="px-4 py-2 rounded-xl text-slate-600 hover:bg-slate-100 font-semibold cursor-pointer"
+                    className="px-4 py-2 rounded-xl text-slate-400 hover:bg-[#141c25] font-semibold cursor-pointer"
                   >
                     Cancel
                   </button>

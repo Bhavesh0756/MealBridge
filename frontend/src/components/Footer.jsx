@@ -10,7 +10,7 @@ export function Footer() {
           {/* Col 1 */}
           <div className="space-y-3">
             <div className="flex items-center gap-2 text-white">
-              <div className="w-8 h-8 rounded-lg bg-emerald-500 flex items-center justify-center font-bold text-slate-900">
+              <div className="w-8 h-8 rounded-lg bg-emerald-500 flex items-center justify-center font-bold text-white">
                 <Utensils className="w-4 h-4" />
               </div>
               <span className="font-extrabold text-lg">MealBridge</span>
