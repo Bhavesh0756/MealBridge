@@ -22,4 +22,8 @@ export const pickupsApi = {
     });
     return res.data;
   },
+  unclaimPickup: async (id, reason = '') => {
+    const res = await api.post(`/pickups/${id}/unclaim/`, { reason });
+    return res.data;
+  },
 };

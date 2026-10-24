@@ -61,6 +61,19 @@ export function VolunteerDashboard() {
     }
   };
 
+  const handleUnclaimPickup = async (pickupId) => {
+    const reason = window.prompt('Please provide a reason for releasing this mission back to the pool (e.g., flat tire, schedule emergency):');
+    if (reason === null) return;
+    try {
+      await pickupsApi.unclaimPickup(pickupId, reason || 'Volunteer released assignment');
+      toastInfo('Mission released back to the available pool for another volunteer.');
+      loadData();
+    } catch (err) {
+      const msg = err.response?.data?.error || 'Failed to release mission.';
+      toastError(msg);
+    }
+  };
+
   const handleOpenStatusModal = (pickup, nextStatus) => {
     setActivePickupForUpdate(pickup);
     setTargetStatus(nextStatus);
@@ -288,6 +301,15 @@ export function VolunteerDashboard() {
                             className="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold shadow-xs transition cursor-pointer"
                           >
                             {stepInfo.label} →
+                          </button>
+                        )}
+                        {['CLAIMED', 'EN_ROUTE_PICKUP'].includes(p.status) && (
+                          <button
+                            onClick={() => handleUnclaimPickup(p.id)}
+                            className="px-3 py-2 text-amber-700 hover:bg-amber-50 border border-amber-300 rounded-xl text-xs font-semibold transition cursor-pointer"
+                            title="Release this mission back to the community dispatch pool"
+                          >
+                            Release Mission
                           </button>
                         )}
                         <button

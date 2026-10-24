@@ -46,7 +46,7 @@ class PickupAssignmentViewSet(viewsets.ModelViewSet):
         return PickupAssignment.objects.none()
 
     def get_permissions(self):
-        if self.action in ['claim', 'update_status']:
+        if self.action in ['claim', 'unclaim', 'update_status']:
             return [permissions.IsAuthenticated(), IsVolunteer(), IsVerified()]
         return [permissions.IsAuthenticated()]
 
@@ -124,6 +124,54 @@ class PickupAssignmentViewSet(viewsets.ModelViewSet):
                 entity_type='PickupAssignment',
                 entity_id=str(pickup.id),
                 details={'volunteer': request.user.email}
+            )
+
+        return Response(PickupAssignmentSerializer(pickup).data)
+
+    @action(detail=True, methods=['post'])
+    def unclaim(self, request, pk=None):
+        """Volunteer releases a claimed assignment back to the available pool before food is collected."""
+        reason = request.data.get('reason', 'Volunteer reported an unexpected scheduling conflict or emergency.')
+        with transaction.atomic():
+            pickup = get_object_or_404(
+                PickupAssignment.objects.select_for_update(),
+                pk=pk,
+                volunteer=request.user
+            )
+
+            if pickup.status not in [PickupAssignment.Status.CLAIMED, PickupAssignment.Status.EN_ROUTE_PICKUP]:
+                return Response(
+                    {'error': 'Cannot release mission once food has already been collected from the donor.'},
+                    status=status.HTTP_400_BAD_REQUEST
+                )
+
+            previous_status = pickup.status
+            pickup.volunteer = None
+            pickup.status = PickupAssignment.Status.READY_FOR_PICKUP
+            pickup.save()
+
+            PickupStatusLog.objects.create(
+                assignment=pickup,
+                status=PickupAssignment.Status.READY_FOR_PICKUP,
+                changed_by=request.user,
+                notes=f"Released back to pool by volunteer ({reason})"
+            )
+
+            Notification.objects.create(
+                recipient=pickup.request.recipient,
+                title="Volunteer Reassignment Notice ℹ️",
+                message=f"Mission for '{pickup.request.donation.title}' was returned to the pool ({reason}) and is available for other volunteers.",
+                notification_type=Notification.NotificationType.PICKUP_CLAIMED,
+                related_entity_type='pickup',
+                related_entity_id=str(pickup.id)
+            )
+
+            AuditLog.objects.create(
+                user=request.user,
+                action='PICKUP_UNCLAIMED',
+                entity_type='PickupAssignment',
+                entity_id=str(pickup.id),
+                details={'previous_status': previous_status, 'reason': reason}
             )
 
         return Response(PickupAssignmentSerializer(pickup).data)
