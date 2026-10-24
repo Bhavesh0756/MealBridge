@@ -24,7 +24,7 @@ class DonationRequestListSerializer(serializers.ModelSerializer):
             'requested_quantity', 'status', 'beneficiary_notes',
             'donor_notes', 'rejection_reason', 'responded_at',
             'created_at', 'has_pickup_assignment', 'pickup_status',
-            'volunteer_details'
+            'volunteer_details', 'recipient_feedback', 'rating'
         ]
 
     def get_recipient_organization(self, obj):

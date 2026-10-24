@@ -266,3 +266,53 @@ class DonationRequestViewSet(viewsets.ModelViewSet):
             )
 
         return Response({'status': 'Request cancelled successfully.'})
+
+    @action(detail=True, methods=['post'], permission_classes=[permissions.IsAuthenticated])
+    def confirm_receipt(self, request, pk=None):
+        """
+        NGO recipient confirms food was safely received and provides quality rating and feedback.
+        """
+        with transaction.atomic():
+            req = get_object_or_404(DonationRequest.objects.select_for_update(), pk=pk)
+
+            if req.recipient != request.user and not request.user.is_staff:
+                return Response({'error': 'Only the recipient NGO can confirm food delivery.'}, status=status.HTTP_403_FORBIDDEN)
+
+            feedback = request.data.get('feedback', '')
+            rating = request.data.get('rating', 5)
+
+            req.recipient_feedback = feedback
+            req.rating = int(rating) if rating else 5
+            req.status = DonationRequest.Status.FULFILLED
+            req.save(update_fields=['recipient_feedback', 'rating', 'status'])
+
+            # If there was a pickup assignment, ensure it is marked DELIVERED
+            if hasattr(req, 'pickup_assignment') and req.pickup_assignment.status != PickupAssignment.Status.DELIVERED:
+                pickup = req.pickup_assignment
+                pickup.status = PickupAssignment.Status.DELIVERED
+                pickup.delivery_time = timezone.now()
+                org = getattr(request.user, 'ngo_profile', None)
+                pickup.recipient_signature_name = org.organization_name if org else request.user.username
+                pickup.save()
+
+            # Notify donor
+            org_label = getattr(request.user, 'ngo_profile', None)
+            org_name = org_label.organization_name if org_label else request.user.email
+            Notification.objects.create(
+                recipient=req.donation.donor,
+                title="Food Delivery Confirmed by Recipient! 🌟",
+                message=f"Recipient {org_name} confirmed delivery: '{feedback}' (Rating: {rating}/5)",
+                notification_type=Notification.NotificationType.DELIVERY_COMPLETED,
+                related_entity_type='request',
+                related_entity_id=str(req.id)
+            )
+
+            AuditLog.objects.create(
+                user=request.user,
+                action='FOOD_DELIVERY_CONFIRMED',
+                entity_type='DonationRequest',
+                entity_id=str(req.id),
+                details={'rating': rating, 'feedback': feedback}
+            )
+
+        return Response(DonationRequestListSerializer(req).data)

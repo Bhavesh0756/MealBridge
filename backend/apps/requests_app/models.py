@@ -39,6 +39,16 @@ class DonationRequest(models.Model):
         help_text=_('Donor comments or reasons for acceptance/rejection.')
     )
     rejection_reason = models.CharField(max_length=255, blank=True, default='')
+    recipient_feedback = models.TextField(
+        blank=True,
+        default='',
+        help_text=_('Feedback from NGO upon food delivery receipt.')
+    )
+    rating = models.PositiveSmallIntegerField(
+        null=True,
+        blank=True,
+        help_text=_('Food quality & handover rating from 1 to 5.')
+    )
     
     responded_at = models.DateTimeField(null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)

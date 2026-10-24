@@ -21,4 +21,8 @@ export const requestsApi = {
     const res = await api.post(`/requests/${id}/cancel/`);
     return res.data;
   },
+  confirmReceipt: async (id, feedback = '', rating = 5) => {
+    const res = await api.post(`/requests/${id}/confirm_receipt/`, { feedback, rating });
+    return res.data;
+  },
 };
