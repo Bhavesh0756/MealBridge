@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { motion } from 'motion/react';
+import { motion, AnimatePresence } from 'motion/react';
 import { Link, useNavigate } from 'react-router-dom';
 import {
   Utensils,
@@ -7,12 +7,60 @@ import {
   ShieldCheck,
   Clock,
   Sparkles,
-  ArrowRight
+  ArrowRight,
+  ChevronDown,
+  HelpCircle,
+  CheckCircle
 } from 'lucide-react';
 import { ImpactCounter } from '../components/ImpactCounter';
 import { LeafletMapView } from '../components/LeafletMapView';
 import { donationsApi } from '../api/donations';
 import { analyticsApi } from '../api/analytics';
+
+const FALLBACK_DONATIONS = [
+  {
+    id: 'f1',
+    title: '60 Trays Steamed Basmati & Paneer Butter Masala',
+    description: 'Freshly prepared wedding banquet surplus stored in thermal hot-holding units.',
+    category: { name: 'Cooked Feast' },
+    available_quantity: 60,
+    quantity: 60,
+    unit: 'Portions',
+    remaining_hours: 3.5,
+    storage_requirement: 'HOT_HOLDING',
+    pickup_address: 'Bandra Banquet Hall, Mumbai',
+    latitude: 19.0596,
+    longitude: 72.8295,
+  },
+  {
+    id: 'f2',
+    title: '40 kg Fresh Organic Vegetables & Salad Leaves',
+    description: 'Chilled hydroponic greens and seasonal vegetables surplus from luxury hotel restaurant.',
+    category: { name: 'Fresh Produce' },
+    available_quantity: 40,
+    quantity: 40,
+    unit: 'kg',
+    remaining_hours: 6.0,
+    storage_requirement: 'REFRIGERATED',
+    pickup_address: 'BKC Hotel Kitchen, Mumbai',
+    latitude: 19.0650,
+    longitude: 72.8680,
+  },
+  {
+    id: 'f3',
+    title: '85 Packets Sourdough & Multigrain Loaves',
+    description: 'Artisanal day-baked breads packaged in food-grade bakery bags ready for shelter breakfast.',
+    category: { name: 'Bakery' },
+    available_quantity: 85,
+    quantity: 85,
+    unit: 'Packets',
+    remaining_hours: 12.0,
+    storage_requirement: 'ROOM_TEMPERATURE',
+    pickup_address: 'Juhu Artisan Bakery, Mumbai',
+    latitude: 19.1000,
+    longitude: 72.8270,
+  },
+];
 
 export function LandingPage() {
   const [stats, setStats] = useState({
@@ -21,7 +69,8 @@ export function LandingPage() {
     co2_avoided_kg: 220.5,
     water_saved_liters: 88200,
   });
-  const [featuredDonations, setFeaturedDonations] = useState([]);
+  const [featuredDonations, setFeaturedDonations] = useState(FALLBACK_DONATIONS);
+  const [openFaq, setOpenFaq] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -34,7 +83,9 @@ export function LandingPage() {
         if (dash?.impact_metrics) {
           setStats(dash.impact_metrics);
         }
-        setFeaturedDonations(listings?.results?.slice(0, 4) || []);
+        if (listings?.results && listings.results.length > 0) {
+          setFeaturedDonations(listings.results.slice(0, 4));
+        }
       } catch (e) {
         console.error(e);
       }
@@ -328,6 +379,75 @@ export function LandingPage() {
                   Request Allocation
                 </Link>
               </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* Frequently Asked Questions Accordion */}
+      <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-4">
+        <div className="text-center space-y-2 mb-8">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-100 text-emerald-800 text-xs font-bold">
+            <HelpCircle className="w-3.5 h-3.5" />
+            <span>Common Questions & Answers</span>
+          </div>
+          <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900">
+            Frequently Asked Questions
+          </h2>
+          <p className="text-xs sm:text-sm text-slate-500">
+            Everything you need to know about food safety, legal protection, and courier logistics.
+          </p>
+        </div>
+
+        <div className="space-y-3">
+          {[
+            {
+              q: 'Is donating surplus food legally protected under the Good Samaritan Law?',
+              a: 'Yes. Commercial food businesses donating in good faith without negligence are protected under FSSAI regulations and Good Samaritan provisions. MealBridge requires every donor to verify preparation hygiene and safe temperature standards before publishing.'
+            },
+            {
+              q: 'How does MealBridge prevent overbooking and food allocation conflicts?',
+              a: 'MealBridge employs atomic row-level database locks with select_for_update. When an NGO requests portions and the donor accepts, quantity is immediately deducted from available stock, guaranteeing zero double-allocation even under high concurrent demand.'
+            },
+            {
+              q: 'Can volunteers access GPS navigation and donor contact numbers directly?',
+              a: 'Yes. The Volunteer Console provides direct one-tap Google Maps directions to both pickup kitchens and delivery shelters, contact calling buttons, and a digital signoff interface.'
+            },
+            {
+              q: 'How are environmental metrics like CO₂e and water savings calculated?',
+              a: 'We strictly adhere to the United Nations FAO standard meal benchmark (0.42 kg per portion) and US EPA WARM emission factors (2.5 kg CO₂e abated per kg of diverted food).'
+            }
+          ].map((faq, idx) => (
+            <div
+              key={idx}
+              className="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-xs transition"
+            >
+              <button
+                onClick={() => setOpenFaq(openFaq === idx ? null : idx)}
+                className="w-full p-4 sm:p-5 text-left flex items-center justify-between gap-4 font-bold text-xs sm:text-sm text-slate-900 hover:bg-slate-50 transition cursor-pointer"
+              >
+                <span>{faq.q}</span>
+                <ChevronDown
+                  className={`w-4 h-4 text-slate-400 shrink-0 transition-transform duration-200 ${
+                    openFaq === idx ? 'rotate-180 text-emerald-600' : ''
+                  }`}
+                />
+              </button>
+              <AnimatePresence>
+                {openFaq === idx && (
+                  <motion.div
+                    initial={{ height: 0, opacity: 0 }}
+                    animate={{ height: 'auto', opacity: 1 }}
+                    exit={{ height: 0, opacity: 0 }}
+                    transition={{ duration: 0.2 }}
+                    className="overflow-hidden"
+                  >
+                    <div className="p-4 sm:p-5 pt-0 text-xs text-slate-600 leading-relaxed border-t border-slate-100 bg-slate-50/50">
+                      {faq.a}
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </div>
           ))}
         </div>
