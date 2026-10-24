@@ -5,6 +5,17 @@ import { useNotifications } from '../context/NotificationContext';
 
 export function NotificationDrawer() {
   const { notifications, unreadCount, drawerOpen, setDrawerOpen, markAsRead, markAllRead } = useNotifications();
+  const [filter, setFilter] = React.useState('all'); // 'all' | 'unread' | 'pickups'
+
+  const filteredNotifications = React.useMemo(() => {
+    return notifications.filter((n) => {
+      if (filter === 'unread') return !n.is_read;
+      if (filter === 'pickups') {
+        return ['FOOD_COLLECTED', 'PICKUP_READY', 'PICKUP_CLAIMED', 'DELIVERY_COMPLETED', 'PICKUP_FAILED'].includes(n.notification_type);
+      }
+      return true;
+    });
+  }, [notifications, filter]);
 
   const getIcon = (type) => {
     switch (type) {
@@ -79,15 +90,43 @@ export function NotificationDrawer() {
               </div>
             </div>
 
+            {/* Category Filter Chips */}
+            <div className="px-4 py-2 border-b border-slate-100 flex items-center gap-1.5 bg-white text-xs">
+              <button
+                onClick={() => setFilter('all')}
+                className={`px-2.5 py-1 rounded-lg font-bold transition cursor-pointer ${
+                  filter === 'all' ? 'bg-slate-900 text-white shadow-xs' : 'text-slate-500 hover:bg-slate-100'
+                }`}
+              >
+                All ({notifications.length})
+              </button>
+              <button
+                onClick={() => setFilter('unread')}
+                className={`px-2.5 py-1 rounded-lg font-bold transition cursor-pointer ${
+                  filter === 'unread' ? 'bg-emerald-600 text-white shadow-xs' : 'text-slate-500 hover:bg-slate-100'
+                }`}
+              >
+                Unread ({unreadCount})
+              </button>
+              <button
+                onClick={() => setFilter('pickups')}
+                className={`px-2.5 py-1 rounded-lg font-bold transition cursor-pointer ${
+                  filter === 'pickups' ? 'bg-amber-600 text-white shadow-xs' : 'text-slate-500 hover:bg-slate-100'
+                }`}
+              >
+                Logistics
+              </button>
+            </div>
+
             {/* List */}
             <div className="flex-1 overflow-y-auto p-4 space-y-3">
-              {notifications.length === 0 ? (
+              {filteredNotifications.length === 0 ? (
                 <div className="text-center py-16 text-slate-400 space-y-2">
                   <Bell className="w-10 h-10 mx-auto opacity-30" />
-                  <p className="text-sm">No notifications yet</p>
+                  <p className="text-sm">No notifications matching this filter</p>
                 </div>
               ) : (
-                notifications.map((n) => (
+                filteredNotifications.map((n) => (
                   <motion.div
                     key={n.id}
                     layout
