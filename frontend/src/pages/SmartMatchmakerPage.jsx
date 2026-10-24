@@ -96,14 +96,14 @@ export function SmartMatchmakerPage() {
   };
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-8">
       {/* Header */}
-      <div className="space-y-2 pb-4 border-b border-slate-200">
-        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-100 text-amber-900 text-xs font-bold">
-          <Sparkles className="w-3.5 h-3.5 text-amber-600" />
-          <span>Transparent Rule-Based Matchmaker</span>
+      <div className="space-y-3 pb-6 border-b border-slate-200/80">
+        <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-amber-50 text-amber-900 text-[11px] font-black uppercase tracking-widest border border-amber-200/60">
+          <Sparkles className="w-3.5 h-3.5 text-amber-500 animate-pulse" />
+          <span>Algorithmic Allocation Intelligence</span>
         </div>
-        <h1 className="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight">
+        <h1 className="font-display text-3xl sm:text-5xl font-black text-slate-900 tracking-tight">
           Smart Food Rescue Allocation Engine
         </h1>
         <p className="text-sm text-slate-600 max-w-2xl leading-relaxed">
@@ -112,43 +112,43 @@ export function SmartMatchmakerPage() {
       </div>
 
       {/* Matching Parameters Explainer Card */}
-      <div className="bg-white p-6 rounded-3xl border border-slate-200 shadow-xs space-y-4">
+      <div className="bg-white/90 backdrop-blur-md p-6 sm:p-8 rounded-3xl border border-slate-200/80 shadow-md space-y-6">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
-            <h3 className="font-bold text-sm text-slate-900">Search Radius & Feasibility Filter</h3>
+            <h3 className="font-display font-bold text-base text-slate-900">Search Radius & Feasibility Filter</h3>
             <p className="text-xs text-slate-500">Adjust the transport range to explore nearby surplus matches.</p>
           </div>
           <div className="flex items-center gap-4 flex-wrap">
             {/* Min score chips */}
-            <div className="flex items-center gap-1 bg-slate-100 p-1 rounded-xl">
+            <div className="flex items-center gap-1.5 bg-slate-100/80 p-1 rounded-2xl border border-slate-200/60 shadow-2xs">
               <button
                 onClick={() => setMinScore(0)}
-                className={`px-2.5 py-1 rounded-lg text-xs font-bold transition cursor-pointer ${
-                  minScore === 0 ? 'bg-white text-slate-900 shadow-xs' : 'text-slate-500 hover:text-slate-700'
+                className={`px-3 py-1.5 rounded-xl text-xs font-black transition-all cursor-pointer ${
+                  minScore === 0 ? 'bg-white text-emerald-800 shadow-xs border border-slate-200/60 scale-[1.02]' : 'text-slate-600 hover:text-slate-900'
                 }`}
               >
                 All
               </button>
               <button
                 onClick={() => setMinScore(60)}
-                className={`px-2.5 py-1 rounded-lg text-xs font-bold transition cursor-pointer ${
-                  minScore === 60 ? 'bg-white text-slate-900 shadow-xs' : 'text-slate-500 hover:text-slate-700'
+                className={`px-3 py-1.5 rounded-xl text-xs font-black transition-all cursor-pointer ${
+                  minScore === 60 ? 'bg-white text-emerald-800 shadow-xs border border-slate-200/60 scale-[1.02]' : 'text-slate-600 hover:text-slate-900'
                 }`}
               >
                 &ge;60% Score
               </button>
               <button
                 onClick={() => setMinScore(80)}
-                className={`px-2.5 py-1 rounded-lg text-xs font-bold transition cursor-pointer ${
-                  minScore === 80 ? 'bg-white text-slate-900 shadow-xs' : 'text-slate-500 hover:text-slate-700'
+                className={`px-3 py-1.5 rounded-xl text-xs font-black transition-all cursor-pointer ${
+                  minScore === 80 ? 'bg-white text-emerald-800 shadow-xs border border-slate-200/60 scale-[1.02]' : 'text-slate-600 hover:text-slate-900'
                 }`}
               >
                 &ge;80% Elite
               </button>
             </div>
 
-            <div className="flex items-center gap-2">
-              <span className="text-xs font-bold text-slate-700">{radius} km</span>
+            <div className="flex items-center gap-2.5 bg-slate-50 px-3.5 py-1.5 rounded-2xl border border-slate-200">
+              <span className="text-xs font-black text-slate-800">{radius} km</span>
               <input
                 type="range"
                 min="5"
@@ -163,31 +163,31 @@ export function SmartMatchmakerPage() {
         </div>
 
         {/* 5-Pillar Score Formula */}
-        <div className="grid grid-cols-2 sm:grid-cols-5 gap-3 pt-3 border-t border-slate-100 text-center">
-          <div className="p-3 bg-emerald-50/60 rounded-xl border border-emerald-100">
-            <div className="font-extrabold text-sm text-emerald-800">30 Pts</div>
-            <div className="text-[11px] text-slate-600 font-semibold mt-0.5">Geographic Proximity</div>
-            <div className="text-[10px] text-slate-400">Haversine formula &lt;3km</div>
+        <div className="grid grid-cols-2 sm:grid-cols-5 gap-3.5 pt-4 border-t border-slate-100 text-center">
+          <div className="p-4 bg-emerald-50/60 rounded-2xl border border-emerald-200/60 hover:shadow-md transition">
+            <div className="font-display font-black text-base text-emerald-800">30 Pts</div>
+            <div className="text-[11px] text-slate-800 font-bold mt-1">Geographic Proximity</div>
+            <div className="text-[10px] text-slate-500 mt-0.5">Haversine formula &lt;3km</div>
           </div>
-          <div className="p-3 bg-amber-50/60 rounded-xl border border-amber-100">
-            <div className="font-extrabold text-sm text-amber-800">25 Pts</div>
-            <div className="text-[11px] text-slate-600 font-semibold mt-0.5">Rescue Urgency</div>
-            <div className="text-[10px] text-slate-400">Expiry deadline &lt;3 hrs</div>
+          <div className="p-4 bg-amber-50/60 rounded-2xl border border-amber-200/60 hover:shadow-md transition">
+            <div className="font-display font-black text-base text-amber-800">25 Pts</div>
+            <div className="text-[11px] text-slate-800 font-bold mt-1">Rescue Urgency</div>
+            <div className="text-[10px] text-slate-500 mt-0.5">Expiry deadline &lt;3 hrs</div>
           </div>
-          <div className="p-3 bg-blue-50/60 rounded-xl border border-blue-100">
-            <div className="font-extrabold text-sm text-blue-800">20 Pts</div>
-            <div className="text-[11px] text-slate-600 font-semibold mt-0.5">Capacity Match</div>
-            <div className="text-[10px] text-slate-400">Within daily shelter capacity</div>
+          <div className="p-4 bg-blue-50/60 rounded-2xl border border-blue-200/60 hover:shadow-md transition">
+            <div className="font-display font-black text-base text-blue-800">20 Pts</div>
+            <div className="text-[11px] text-slate-800 font-bold mt-1">Capacity Match</div>
+            <div className="text-[10px] text-slate-500 mt-0.5">Within daily intake</div>
           </div>
-          <div className="p-3 bg-cyan-50/60 rounded-xl border border-cyan-100">
-            <div className="font-extrabold text-sm text-cyan-800">15 Pts</div>
-            <div className="text-[11px] text-slate-600 font-semibold mt-0.5">Storage Safe</div>
-            <div className="text-[10px] text-slate-400">Cold chain verified</div>
+          <div className="p-4 bg-cyan-50/60 rounded-2xl border border-cyan-200/60 hover:shadow-md transition">
+            <div className="font-display font-black text-base text-cyan-800">15 Pts</div>
+            <div className="text-[11px] text-slate-800 font-bold mt-1">Storage Safe</div>
+            <div className="text-[10px] text-slate-500 mt-0.5">Cold chain verified</div>
           </div>
-          <div className="p-3 bg-purple-50/60 rounded-xl border border-purple-100">
-            <div className="font-extrabold text-sm text-purple-800">10 Pts</div>
-            <div className="text-[11px] text-slate-600 font-semibold mt-0.5">Trust Verification</div>
-            <div className="text-[10px] text-slate-400">Verified donor partner</div>
+          <div className="p-4 bg-purple-50/60 rounded-2xl border border-purple-200/60 hover:shadow-md transition">
+            <div className="font-display font-black text-base text-purple-800">10 Pts</div>
+            <div className="text-[11px] text-slate-800 font-bold mt-1">Trust Score</div>
+            <div className="text-[10px] text-slate-500 mt-0.5">Verified donor partner</div>
           </div>
         </div>
       </div>
