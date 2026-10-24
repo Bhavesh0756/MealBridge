@@ -14,6 +14,10 @@ import {
 } from 'lucide-react';
 import { ImpactCounter } from '../components/ImpactCounter';
 import { LeafletMapView } from '../components/LeafletMapView';
+import { ImpactCalculator } from '../components/ImpactCalculator';
+import { HeroRoleTabs } from '../components/HeroRoleTabs';
+import { ExpiryTimerRing } from '../components/ExpiryTimerRing';
+import { SkeletonCard } from '../components/SkeletonLoader';
 import { donationsApi } from '../api/donations';
 import { analyticsApi } from '../api/analytics';
 
@@ -70,6 +74,7 @@ export function LandingPage() {
     water_saved_liters: 88200,
   });
   const [featuredDonations, setFeaturedDonations] = useState(FALLBACK_DONATIONS);
+  const [loadingListings, setLoadingListings] = useState(true);
   const [openFaq, setOpenFaq] = useState(null);
   const navigate = useNavigate();
 
@@ -88,6 +93,8 @@ export function LandingPage() {
         }
       } catch (e) {
         console.error(e);
+      } finally {
+        setLoadingListings(false);
       }
     }
     loadData();
@@ -188,6 +195,11 @@ export function LandingPage() {
                 </div>
               </div>
             </motion.div>
+          </div>
+
+          {/* Interactive Role Tabs Preview */}
+          <div className="mt-14">
+            <HeroRoleTabs />
           </div>
         </div>
       </section>
@@ -335,53 +347,60 @@ export function LandingPage() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {featuredDonations.map((d) => (
-            <div
-              key={d.id}
-              className="bg-white rounded-2xl border border-slate-200 shadow-xs hover:shadow-md transition overflow-hidden flex flex-col"
-            >
-              <div className="p-4 bg-slate-50 border-b border-slate-100 flex items-center justify-between">
-                <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-100 text-emerald-800">
-                  {d.category?.name || 'Cooked Feasts'}
-                </span>
-                <span className="text-[11px] font-bold text-amber-700 bg-amber-50 px-2 py-0.5 rounded border border-amber-200">
-                  {d.remaining_hours !== undefined ? `${d.remaining_hours}h left` : 'Active'}
-                </span>
-              </div>
-
-              <div className="p-5 flex-1 flex flex-col justify-between space-y-4">
-                <div>
-                  <h3 className="font-bold text-base text-slate-900 mb-1">{d.title}</h3>
-                  <p className="text-xs text-slate-500 line-clamp-2">{d.description}</p>
+          {loadingListings ? (
+            Array.from({ length: 4 }).map((_, i) => <SkeletonCard key={i} />)
+          ) : (
+            featuredDonations.map((d) => (
+              <div
+                key={d.id}
+                className="stripe-card rounded-2xl border border-slate-200/90 shadow-xs hover:shadow-md transition overflow-hidden flex flex-col bg-white"
+              >
+                <div className="p-3.5 bg-slate-50/90 border-b border-slate-100 flex items-center justify-between gap-2">
+                  <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-100 text-emerald-800">
+                    {d.category?.name || 'Cooked Feasts'}
+                  </span>
+                  <ExpiryTimerRing remainingHours={d.remaining_hours} size="sm" />
                 </div>
 
-                <div className="bg-slate-50 p-3 rounded-xl border border-slate-100 space-y-1.5 text-xs">
-                  <div className="flex justify-between">
-                    <span className="text-slate-500">Available:</span>
-                    <span className="font-bold text-emerald-700">
-                      {d.available_quantity} {d.unit}
-                    </span>
+                <div className="p-5 flex-1 flex flex-col justify-between space-y-4">
+                  <div>
+                    <h3 className="font-bold text-base text-slate-900 mb-1 line-clamp-1">{d.title}</h3>
+                    <p className="text-xs text-slate-500 line-clamp-2">{d.description}</p>
                   </div>
-                  <div className="flex justify-between">
-                    <span className="text-slate-500">Storage:</span>
-                    <span className="font-medium text-slate-800">{d.storage_requirement_display || d.storage_requirement}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-slate-500">Location:</span>
-                    <span className="font-medium text-slate-800 truncate max-w-[140px]">{d.pickup_address}</span>
-                  </div>
-                </div>
 
-                <Link
-                  to="/browse"
-                  className="w-full py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold text-center transition block"
-                >
-                  Request Allocation
-                </Link>
+                  <div className="bg-slate-50 p-3 rounded-xl border border-slate-100 space-y-1.5 text-xs">
+                    <div className="flex justify-between">
+                      <span className="text-slate-500">Available:</span>
+                      <span className="font-bold text-emerald-700">
+                        {d.available_quantity} {d.unit}
+                      </span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-slate-500">Storage:</span>
+                      <span className="font-medium text-slate-800">{d.storage_requirement_display || d.storage_requirement}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-slate-500">Location:</span>
+                      <span className="font-medium text-slate-800 truncate max-w-[140px]">{d.pickup_address}</span>
+                    </div>
+                  </div>
+
+                  <Link
+                    to="/browse"
+                    className="w-full py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold text-center transition block shadow-xs"
+                  >
+                    Request Allocation
+                  </Link>
+                </div>
               </div>
-            </div>
-          ))}
+            ))
+          )}
         </div>
+      </section>
+
+      {/* Interactive ESG ROI Impact Calculator Section */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-4">
+        <ImpactCalculator />
       </section>
 
       {/* Frequently Asked Questions Accordion */}
