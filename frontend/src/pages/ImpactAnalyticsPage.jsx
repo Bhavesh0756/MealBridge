@@ -74,45 +74,45 @@ export function ImpactAnalyticsPage() {
   }
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-10">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-10">
       {/* Header */}
-      <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 pb-4 border-b border-slate-200">
+      <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-6 border-b border-slate-200/80">
         <div className="space-y-2">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-100 text-emerald-900 text-xs font-bold">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-emerald-50 text-emerald-800 text-[11px] font-black uppercase tracking-widest border border-emerald-200/60">
             <BarChart3 className="w-3.5 h-3.5 text-emerald-600" />
-            <span>Transparent Ecological & Social Measurement</span>
+            <span>Audited ESG Impact & Sustainability Intelligence</span>
           </div>
-          <h1 className="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight">
-            Food Rescue Impact & Carbon Offset
+          <h1 className="font-display text-3xl sm:text-5xl font-black text-slate-900 tracking-tight">
+            Ecological & Social Impact Command
           </h1>
           <p className="text-sm text-slate-600 max-w-2xl leading-relaxed">
-            Every kilogram of food rescued directly prevents methane emissions from landfill decomposition while delivering essential calories to vulnerable populations.
+            Every kilogram of food rescued eliminates organic landfill decomposition, mitigates greenhouse emissions, and delivers vital calories to underserved families.
           </p>
         </div>
 
         <div className="flex items-center gap-3 flex-wrap">
           {/* Time Range Toggle */}
-          <div className="flex items-center bg-slate-100 p-1 rounded-xl text-xs font-bold">
+          <div className="flex items-center bg-slate-100/80 p-1.5 rounded-2xl text-xs font-bold border border-slate-200/60 shadow-2xs">
             <button
               onClick={() => setTimeRange('week')}
-              className={`px-3 py-1.5 rounded-lg transition cursor-pointer ${
-                timeRange === 'week' ? 'bg-white text-slate-900 shadow-xs' : 'text-slate-500 hover:text-slate-700'
+              className={`px-3.5 py-1.5 rounded-xl transition-all cursor-pointer ${
+                timeRange === 'week' ? 'bg-white text-emerald-800 shadow-xs border border-slate-200/60 scale-[1.02]' : 'text-slate-600 hover:text-slate-900'
               }`}
             >
               7 Days
             </button>
             <button
               onClick={() => setTimeRange('month')}
-              className={`px-3 py-1.5 rounded-lg transition cursor-pointer ${
-                timeRange === 'month' ? 'bg-white text-slate-900 shadow-xs' : 'text-slate-500 hover:text-slate-700'
+              className={`px-3.5 py-1.5 rounded-xl transition-all cursor-pointer ${
+                timeRange === 'month' ? 'bg-white text-emerald-800 shadow-xs border border-slate-200/60 scale-[1.02]' : 'text-slate-600 hover:text-slate-900'
               }`}
             >
               30 Days
             </button>
             <button
               onClick={() => setTimeRange('all')}
-              className={`px-3 py-1.5 rounded-lg transition cursor-pointer ${
-                timeRange === 'all' ? 'bg-white text-slate-900 shadow-xs' : 'text-slate-500 hover:text-slate-700'
+              className={`px-3.5 py-1.5 rounded-xl transition-all cursor-pointer ${
+                timeRange === 'all' ? 'bg-white text-emerald-800 shadow-xs border border-slate-200/60 scale-[1.02]' : 'text-slate-600 hover:text-slate-900'
               }`}
             >
               All Time
@@ -122,108 +122,108 @@ export function ImpactAnalyticsPage() {
           {/* Certificate Download Button */}
           <button
             onClick={() => setShowCertificate(true)}
-            className="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold shadow-xs transition flex items-center gap-1.5 cursor-pointer"
+            className="px-5 py-2.5 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white rounded-2xl text-xs font-black shadow-lg shadow-emerald-600/20 hover:scale-[1.02] transition-all flex items-center gap-2 cursor-pointer"
           >
             <Award className="w-4 h-4 text-emerald-200" />
-            <span>ESG Certificate</span>
+            <span>Generate ESG Certificate</span>
           </button>
         </div>
       </div>
 
-      {/* Hero 4 Big Metrics with Anime.js Animated Tickers */}
+      {/* Hero 4 Big Metrics with Glowing Cyber-Nature Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         {/* Metric 1 */}
-        <div className="bg-gradient-to-br from-emerald-500 to-teal-700 p-6 rounded-3xl text-white shadow-lg space-y-2">
-          <div className="p-2.5 bg-white/20 rounded-2xl w-fit">
+        <div className="relative overflow-hidden bg-gradient-to-br from-emerald-600 via-emerald-700 to-teal-800 p-7 rounded-3xl text-white shadow-xl shadow-emerald-600/20 space-y-3 group hover:scale-[1.02] transition-all duration-300">
+          <div className="p-3 bg-white/20 backdrop-blur-md rounded-2xl w-fit shadow-xs">
             <Utensils className="w-6 h-6 text-white" />
           </div>
-          <p className="text-xs text-emerald-100 font-semibold uppercase tracking-wider">
+          <p className="text-xs text-emerald-100 font-extrabold uppercase tracking-widest">
             Meals Rescued & Delivered
           </p>
-          <div className="text-4xl sm:text-5xl font-black text-white">
+          <div className="font-display text-4xl sm:text-5xl font-black text-white tracking-tight">
             <ImpactCounter targetValue={impact.meals_rescued} />
           </div>
           <p className="text-[11px] text-emerald-100/90 leading-tight">
-            Nourished shelter residents and families in urban settlements.
+            Directly nourished community shelter residents and families.
           </p>
         </div>
 
         {/* Metric 2 */}
-        <div className="bg-gradient-to-br from-amber-500 to-amber-700 p-6 rounded-3xl text-white shadow-lg space-y-2">
-          <div className="p-2.5 bg-white/20 rounded-2xl w-fit">
+        <div className="relative overflow-hidden bg-gradient-to-br from-amber-500 via-orange-600 to-amber-700 p-7 rounded-3xl text-white shadow-xl shadow-amber-600/20 space-y-3 group hover:scale-[1.02] transition-all duration-300">
+          <div className="p-3 bg-white/20 backdrop-blur-md rounded-2xl w-fit shadow-xs">
             <Leaf className="w-6 h-6 text-white" />
           </div>
-          <p className="text-xs text-amber-100 font-semibold uppercase tracking-wider">
-            Food Diverted from Landfill
+          <p className="text-xs text-amber-100 font-extrabold uppercase tracking-widest">
+            Landfill Diversion
           </p>
-          <div className="text-4xl sm:text-5xl font-black text-white">
+          <div className="font-display text-4xl sm:text-5xl font-black text-white tracking-tight">
             <ImpactCounter targetValue={impact.food_diverted_kg} suffix=" kg" decimals={1} />
           </div>
           <p className="text-[11px] text-amber-100/90 leading-tight">
-            Prevented organic waste and harmful landfill leachate.
+            Zero organic methane emissions and toxic landfill leachate.
           </p>
         </div>
 
         {/* Metric 3 */}
-        <div className="bg-gradient-to-br from-slate-900 to-slate-800 p-6 rounded-3xl text-white shadow-lg space-y-2 border border-slate-700">
-          <div className="p-2.5 bg-white/10 rounded-2xl w-fit">
-            <Award className="w-6 h-6 text-teal-400" />
+        <div className="relative overflow-hidden bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 p-7 rounded-3xl text-white shadow-xl shadow-slate-900/30 space-y-3 border border-emerald-500/30 group hover:scale-[1.02] transition-all duration-300">
+          <div className="p-3 bg-emerald-500/20 backdrop-blur-md rounded-2xl w-fit shadow-xs border border-emerald-400/30">
+            <Award className="w-6 h-6 text-emerald-400" />
           </div>
-          <p className="text-xs text-slate-400 font-semibold uppercase tracking-wider">
-            CO₂e Emissions Avoided
+          <p className="text-xs text-emerald-400 font-extrabold uppercase tracking-widest">
+            CO₂e Emissions Abated
           </p>
-          <div className="text-4xl sm:text-5xl font-black text-teal-300">
+          <div className="font-display text-4xl sm:text-5xl font-black text-emerald-300 tracking-tight">
             <ImpactCounter targetValue={impact.co2_avoided_kg} suffix=" kg" decimals={1} />
           </div>
           <p className="text-[11px] text-slate-400 leading-tight">
-            Equivalent to avoiding hundreds of car travel kilometers.
+            Equivalent to avoiding hundreds of urban vehicle passenger-km.
           </p>
         </div>
 
         {/* Metric 4 */}
-        <div className="bg-gradient-to-br from-blue-600 to-blue-800 p-6 rounded-3xl text-white shadow-lg space-y-2">
-          <div className="p-2.5 bg-white/20 rounded-2xl w-fit">
+        <div className="relative overflow-hidden bg-gradient-to-br from-blue-600 via-blue-700 to-cyan-800 p-7 rounded-3xl text-white shadow-xl shadow-blue-600/20 space-y-3 group hover:scale-[1.02] transition-all duration-300">
+          <div className="p-3 bg-white/20 backdrop-blur-md rounded-2xl w-fit shadow-xs">
             <Droplet className="w-6 h-6 text-white" />
           </div>
-          <p className="text-xs text-blue-100 font-semibold uppercase tracking-wider">
-            Agricultural Water Conserved
+          <p className="text-xs text-blue-100 font-extrabold uppercase tracking-widest">
+            Embedded Water Saved
           </p>
-          <div className="text-4xl sm:text-5xl font-black text-white">
+          <div className="font-display text-4xl sm:text-5xl font-black text-white tracking-tight">
             <ImpactCounter targetValue={impact.water_saved_liters} suffix=" L" />
           </div>
           <p className="text-[11px] text-blue-100/90 leading-tight">
-            Conserved agricultural freshwater embedded in food crops.
+            Preserved virtual agricultural irrigation embedded in produce.
           </p>
         </div>
       </div>
 
       {/* Platform Reliability & Distribution Overview */}
-      <div className="bg-white p-6 sm:p-8 rounded-3xl border border-slate-200 shadow-xs space-y-6">
+      <div className="bg-white/90 backdrop-blur-md p-6 sm:p-8 rounded-3xl border border-slate-200/80 shadow-md space-y-6">
         <div>
-          <h2 className="text-lg font-extrabold text-slate-900">Platform Performance & Logistics Health</h2>
-          <p className="text-xs text-slate-500">Live operational metrics recorded across all four user roles.</p>
+          <h2 className="font-display text-xl font-black text-slate-900">Platform Performance & Logistics Health</h2>
+          <p className="text-xs text-slate-500">Live operational metrics recorded across all four user roles in the ecosystem.</p>
         </div>
 
         <div className="grid grid-cols-2 lg:grid-cols-5 gap-4">
-          <div className="p-4 bg-slate-50 rounded-2xl border border-slate-100 text-center">
-            <div className="text-2xl font-black text-slate-900">{overview.total_donations}</div>
-            <div className="text-xs font-semibold text-slate-600 mt-1">Total Donations</div>
+          <div className="p-4 bg-slate-50/80 rounded-2xl border border-slate-100 text-center">
+            <div className="font-display text-2xl font-black text-slate-900">{overview.total_donations}</div>
+            <div className="text-xs font-bold text-slate-600 mt-1">Total Batches</div>
           </div>
-          <div className="p-4 bg-slate-50 rounded-2xl border border-slate-100 text-center">
-            <div className="text-2xl font-black text-emerald-600">{overview.active_listings}</div>
-            <div className="text-xs font-semibold text-slate-600 mt-1">Available Feeds</div>
+          <div className="p-4 bg-slate-50/80 rounded-2xl border border-slate-100 text-center">
+            <div className="font-display text-2xl font-black text-emerald-600">{overview.active_listings}</div>
+            <div className="text-xs font-bold text-slate-600 mt-1">Available Feeds</div>
           </div>
-          <div className="p-4 bg-slate-50 rounded-2xl border border-slate-100 text-center">
-            <div className="text-2xl font-black text-blue-600">{overview.completed_deliveries}</div>
-            <div className="text-xs font-semibold text-slate-600 mt-1">Rescues Completed</div>
+          <div className="p-4 bg-slate-50/80 rounded-2xl border border-slate-100 text-center">
+            <div className="font-display text-2xl font-black text-blue-600">{overview.completed_deliveries}</div>
+            <div className="text-xs font-bold text-slate-600 mt-1">Rescues Fulfilled</div>
           </div>
-          <div className="p-4 bg-slate-50 rounded-2xl border border-slate-100 text-center">
-            <div className="text-2xl font-black text-amber-600">{overview.failed_attempts}</div>
-            <div className="text-xs font-semibold text-slate-600 mt-1">Failed Attempts</div>
+          <div className="p-4 bg-slate-50/80 rounded-2xl border border-slate-100 text-center">
+            <div className="font-display text-2xl font-black text-amber-600">{overview.failed_attempts}</div>
+            <div className="text-xs font-bold text-slate-600 mt-1">Failed Attempts</div>
           </div>
-          <div className="p-4 bg-slate-50 rounded-2xl border border-slate-100 text-center col-span-2 lg:col-span-1">
-            <div className="text-2xl font-black text-teal-600">{overview.delivery_success_rate}%</div>
-            <div className="text-xs font-semibold text-slate-600 mt-1">Courier Success Rate</div>
+          <div className="p-4 bg-slate-50/80 rounded-2xl border border-slate-100 text-center col-span-2 lg:col-span-1">
+            <div className="font-display text-2xl font-black text-teal-600">{overview.delivery_success_rate}%</div>
+            <div className="text-xs font-bold text-slate-600 mt-1">Courier Success Rate</div>
           </div>
         </div>
 
@@ -238,9 +238,9 @@ export function ImpactAnalyticsPage() {
                 <div key={i} className="flex flex-col items-center gap-1.5 h-full justify-end">
                   <div
                     style={{ height: `${Math.max(15, (d.donations + d.deliveries) * 20)}%` }}
-                    className="w-full max-w-[36px] bg-emerald-500 hover:bg-emerald-600 rounded-t-lg transition relative group"
+                    className="w-full max-w-[36px] bg-gradient-to-t from-emerald-600 to-teal-400 hover:from-emerald-700 hover:to-teal-500 rounded-t-xl transition-all relative group shadow-xs"
                   >
-                    <div className="absolute -top-7 left-1/2 -translate-x-1/2 bg-slate-800 text-white text-[10px] px-1.5 py-0.5 rounded opacity-0 group-hover:opacity-100 transition whitespace-nowrap z-20">
+                    <div className="absolute -top-7 left-1/2 -translate-x-1/2 bg-slate-900 text-white text-[10px] font-bold px-2 py-0.5 rounded-lg opacity-0 group-hover:opacity-100 transition whitespace-nowrap z-20 shadow-md">
                       {d.donations} batches
                     </div>
                   </div>
