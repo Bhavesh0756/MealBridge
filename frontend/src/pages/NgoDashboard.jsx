@@ -119,12 +119,12 @@ export function NgoDashboard() {
   }
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-8">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-8 cyber-dots">
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-6 pb-6 border-b border-slate-200/80">
         <div>
           <div className="flex items-center gap-2 mb-2">
-            <span className="px-3 py-1 rounded-full text-[11px] font-black uppercase tracking-widest bg-blue-50 text-blue-800 border border-blue-200/60 flex items-center gap-1.5">
+            <span className="px-3 py-1 rounded-full text-[11px] font-black uppercase tracking-widest bg-blue-50 text-blue-900 border border-blue-300/60 flex items-center gap-1.5 shadow-2xs">
               <span className="w-2 h-2 rounded-full bg-blue-500 animate-ping" />
               NGO Community Intake Console
             </span>
@@ -141,14 +141,14 @@ export function NgoDashboard() {
         <div className="flex items-center gap-3">
           <button
             onClick={loadData}
-            className="p-3 bg-white border border-slate-200 hover:bg-slate-50 rounded-2xl text-slate-600 transition-all shadow-2xs cursor-pointer"
+            className="p-3 glass-panel border border-slate-200 hover:bg-slate-50 rounded-2xl text-slate-600 transition-all shadow-2xs cursor-pointer"
             title="Refresh dashboard"
           >
             <RefreshCw className="w-4 h-4" />
           </button>
           <Link
             to="/browse"
-            className="px-5 py-3.5 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white rounded-2xl text-xs font-black shadow-lg shadow-blue-600/25 hover:scale-[1.02] transition-all flex items-center gap-2 cursor-pointer"
+            className="px-5 py-3.5 bg-gradient-to-r from-[#0284c7] via-[#0ea5e9] to-[#06b6d4] hover:brightness-110 text-white rounded-2xl text-xs font-black shadow-lg shadow-blue-600/25 hover:scale-[1.02] transition-all flex items-center gap-2 cursor-pointer"
           >
             <span>Explore Live Feed</span>
             <ArrowRight className="w-3.5 h-3.5" />
@@ -157,9 +157,9 @@ export function NgoDashboard() {
       </div>
 
       {/* Profile & Capacity Summary Banner */}
-      <div className="relative overflow-hidden bg-gradient-to-br from-slate-950 via-blue-950 to-slate-900 rounded-3xl p-7 text-white flex flex-col md:flex-row items-center justify-between gap-6 shadow-2xl border border-blue-500/30">
+      <div className="relative overflow-hidden bg-gradient-to-br from-[#0B0F17] via-[#071712] to-[#051C14] rounded-3xl p-7 text-white flex flex-col md:flex-row items-center justify-between gap-6 shadow-2xl border border-emerald-500/30 glow-aurora">
         <div className="space-y-2 text-center md:text-left relative z-10">
-          <div className="flex items-center justify-center md:justify-start gap-2 text-xs text-blue-300 font-bold">
+          <div className="flex items-center justify-center md:justify-start gap-2 text-xs text-emerald-300 font-bold">
             <ShieldCheck className="w-4 h-4 text-emerald-400" />
             <span className="tracking-wide uppercase font-black text-[11px]">Verified NGO Distribution Facility</span>
           </div>
@@ -167,7 +167,7 @@ export function NgoDashboard() {
             {user?.ngo_profile?.organization_name || 'Community Shelter'}
           </h2>
           <p className="text-xs text-slate-300 max-w-lg leading-relaxed">
-            Daily Intake Capacity: <strong className="text-white">{user?.ngo_profile?.daily_capacity_meals || 200} meals</strong> •{' '}
+            Daily Intake Capacity: <strong className="text-white font-mono-numbers">{user?.ngo_profile?.daily_capacity_meals || 200} meals</strong> •{' '}
             {user?.ngo_profile?.cold_storage_available ? (
               <span className="text-cyan-300 font-bold">Certified Cold Storage Active ❄️</span>
             ) : (
@@ -177,16 +177,16 @@ export function NgoDashboard() {
         </div>
 
         <div className="grid grid-cols-3 gap-3 text-center shrink-0 relative z-10 w-full md:w-auto">
-          <div className="bg-white/10 backdrop-blur-md p-4 rounded-2xl border border-white/10 hover:border-blue-400/40 transition">
-            <div className="font-display text-3xl font-black text-white">{activeRequests.length}</div>
+          <div className="bg-white/10 backdrop-blur-md p-4 rounded-2xl border border-white/10 hover:border-blue-400/40 transition card-interactive shimmer-sweep-hover group">
+            <div className="font-display text-3xl font-black text-white font-mono-numbers">{activeRequests.length}</div>
             <div className="text-[10px] font-bold text-slate-300 mt-0.5 uppercase tracking-wider">Active In-Flight</div>
           </div>
-          <div className="bg-white/10 backdrop-blur-md p-4 rounded-2xl border border-white/10 hover:border-emerald-400/40 transition">
-            <div className="font-display text-3xl font-black text-emerald-400">{fulfilledRequests.length}</div>
+          <div className="bg-white/10 backdrop-blur-md p-4 rounded-2xl border border-white/10 hover:border-emerald-400/40 transition card-interactive shimmer-sweep-hover group">
+            <div className="font-display text-3xl font-black text-emerald-400 font-mono-numbers">{fulfilledRequests.length}</div>
             <div className="text-[10px] font-bold text-slate-300 mt-0.5 uppercase tracking-wider">Fulfilled Portions</div>
           </div>
-          <div className="bg-white/10 backdrop-blur-md p-4 rounded-2xl border border-white/10 hover:border-amber-400/40 transition">
-            <div className="font-display text-3xl font-black text-amber-400">{recommendations.length}</div>
+          <div className="bg-white/10 backdrop-blur-md p-4 rounded-2xl border border-white/10 hover:border-amber-400/40 transition card-interactive shimmer-sweep-hover group">
+            <div className="font-display text-3xl font-black text-amber-400 font-mono-numbers">{recommendations.length}</div>
             <div className="text-[10px] font-bold text-slate-300 mt-0.5 uppercase tracking-wider">Algorithm Matches</div>
           </div>
         </div>

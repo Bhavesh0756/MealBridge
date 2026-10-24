@@ -277,12 +277,12 @@ export function DonorDashboard() {
   }
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-8">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-8 cyber-dots">
       {/* Console Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-6 pb-6 border-b border-slate-200/80">
         <div>
           <div className="flex items-center gap-2 mb-2">
-            <span className="px-3 py-1 rounded-full text-[11px] font-black uppercase tracking-widest bg-emerald-50 text-emerald-800 border border-emerald-200/60 flex items-center gap-1.5">
+            <span className="px-3 py-1 rounded-full text-[11px] font-black uppercase tracking-widest bg-emerald-50 text-emerald-800 border border-emerald-300/60 flex items-center gap-1.5 shadow-2xs">
               <span className="w-2 h-2 rounded-full bg-emerald-500 animate-ping" />
               Donor Operational Console
             </span>
@@ -298,7 +298,7 @@ export function DonorDashboard() {
 
         <button
           onClick={() => setCreateModalOpen(true)}
-          className="px-6 py-3.5 bg-gradient-to-r from-[#047857] via-[#10b981] to-[#06b6d4] hover:from-[#065f46] hover:to-[#0891b2] text-white rounded-2xl text-xs font-black shadow-lg shadow-emerald-500/25 hover:shadow-xl hover:scale-[1.02] transition-all flex items-center gap-2 self-start sm:self-auto cursor-pointer"
+          className="px-6 py-3.5 bg-gradient-to-r from-[#047857] via-[#10b981] to-[#06b6d4] hover:brightness-110 text-white rounded-2xl text-xs font-black shadow-lg shadow-emerald-500/25 hover:shadow-xl hover:scale-[1.02] transition-all flex items-center gap-2 self-start sm:self-auto cursor-pointer"
         >
           <Plus className="w-4 h-4" />
           <span>Publish Surplus Listing</span>
@@ -307,25 +307,25 @@ export function DonorDashboard() {
 
       {/* KPI Overview Cards */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-5">
-        <div className="bg-white/90 backdrop-blur-md p-6 rounded-3xl border border-slate-200/80 shadow-md hover:shadow-xl hover:border-emerald-500/40 transition-all duration-300 space-y-1">
+        <div className="glass-panel p-6 rounded-3xl border border-slate-200/80 shadow-md card-interactive shimmer-sweep-hover space-y-1 group">
           <p className="text-xs font-extrabold uppercase tracking-widest text-slate-400">Active Listings</p>
-          <p className="font-display text-3xl sm:text-4xl font-black text-emerald-600 mt-1">{activeDonationsCount}</p>
+          <p className="font-display text-3xl sm:text-4xl font-black text-emerald-600 mt-1 font-mono-numbers">{activeDonationsCount}</p>
           <p className="text-[11px] text-slate-500 font-medium">Available for NGOs to claim</p>
         </div>
 
-        <div className="bg-white/90 backdrop-blur-md p-6 rounded-3xl border border-slate-200/80 shadow-md hover:shadow-xl hover:border-amber-500/40 transition-all duration-300 space-y-1">
+        <div className="glass-panel p-6 rounded-3xl border border-slate-200/80 shadow-md card-interactive shimmer-sweep-hover space-y-1 group">
           <p className="text-xs font-extrabold uppercase tracking-widest text-slate-400">Awaiting Approval</p>
-          <p className="font-display text-3xl sm:text-4xl font-black text-amber-500 mt-1">{pendingRequests.length}</p>
+          <p className="font-display text-3xl sm:text-4xl font-black text-amber-500 mt-1 font-mono-numbers">{pendingRequests.length}</p>
           <p className="text-[11px] text-slate-500 font-medium">Requires donor review</p>
         </div>
 
-        <div className="bg-white/90 backdrop-blur-md p-6 rounded-3xl border border-slate-200/80 shadow-md hover:shadow-xl hover:border-slate-400/40 transition-all duration-300 space-y-1">
+        <div className="glass-panel p-6 rounded-3xl border border-slate-200/80 shadow-md card-interactive shimmer-sweep-hover space-y-1 group">
           <p className="text-xs font-extrabold uppercase tracking-widest text-slate-400">Total Batches</p>
-          <p className="font-display text-3xl sm:text-4xl font-black text-slate-900 mt-1">{myDonations.length}</p>
+          <p className="font-display text-3xl sm:text-4xl font-black text-slate-900 mt-1 font-mono-numbers">{myDonations.length}</p>
           <p className="text-[11px] text-slate-500 font-medium">Lifetime rescue postings</p>
         </div>
 
-        <div className="bg-white/90 backdrop-blur-md p-6 rounded-3xl border border-slate-200/80 shadow-md hover:shadow-xl hover:border-emerald-500/40 transition-all duration-300 space-y-1">
+        <div className="glass-panel p-6 rounded-3xl border border-slate-200/80 shadow-md card-interactive shimmer-sweep-hover space-y-1 group">
           <p className="text-xs font-extrabold uppercase tracking-widest text-slate-400">Hygiene Standard</p>
           <div className="flex items-center gap-1.5 mt-2 text-emerald-600 font-black text-sm">
             <ShieldCheck className="w-5 h-5 text-emerald-600" />
