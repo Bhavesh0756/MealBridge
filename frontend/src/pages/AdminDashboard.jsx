@@ -161,12 +161,12 @@ export function AdminDashboard() {
   }
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-8">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-8 cyber-dots">
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-6 pb-6 border-b border-slate-200/80">
         <div>
           <div className="flex items-center gap-2 mb-2">
-            <span className="px-3 py-1 rounded-full text-[11px] font-black uppercase tracking-widest bg-purple-50 text-purple-800 border border-purple-200/60 flex items-center gap-1.5">
+            <span className="px-3 py-1 rounded-full text-[11px] font-black uppercase tracking-widest bg-purple-50 text-purple-900 border border-purple-300/60 flex items-center gap-1.5 shadow-2xs">
               <span className="w-2 h-2 rounded-full bg-purple-500 animate-ping" />
               Administrative Security & Control
             </span>
@@ -181,7 +181,7 @@ export function AdminDashboard() {
 
         <button
           onClick={loadAdminData}
-          className="p-3 bg-white border border-slate-200 hover:bg-slate-50 rounded-2xl text-slate-600 transition-all flex items-center gap-2 text-xs font-bold cursor-pointer shadow-2xs"
+          className="p-3 glass-panel border border-slate-200 hover:bg-slate-50 rounded-2xl text-slate-600 transition-all flex items-center gap-2 text-xs font-bold cursor-pointer shadow-2xs"
         >
           <RefreshCw className="w-4 h-4" />
           <span>Refresh Queue</span>
@@ -192,37 +192,37 @@ export function AdminDashboard() {
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-5">
         <div
           onClick={() => { setActiveTab('verification'); setStatusFilter('PENDING'); }}
-          className="bg-white/90 backdrop-blur-md p-6 rounded-3xl border border-slate-200/80 shadow-md hover:shadow-xl hover:border-amber-500/50 transition-all duration-300 space-y-1 cursor-pointer"
+          className="glass-panel p-6 rounded-3xl border border-slate-200/80 shadow-md card-interactive shimmer-sweep-hover space-y-1 cursor-pointer group"
         >
           <p className="text-xs font-extrabold uppercase tracking-widest text-slate-400">Pending Approvals</p>
-          <p className="font-display text-3xl sm:text-4xl font-black text-amber-500 mt-1">{pendingUsers.length}</p>
+          <p className="font-display text-3xl sm:text-4xl font-black text-amber-500 mt-1 font-mono-numbers">{pendingUsers.length}</p>
           <p className="text-[11px] text-slate-500 font-medium">Requires verification</p>
         </div>
 
         <div
           onClick={() => { setActiveTab('directory'); setStatusFilter('VERIFIED'); }}
-          className="bg-white/90 backdrop-blur-md p-6 rounded-3xl border border-slate-200/80 shadow-md hover:shadow-xl hover:border-emerald-500/50 transition-all duration-300 space-y-1 cursor-pointer"
+          className="glass-panel p-6 rounded-3xl border border-slate-200/80 shadow-md card-interactive shimmer-sweep-hover space-y-1 cursor-pointer group"
         >
           <p className="text-xs font-extrabold uppercase tracking-widest text-slate-400">Verified Network</p>
-          <p className="font-display text-3xl sm:text-4xl font-black text-emerald-600 mt-1">{verifiedUsers.length}</p>
+          <p className="font-display text-3xl sm:text-4xl font-black text-emerald-600 mt-1 font-mono-numbers">{verifiedUsers.length}</p>
           <p className="text-[11px] text-slate-500 font-medium">Certified platform actors</p>
         </div>
 
         <div
           onClick={() => { setActiveTab('directory'); setStatusFilter('ALL'); setRoleFilter('ALL'); }}
-          className="bg-white/90 backdrop-blur-md p-6 rounded-3xl border border-slate-200/80 shadow-md hover:shadow-xl hover:border-slate-400/50 transition-all duration-300 space-y-1 cursor-pointer"
+          className="glass-panel p-6 rounded-3xl border border-slate-200/80 shadow-md card-interactive shimmer-sweep-hover space-y-1 cursor-pointer group"
         >
           <p className="text-xs font-extrabold uppercase tracking-widest text-slate-400">Total Participants</p>
-          <p className="font-display text-3xl sm:text-4xl font-black text-slate-900 mt-1">{users.length}</p>
+          <p className="font-display text-3xl sm:text-4xl font-black text-slate-900 mt-1 font-mono-numbers">{users.length}</p>
           <p className="text-[11px] text-slate-500 font-medium">Donors, NGOs, Couriers</p>
         </div>
 
         <div
           onClick={() => setActiveTab('logs')}
-          className="bg-white/90 backdrop-blur-md p-6 rounded-3xl border border-slate-200/80 shadow-md hover:shadow-xl hover:border-purple-500/50 transition-all duration-300 space-y-1 cursor-pointer"
+          className="glass-panel p-6 rounded-3xl border border-slate-200/80 shadow-md card-interactive shimmer-sweep-hover space-y-1 cursor-pointer group"
         >
           <p className="text-xs font-extrabold uppercase tracking-widest text-slate-400">Audit Trail Events</p>
-          <p className="font-display text-3xl sm:text-4xl font-black text-purple-600 mt-1">{auditLogs.length}</p>
+          <p className="font-display text-3xl sm:text-4xl font-black text-purple-600 mt-1 font-mono-numbers">{auditLogs.length}</p>
           <p className="text-[11px] text-slate-500 font-medium">Cryptographic logs</p>
         </div>
       </div>

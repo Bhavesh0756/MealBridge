@@ -142,12 +142,12 @@ export function VolunteerDashboard() {
   }
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-8">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-8 cyber-dots">
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-6 pb-6 border-b border-slate-200/80">
         <div>
           <div className="flex items-center gap-2 mb-2">
-            <span className="px-3 py-1 rounded-full text-[11px] font-black uppercase tracking-widest bg-amber-50 text-amber-800 border border-amber-200/60 flex items-center gap-1.5">
+            <span className="px-3 py-1 rounded-full text-[11px] font-black uppercase tracking-widest bg-amber-50 text-amber-900 border border-amber-300/60 flex items-center gap-1.5 shadow-2xs">
               <span className="w-2 h-2 rounded-full bg-amber-500 animate-ping" />
               Volunteer Courier Dispatch Pool
             </span>
@@ -161,34 +161,34 @@ export function VolunteerDashboard() {
           </p>
         </div>
 
-        <div className="flex items-center gap-3 bg-white/90 backdrop-blur-md px-4 py-2.5 rounded-2xl border border-slate-200/80 shadow-xs text-xs font-bold text-slate-700">
+        <div className="flex items-center gap-3 glass-panel px-4 py-2.5 rounded-2xl border border-slate-200/80 shadow-xs text-xs font-bold text-slate-700">
           <span>Vehicle: <strong className="text-amber-800">{user?.volunteer_profile?.vehicle_type || 'Motorcycle'}</strong></span>
           <span className="text-slate-300">•</span>
-          <span>Max Capacity: <strong className="text-emerald-700">{user?.volunteer_profile?.max_transport_capacity_kg || 30} kg</strong></span>
+          <span>Max Capacity: <strong className="text-emerald-700 font-mono-numbers">{user?.volunteer_profile?.max_transport_capacity_kg || 30} kg</strong></span>
         </div>
       </div>
 
       {/* KPI Cards */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-5">
-        <div className="bg-white/90 backdrop-blur-md p-6 rounded-3xl border border-slate-200/80 shadow-md hover:shadow-xl hover:border-amber-500/40 transition-all duration-300 space-y-1">
+        <div className="glass-panel p-6 rounded-3xl border border-slate-200/80 shadow-md card-interactive shimmer-sweep-hover space-y-1 group">
           <p className="text-xs font-extrabold uppercase tracking-widest text-slate-400">Available In Pool</p>
-          <p className="font-display text-3xl sm:text-4xl font-black text-amber-600 mt-1">{availablePool.length}</p>
+          <p className="font-display text-3xl sm:text-4xl font-black text-amber-600 mt-1 font-mono-numbers">{availablePool.length}</p>
           <p className="text-[11px] text-slate-500 font-medium">Ready for immediate pickup</p>
         </div>
 
-        <div className="bg-white/90 backdrop-blur-md p-6 rounded-3xl border border-slate-200/80 shadow-md hover:shadow-xl hover:border-emerald-500/40 transition-all duration-300 space-y-1">
+        <div className="glass-panel p-6 rounded-3xl border border-slate-200/80 shadow-md card-interactive shimmer-sweep-hover space-y-1 group">
           <p className="text-xs font-extrabold uppercase tracking-widest text-slate-400">Active In Transit</p>
-          <p className="font-display text-3xl sm:text-4xl font-black text-emerald-600 mt-1">{activeDeliveries.length}</p>
+          <p className="font-display text-3xl sm:text-4xl font-black text-emerald-600 mt-1 font-mono-numbers">{activeDeliveries.length}</p>
           <p className="text-[11px] text-slate-500 font-medium">Currently en-route</p>
         </div>
 
-        <div className="bg-white/90 backdrop-blur-md p-6 rounded-3xl border border-slate-200/80 shadow-md hover:shadow-xl hover:border-teal-500/40 transition-all duration-300 space-y-1">
+        <div className="glass-panel p-6 rounded-3xl border border-slate-200/80 shadow-md card-interactive shimmer-sweep-hover space-y-1 group">
           <p className="text-xs font-extrabold uppercase tracking-widest text-slate-400">Delivered Safely</p>
-          <p className="font-display text-3xl sm:text-4xl font-black text-teal-700 mt-1">{completedDeliveries.length}</p>
+          <p className="font-display text-3xl sm:text-4xl font-black text-teal-700 mt-1 font-mono-numbers">{completedDeliveries.length}</p>
           <p className="text-[11px] text-slate-500 font-medium">Missions completed</p>
         </div>
 
-        <div className="bg-white/90 backdrop-blur-md p-6 rounded-3xl border border-slate-200/80 shadow-md hover:shadow-xl hover:border-emerald-500/40 transition-all duration-300 space-y-1">
+        <div className="glass-panel p-6 rounded-3xl border border-slate-200/80 shadow-md card-interactive shimmer-sweep-hover space-y-1 group">
           <p className="text-xs font-extrabold uppercase tracking-widest text-slate-400">Courier Readiness</p>
           <div className="flex items-center gap-1.5 mt-2 text-emerald-600 font-black text-sm">
             <CheckCircle2 className="w-5 h-5 text-emerald-600" />
