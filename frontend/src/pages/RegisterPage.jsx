@@ -150,7 +150,7 @@ export function RegisterPage() {
       </div>
 
       {/* Form Container */}
-      <div className="bg-white p-6 sm:p-8 rounded-3xl border border-slate-200 shadow-xl space-y-6">
+      <div className="stripe-card p-6 sm:p-8 rounded-3xl border border-slate-200/90 shadow-xl space-y-6 bg-white">
         {error && (
           <div className="p-3 bg-rose-50 border border-rose-200 rounded-xl text-xs text-rose-700 flex items-center gap-2">
             <AlertCircle className="w-4 h-4 shrink-0" />
