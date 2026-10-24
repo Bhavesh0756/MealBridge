@@ -19,6 +19,8 @@ import { requestsApi } from '../api/requests';
 import { useAuth } from '../context/AuthContext';
 import { useToast } from '../context/ToastContext';
 import { LeafletMapView } from '../components/LeafletMapView';
+import { ExpiryTimerRing } from '../components/ExpiryTimerRing';
+import { SkeletonFeed } from '../components/SkeletonLoader';
 import { useNavigate } from 'react-router-dom';
 
 export function BrowseFeedPage() {
@@ -345,10 +347,7 @@ export function BrowseFeedPage() {
       ) : (
         <>
           {loading ? (
-            <div className="text-center py-20 text-slate-400 space-y-2">
-              <div className="w-8 h-8 border-3 border-emerald-500 border-t-transparent rounded-full animate-spin mx-auto" />
-              <p className="text-xs font-medium">Scanning food rescue inventory...</p>
-            </div>
+            <SkeletonFeed count={6} />
           ) : displayedDonations.length === 0 ? (
             <div className="text-center py-20 bg-white rounded-2xl border border-slate-200 p-8 space-y-3">
               <Utensils className="w-12 h-12 text-slate-300 mx-auto" />
@@ -377,26 +376,23 @@ export function BrowseFeedPage() {
                   layout
                   initial={{ opacity: 0, y: 15 }}
                   animate={{ opacity: 1, y: 0 }}
-                  className="bg-white rounded-2xl border border-slate-200 shadow-xs hover:shadow-md transition overflow-hidden flex flex-col justify-between"
+                  className="stripe-card rounded-2xl border border-slate-200/90 shadow-xs hover:shadow-md transition overflow-hidden flex flex-col justify-between bg-white"
                 >
                   <div>
                     {/* Top Tag Header */}
-                    <div className="p-4 bg-slate-50 border-b border-slate-100 flex items-center justify-between">
-                      <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-emerald-100 text-emerald-800">
-                        {d.category?.name || 'Cooked Meals'}
-                      </span>
-                      <div className="flex items-center gap-2">
+                    <div className="p-3.5 bg-slate-50/90 border-b border-slate-100 flex items-center justify-between gap-2">
+                      <div className="flex items-center gap-1.5 flex-wrap">
+                        <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-emerald-100 text-emerald-800">
+                          {d.category?.name || 'Cooked Meals'}
+                        </span>
                         {d.latitude && d.longitude && calculateDistance(d.latitude, d.longitude) && (
-                          <span className="inline-flex items-center gap-0.5 text-[11px] font-semibold text-slate-600 bg-white px-2 py-0.5 rounded-md border border-slate-200">
+                          <span className="inline-flex items-center gap-0.5 text-[11px] font-semibold text-slate-600 bg-white px-2 py-0.5 rounded-md border border-slate-200 shadow-2xs">
                             <MapPin className="w-3 h-3 text-emerald-600" />
                             {calculateDistance(d.latitude, d.longitude)} km
                           </span>
                         )}
-                        <span className="text-[11px] font-bold text-slate-600 flex items-center gap-1">
-                          <Clock className="w-3.5 h-3.5 text-amber-600" />
-                          {d.remaining_hours !== undefined ? `${d.remaining_hours}h left` : 'Active'}
-                        </span>
                       </div>
+                      <ExpiryTimerRing remainingHours={d.remaining_hours} size="sm" />
                     </div>
 
                     {/* Content */}
