@@ -16,6 +16,7 @@ import {
 } from 'lucide-react';
 import { analyticsApi } from '../api/analytics';
 import { ImpactCounter } from '../components/ImpactCounter';
+import { SkeletonStat, SkeletonCard } from '../components/SkeletonLoader';
 
 export function ImpactAnalyticsPage() {
   const [data, setData] = useState(null);
@@ -66,9 +67,21 @@ export function ImpactAnalyticsPage() {
 
   if (loading) {
     return (
-      <div className="min-h-[60vh] flex flex-col items-center justify-center gap-3">
-        <div className="w-8 h-8 border-3 border-emerald-500 border-t-transparent rounded-full animate-spin" />
-        <p className="text-sm text-slate-500 font-medium">Calculating verified ecological & social metrics...</p>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-10">
+        <div className="space-y-3 pb-4 border-b border-slate-200">
+          <div className="h-4 w-32 bg-slate-200 rounded-full skeleton-shimmer" />
+          <div className="h-8 w-80 bg-slate-200 rounded-lg skeleton-shimmer" />
+          <div className="h-4 w-96 bg-slate-200 rounded-md skeleton-shimmer" />
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {Array.from({ length: 4 }).map((_, i) => (
+            <SkeletonStat key={i} />
+          ))}
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <SkeletonCard />
+          <SkeletonCard />
+        </div>
       </div>
     );
   }
