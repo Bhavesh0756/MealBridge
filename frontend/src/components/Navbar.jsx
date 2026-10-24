@@ -37,7 +37,10 @@ export function Navbar() {
   };
 
   return (
-    <header className="sticky top-0 z-40 bg-white/85 backdrop-blur-xl border-b border-slate-200/80 shadow-xs transition-all">
+    <header className="sticky top-0 z-40 bg-white/85 backdrop-blur-xl border-b border-slate-200/80 shadow-xs transition-all relative">
+      {/* Aurora Laser Underline */}
+      <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-[#10b981] to-transparent opacity-80 pointer-events-none" />
+
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
         {/* Brand */}
         <div className="flex items-center gap-8">
@@ -105,7 +108,7 @@ export function Navbar() {
                 to="/dashboard/donor"
                 className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all duration-200 ${
                   isActive('/dashboard/donor')
-                    ? 'bg-gradient-to-r from-emerald-600 to-teal-600 text-white shadow-md shadow-emerald-600/20'
+                    ? 'bg-gradient-to-r from-[#047857] via-[#10b981] to-[#06b6d4] text-white shadow-md shadow-emerald-600/20'
                     : 'text-emerald-700 hover:bg-emerald-50'
                 }`}
               >
@@ -117,7 +120,7 @@ export function Navbar() {
                 to="/dashboard/ngo"
                 className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all duration-200 ${
                   isActive('/dashboard/ngo')
-                    ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-md shadow-blue-600/20'
+                    ? 'bg-gradient-to-r from-[#0284c7] via-[#0ea5e9] to-[#06b6d4] text-white shadow-md shadow-blue-600/20'
                     : 'text-blue-700 hover:bg-blue-50'
                 }`}
               >
@@ -129,7 +132,7 @@ export function Navbar() {
                 to="/dashboard/volunteer"
                 className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all duration-200 ${
                   isActive('/dashboard/volunteer')
-                    ? 'bg-gradient-to-r from-amber-600 to-orange-600 text-white shadow-md shadow-amber-600/20'
+                    ? 'bg-gradient-to-r from-[#d97706] via-[#f59e0b] to-[#10b981] text-white shadow-md shadow-amber-600/20'
                     : 'text-amber-800 hover:bg-amber-50'
                 }`}
               >
@@ -141,7 +144,7 @@ export function Navbar() {
                 to="/dashboard/admin"
                 className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all duration-200 ${
                   isActive('/dashboard/admin')
-                    ? 'bg-gradient-to-r from-purple-600 to-pink-600 text-white shadow-md shadow-purple-600/20'
+                    ? 'bg-gradient-to-r from-[#4f46e5] via-[#7c3aed] to-[#10b981] text-white shadow-md shadow-purple-600/20'
                     : 'text-purple-700 hover:bg-purple-50'
                 }`}
               >
