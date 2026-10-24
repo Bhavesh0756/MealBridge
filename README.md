@@ -94,10 +94,10 @@ python manage.py migrate
 # Seed demonstration data
 python manage.py seed_data
 
-# Start Django development server
-python manage.py runserver
+# Start Django development server on port 8001
+python manage.py runserver 127.0.0.1:8001
 ```
-The Django REST API runs at `http://127.0.0.1:8000/`.
+The Django REST API runs at `http://127.0.0.1:8001/`.
 
 ### 3. Frontend Setup
 ```bash
@@ -109,7 +109,7 @@ npm install
 # Start Vite development server
 npm run dev
 ```
-The client application runs at `http://localhost:5173/` (with automatic proxying to `/api/` on port 8000).
+The client application runs at `http://localhost:5173/` (with automatic proxying to `/api/` on port 8001).
 
 ---
 
