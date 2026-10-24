@@ -167,53 +167,61 @@ export function BrowseFeedPage() {
   };
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-8">
       {/* Page Title & Search Bar */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-slate-200">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 pb-6 border-b border-slate-200/80">
         <div>
-          <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
-            Surplus Food Feed
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-50 text-emerald-800 text-[11px] font-black uppercase tracking-widest border border-emerald-200/60 mb-2">
+            <span className="w-2 h-2 rounded-full bg-emerald-500 animate-ping" />
+            Live Hyperlocal Network
+          </div>
+          <h1 className="font-display text-3xl sm:text-4xl font-black text-slate-900 tracking-tight">
+            Surplus Food Rescue Feed
           </h1>
-          <p className="text-xs sm:text-sm text-slate-500">
-            Real-time rescue radar for edible surplus donations from commercial kitchens.
+          <p className="text-xs sm:text-sm text-slate-500 max-w-xl">
+            Real-time rescue radar for edible surplus donations from commercial restaurants, banquets, and bakeries.
           </p>
         </div>
 
         {/* View Switcher */}
-        <div className="flex items-center gap-2 bg-slate-100 p-1 rounded-xl self-start md:self-auto">
+        <div className="flex items-center gap-1.5 bg-slate-100/80 p-1.5 rounded-2xl border border-slate-200/60 self-start md:self-auto shadow-2xs">
           <button
             onClick={() => setViewMode('grid')}
-            className={`px-3 py-1.5 rounded-lg text-xs font-bold flex items-center gap-1.5 transition cursor-pointer ${
-              viewMode === 'grid' ? 'bg-white text-slate-900 shadow-xs' : 'text-slate-500 hover:text-slate-800'
+            className={`px-4 py-2 rounded-xl text-xs font-black flex items-center gap-2 transition-all cursor-pointer ${
+              viewMode === 'grid'
+                ? 'bg-white text-emerald-800 shadow-xs border border-slate-200/60 scale-[1.02]'
+                : 'text-slate-600 hover:text-slate-900'
             }`}
           >
-            <Grid className="w-3.5 h-3.5" />
+            <Grid className="w-4 h-4" />
             <span>Card Feed</span>
           </button>
           <button
             onClick={() => setViewMode('map')}
-            className={`px-3 py-1.5 rounded-lg text-xs font-bold flex items-center gap-1.5 transition cursor-pointer ${
-              viewMode === 'map' ? 'bg-white text-slate-900 shadow-xs' : 'text-slate-500 hover:text-slate-800'
+            className={`px-4 py-2 rounded-xl text-xs font-black flex items-center gap-2 transition-all cursor-pointer ${
+              viewMode === 'map'
+                ? 'bg-white text-emerald-800 shadow-xs border border-slate-200/60 scale-[1.02]'
+                : 'text-slate-600 hover:text-slate-900'
             }`}
           >
-            <MapIcon className="w-3.5 h-3.5" />
-            <span>Interactive Map</span>
+            <MapIcon className="w-4 h-4" />
+            <span>Radar Map</span>
           </button>
         </div>
       </div>
 
       {/* Filter Controls Bar */}
-      <div className="bg-white p-4 rounded-2xl border border-slate-200 shadow-xs space-y-3">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+      <div className="bg-white/90 backdrop-blur-md p-5 rounded-3xl border border-slate-200/80 shadow-md space-y-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5">
           {/* Search Input */}
           <div className="relative">
-            <Search className="w-4 h-4 text-slate-400 absolute left-3 top-3" />
+            <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-3.5" />
             <input
               type="text"
-              placeholder="Search food, dishes, addresses..."
+              placeholder="Search dishes, venues, kitchens..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full pl-9 pr-3 py-2 text-xs bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-emerald-500 transition outline-none"
+              className="w-full pl-10 pr-3.5 py-2.5 text-xs font-medium bg-slate-50/80 border border-slate-200 rounded-2xl focus:bg-white focus:ring-2 focus:ring-emerald-500/30 focus:border-emerald-500 transition-all outline-none"
             />
           </div>
 
@@ -222,7 +230,7 @@ export function BrowseFeedPage() {
             <select
               value={selectedCategory}
               onChange={(e) => setSelectedCategory(e.target.value)}
-              className="w-full px-3 py-2 text-xs bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-emerald-500 transition outline-none text-slate-700 cursor-pointer"
+              className="w-full px-3.5 py-2.5 text-xs font-bold bg-slate-50/80 border border-slate-200 rounded-2xl focus:bg-white focus:ring-2 focus:ring-emerald-500/30 focus:border-emerald-500 transition-all outline-none text-slate-700 cursor-pointer"
             >
               <option value="">All Food Categories</option>
               {categories.map((c) => (
@@ -238,7 +246,7 @@ export function BrowseFeedPage() {
             <select
               value={selectedDietary}
               onChange={(e) => setSelectedDietary(e.target.value)}
-              className="w-full px-3 py-2 text-xs bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-emerald-500 transition outline-none text-slate-700 cursor-pointer"
+              className="w-full px-3.5 py-2.5 text-xs font-bold bg-slate-50/80 border border-slate-200 rounded-2xl focus:bg-white focus:ring-2 focus:ring-emerald-500/30 focus:border-emerald-500 transition-all outline-none text-slate-700 cursor-pointer"
             >
               <option value="">All Dietary Types</option>
               <option value="VEGETARIAN">Vegetarian Only</option>
@@ -253,7 +261,7 @@ export function BrowseFeedPage() {
             <select
               value={selectedStorage}
               onChange={(e) => setSelectedStorage(e.target.value)}
-              className="w-full px-3 py-2 text-xs bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-emerald-500 transition outline-none text-slate-700 cursor-pointer"
+              className="w-full px-3.5 py-2.5 text-xs font-bold bg-slate-50/80 border border-slate-200 rounded-2xl focus:bg-white focus:ring-2 focus:ring-emerald-500/30 focus:border-emerald-500 transition-all outline-none text-slate-700 cursor-pointer"
             >
               <option value="">All Storage Types</option>
               <option value="ROOM_TEMPERATURE">Room Temperature</option>
@@ -265,35 +273,41 @@ export function BrowseFeedPage() {
         </div>
 
         {/* Quick Filter Chips & Sort Controls */}
-        <div className="pt-2 border-t border-slate-100 flex flex-wrap items-center justify-between gap-2.5">
-          <div className="flex flex-wrap items-center gap-1.5">
-            <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider mr-1">
-              Quick:
+        <div className="pt-3 border-t border-slate-100 flex flex-wrap items-center justify-between gap-3">
+          <div className="flex flex-wrap items-center gap-2">
+            <span className="text-[11px] font-black text-slate-400 uppercase tracking-widest mr-1">
+              Filter:
             </span>
             <button
               onClick={() => setUrgentOnly(!urgentOnly)}
-              className={`px-2.5 py-1 rounded-lg text-xs font-bold transition flex items-center gap-1 cursor-pointer ${
-                urgentOnly ? 'bg-amber-500 text-white shadow-xs' : 'bg-slate-100 hover:bg-slate-200 text-slate-700'
+              className={`px-3 py-1.5 rounded-xl text-xs font-extrabold transition-all flex items-center gap-1.5 cursor-pointer ${
+                urgentOnly
+                  ? 'bg-gradient-to-r from-amber-500 to-rose-500 text-white shadow-md shadow-amber-500/20'
+                  : 'bg-slate-100 hover:bg-slate-200/80 text-slate-700'
               }`}
             >
-              <Flame className="w-3 h-3" />
+              <Flame className="w-3.5 h-3.5 text-amber-300" />
               <span>Expiring &lt;4h</span>
             </button>
             <button
               onClick={() => setSelectedDietary(selectedDietary === 'VEGETARIAN' ? '' : 'VEGETARIAN')}
-              className={`px-2.5 py-1 rounded-lg text-xs font-bold transition cursor-pointer ${
-                selectedDietary === 'VEGETARIAN' ? 'bg-emerald-600 text-white shadow-xs' : 'bg-slate-100 hover:bg-slate-200 text-slate-700'
+              className={`px-3 py-1.5 rounded-xl text-xs font-extrabold transition-all cursor-pointer ${
+                selectedDietary === 'VEGETARIAN'
+                  ? 'bg-emerald-600 text-white shadow-md shadow-emerald-600/20'
+                  : 'bg-slate-100 hover:bg-slate-200/80 text-slate-700'
               }`}
             >
               🌱 Pure Veg
             </button>
             <button
               onClick={() => setSelectedStorage(selectedStorage === 'REFRIGERATED' ? '' : 'REFRIGERATED')}
-              className={`px-2.5 py-1 rounded-lg text-xs font-bold transition cursor-pointer ${
-                selectedStorage === 'REFRIGERATED' ? 'bg-blue-600 text-white shadow-xs' : 'bg-slate-100 hover:bg-slate-200 text-slate-700'
+              className={`px-3 py-1.5 rounded-xl text-xs font-extrabold transition-all cursor-pointer ${
+                selectedStorage === 'REFRIGERATED'
+                  ? 'bg-blue-600 text-white shadow-md shadow-blue-600/20'
+                  : 'bg-slate-100 hover:bg-slate-200/80 text-slate-700'
               }`}
             >
-              ❄️ Cold Storage
+              ❄️ Cold Chain
             </button>
             {(selectedCategory || selectedDietary || selectedStorage || searchTerm || urgentOnly) && (
               <button
@@ -304,7 +318,7 @@ export function BrowseFeedPage() {
                   setSearchTerm('');
                   setUrgentOnly(false);
                 }}
-                className="px-2 py-1 rounded-lg text-xs font-bold text-rose-600 hover:bg-rose-50 transition cursor-pointer"
+                className="px-3 py-1.5 rounded-xl text-xs font-black text-rose-600 hover:bg-rose-50 transition-all cursor-pointer"
               >
                 Reset All
               </button>
@@ -313,11 +327,11 @@ export function BrowseFeedPage() {
 
           <div className="flex items-center gap-2">
             <SlidersHorizontal className="w-3.5 h-3.5 text-slate-400" />
-            <span className="text-[11px] text-slate-500 font-medium">Sort by:</span>
+            <span className="text-xs text-slate-500 font-bold">Sort by:</span>
             <select
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value)}
-              className="px-2.5 py-1 bg-slate-50 border border-slate-200 rounded-lg text-xs font-bold text-slate-700 focus:outline-none cursor-pointer"
+              className="px-3 py-1.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-bold text-slate-800 focus:outline-none cursor-pointer"
             >
               <option value="urgency">Urgency (Expiring First)</option>
               <option value="quantity">Largest Quantity</option>
@@ -330,7 +344,7 @@ export function BrowseFeedPage() {
       {/* Main Content Area */}
       {viewMode === 'map' ? (
         <div className="space-y-4">
-          <div className="h-[550px] w-full rounded-2xl overflow-hidden border border-slate-200 shadow-md">
+          <div className="h-[560px] w-full rounded-3xl overflow-hidden border border-slate-200/80 shadow-xl">
             <LeafletMapView
               donations={displayedDonations}
               zoom={12}
@@ -338,23 +352,25 @@ export function BrowseFeedPage() {
               onSelectDonation={(d) => handleOpenRequest(d)}
             />
           </div>
-          <p className="text-xs text-slate-500 text-center">
-            Click on any green pin to view donation batch details and trigger allocation requests.
+          <p className="text-xs text-slate-500 text-center font-medium">
+            Interactive GIS Radar • Click any pin to open instant food portion allocation request.
           </p>
         </div>
       ) : (
         <>
           {loading ? (
-            <div className="text-center py-20 text-slate-400 space-y-2">
-              <div className="w-8 h-8 border-3 border-emerald-500 border-t-transparent rounded-full animate-spin mx-auto" />
-              <p className="text-xs font-medium">Scanning food rescue inventory...</p>
+            <div className="text-center py-20 text-slate-400 space-y-3">
+              <div className="w-9 h-9 border-3 border-emerald-500 border-t-transparent rounded-full animate-spin mx-auto" />
+              <p className="text-xs font-bold text-slate-500">Scanning real-time food rescue inventory...</p>
             </div>
           ) : displayedDonations.length === 0 ? (
-            <div className="text-center py-20 bg-white rounded-2xl border border-slate-200 p-8 space-y-3">
-              <Utensils className="w-12 h-12 text-slate-300 mx-auto" />
-              <h3 className="font-bold text-slate-700 text-base">No Matching Donations Found</h3>
-              <p className="text-xs text-slate-500 max-w-sm mx-auto">
-                No active listings match the selected filters. Try clearing some filters or search terms.
+            <div className="text-center py-20 bg-white/90 backdrop-blur-md rounded-3xl border border-slate-200/80 p-8 space-y-4 shadow-sm">
+              <div className="w-14 h-14 rounded-2xl bg-slate-100 flex items-center justify-center mx-auto text-slate-400">
+                <Utensils className="w-7 h-7" />
+              </div>
+              <h3 className="font-display font-black text-slate-800 text-lg">No Matching Donations Found</h3>
+              <p className="text-xs text-slate-500 max-w-sm mx-auto leading-relaxed">
+                No active listings match the selected filters. Try clearing some criteria or search queries.
               </p>
               <button
                 onClick={() => {
@@ -364,7 +380,7 @@ export function BrowseFeedPage() {
                   setSearchTerm('');
                   setUrgentOnly(false);
                 }}
-                className="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold rounded-xl transition cursor-pointer"
+                className="px-5 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold rounded-xl shadow-md shadow-emerald-600/20 transition cursor-pointer"
               >
                 Reset All Filters
               </button>
@@ -377,64 +393,74 @@ export function BrowseFeedPage() {
                   layout
                   initial={{ opacity: 0, y: 15 }}
                   animate={{ opacity: 1, y: 0 }}
-                  className="bg-white rounded-2xl border border-slate-200 shadow-xs hover:shadow-md transition overflow-hidden flex flex-col justify-between"
+                  className="bg-white/95 backdrop-blur-md rounded-3xl border border-slate-200/80 shadow-md hover:shadow-2xl hover:border-emerald-400/60 hover:-translate-y-1 transition-all duration-300 overflow-hidden flex flex-col justify-between group"
                 >
                   <div>
                     {/* Top Tag Header */}
-                    <div className="p-4 bg-slate-50 border-b border-slate-100 flex items-center justify-between">
-                      <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-emerald-100 text-emerald-800">
+                    <div className="p-4 bg-gradient-to-r from-slate-50 to-emerald-50/20 border-b border-slate-100 flex items-center justify-between">
+                      <span className="px-3 py-1 rounded-full text-[11px] font-black bg-emerald-100 text-emerald-800 border border-emerald-200/60">
                         {d.category?.name || 'Cooked Meals'}
                       </span>
                       <div className="flex items-center gap-2">
                         {d.latitude && d.longitude && calculateDistance(d.latitude, d.longitude) && (
-                          <span className="inline-flex items-center gap-0.5 text-[11px] font-semibold text-slate-600 bg-white px-2 py-0.5 rounded-md border border-slate-200">
+                          <span className="inline-flex items-center gap-1 text-[11px] font-bold text-slate-600 bg-white px-2.5 py-0.5 rounded-full border border-slate-200 shadow-2xs">
                             <MapPin className="w-3 h-3 text-emerald-600" />
                             {calculateDistance(d.latitude, d.longitude)} km
                           </span>
                         )}
-                        <span className="text-[11px] font-bold text-slate-600 flex items-center gap-1">
-                          <Clock className="w-3.5 h-3.5 text-amber-600" />
+                        <span className="text-[11px] font-black text-rose-700 bg-rose-50 px-2.5 py-0.5 rounded-full border border-rose-200 flex items-center gap-1 shadow-2xs">
+                          <Clock className="w-3 h-3 text-rose-500 animate-spin" />
                           {d.remaining_hours !== undefined ? `${d.remaining_hours}h left` : 'Active'}
                         </span>
                       </div>
                     </div>
 
                     {/* Content */}
-                    <div className="p-5 space-y-3">
+                    <div className="p-6 space-y-4">
                       <div>
-                        <h3 className="font-bold text-base text-slate-900 leading-snug">{d.title}</h3>
-                        <p className="text-xs text-slate-500 mt-1 line-clamp-2">{d.description}</p>
+                        <h3 className="font-display font-bold text-lg text-slate-900 leading-snug group-hover:text-emerald-700 transition">
+                          {d.title}
+                        </h3>
+                        <p className="text-xs text-slate-500 mt-1 line-clamp-2 leading-relaxed">{d.description}</p>
                       </div>
 
-                      <div className="bg-slate-50 p-3 rounded-xl border border-slate-100 space-y-1.5 text-xs">
-                        <div className="flex justify-between">
-                          <span className="text-slate-500">Available:</span>
-                          <span className="font-bold text-emerald-700">
+                      <div className="bg-slate-50/80 p-3.5 rounded-2xl border border-slate-100 space-y-2 text-xs">
+                        <div className="flex justify-between items-center">
+                          <span className="text-slate-500 font-medium">Available:</span>
+                          <span className="font-black text-emerald-700 text-sm">
                             {d.available_quantity} / {d.quantity} {d.unit}
                           </span>
                         </div>
-                        <div className="flex justify-between">
-                          <span className="text-slate-500">Storage:</span>
-                          <span className="font-medium text-slate-800">{d.storage_requirement_display || d.storage_requirement}</span>
+                        <div className="flex justify-between items-center">
+                          <span className="text-slate-500 font-medium">Storage:</span>
+                          <span className="font-bold text-slate-800 text-[11px]">
+                            {d.storage_requirement_display || d.storage_requirement}
+                          </span>
                         </div>
-                        <div className="flex justify-between">
-                          <span className="text-slate-500">Dietary:</span>
-                          <span className="font-medium text-slate-800">{d.dietary_type_display || d.dietary_type}</span>
+                        <div className="flex justify-between items-center">
+                          <span className="text-slate-500 font-medium">Dietary:</span>
+                          <span className="font-bold text-slate-800 text-[11px]">
+                            {d.dietary_type_display || d.dietary_type}
+                          </span>
                         </div>
-                        <div className="flex justify-between">
-                          <span className="text-slate-500">Allergens:</span>
-                          <span className="font-medium text-slate-700 truncate max-w-[150px]">{d.allergens || 'None declared'}</span>
+                        <div className="flex justify-between items-center">
+                          <span className="text-slate-500 font-medium">Allergens:</span>
+                          <span className="font-medium text-slate-700 truncate max-w-[150px] text-[11px]">
+                            {d.allergens || 'None declared'}
+                          </span>
                         </div>
-                        <div className="flex justify-between pt-1 border-t border-slate-200/60">
-                          <span className="text-slate-500">Pickup Location:</span>
-                          <span className="font-medium text-slate-800 truncate max-w-[140px]">{d.pickup_address}</span>
+                        <div className="flex justify-between items-center pt-1.5 border-t border-slate-200/60">
+                          <span className="text-slate-500 font-medium">Location:</span>
+                          <span className="font-bold text-slate-800 truncate max-w-[150px] text-[11px]">
+                            {d.pickup_address}
+                          </span>
                         </div>
                       </div>
 
                       {/* Donor Attribution */}
                       <div className="flex items-center justify-between text-[11px] text-slate-500 pt-1">
-                        <span>Donor: <strong>{d.donor_organization_name || 'Verified Donor'}</strong></span>
-                        <span className="flex items-center gap-1 text-emerald-600 font-semibold">
+                        <span>Donor: <strong className="text-slate-800">{d.donor_organization_name || 'Verified Donor'}</strong></span>
+                        <span className="flex items-center gap-1 text-emerald-600 font-bold">
                           <ShieldCheck className="w-3.5 h-3.5" />
                           Hygiene Verified
                         </span>
@@ -443,10 +469,10 @@ export function BrowseFeedPage() {
                   </div>
 
                   {/* Action Button */}
-                  <div className="p-4 pt-0">
+                  <div className="p-5 pt-0">
                     <button
                       onClick={() => handleOpenRequest(d)}
-                      className="w-full py-2.5 px-4 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold transition flex items-center justify-center gap-1.5 shadow-xs cursor-pointer"
+                      className="w-full py-3 px-4 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white rounded-2xl text-xs font-black transition-all flex items-center justify-center gap-2 shadow-md shadow-emerald-600/20 group-hover:scale-[1.01] cursor-pointer"
                     >
                       <span>Request Food Portion</span>
                     </button>
