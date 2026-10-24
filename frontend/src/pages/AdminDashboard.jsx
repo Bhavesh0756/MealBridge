@@ -6,8 +6,10 @@ import {
   RefreshCw
 } from 'lucide-react';
 import { authApi } from '../api/auth';
+import { useToast } from '../context/ToastContext';
 
 export function AdminDashboard() {
+  const { success: toastSuccess, error: toastError, info: toastInfo } = useToast();
   const [users, setUsers] = useState([]);
   const [auditLogs, setAuditLogs] = useState([]);
   const [activeTab, setActiveTab] = useState('verification'); // 'verification' | 'logs'
@@ -41,9 +43,15 @@ export function AdminDashboard() {
     try {
       setActionLoading(true);
       await authApi.verifyUser(userId, action, notes);
+      if (action === 'approve') {
+        toastSuccess('User account approved and verified successfully!');
+      } else {
+        toastInfo('User account application rejected.');
+      }
       loadAdminData();
     } catch (err) {
-      alert(err.response?.data?.error || 'Verification action failed.');
+      const msg = err.response?.data?.error || 'Verification action failed.';
+      toastError(msg);
     } finally {
       setActionLoading(false);
     }

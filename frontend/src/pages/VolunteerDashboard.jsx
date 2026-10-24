@@ -7,9 +7,11 @@ import {
 } from 'lucide-react';
 import { pickupsApi } from '../api/pickups';
 import { useAuth } from '../context/AuthContext';
+import { useToast } from '../context/ToastContext';
 
 export function VolunteerDashboard() {
   const { user } = useAuth();
+  const { success: toastSuccess, error: toastError, warning: toastWarning } = useToast();
   const [availablePool, setAvailablePool] = useState([]);
   const [myPickups, setMyPickups] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -45,9 +47,11 @@ export function VolunteerDashboard() {
   const handleClaim = async (pickupId) => {
     try {
       await pickupsApi.claimPickup(pickupId);
+      toastSuccess('Delivery assignment claimed! Added to your active delivery tasks.');
       loadData();
     } catch (err) {
-      alert(err.response?.data?.error || 'Failed to claim pickup.');
+      const msg = err.response?.data?.error || 'Failed to claim pickup.';
+      toastError(msg);
     }
   };
 
@@ -72,10 +76,18 @@ export function VolunteerDashboard() {
         failureReason,
         recipientSignature
       );
+      if (targetStatus === 'FAILED') {
+        toastWarning('Delivery issue recorded. Quantities returned safely to donor stock.');
+      } else if (targetStatus === 'DELIVERED') {
+        toastSuccess('Rescue completed! Recipient signed and calories delivered.');
+      } else {
+        toastSuccess(`Delivery status updated to ${targetStatus.replace(/_/g, ' ')}`);
+      }
       setActivePickupForUpdate(null);
       loadData();
     } catch (err) {
-      alert(err.response?.data?.error || 'Failed to update pickup status.');
+      const msg = err.response?.data?.error || 'Failed to update pickup status.';
+      toastError(msg);
     } finally {
       setSubmitting(false);
     }

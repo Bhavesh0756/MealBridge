@@ -11,10 +11,12 @@ import {
 import { requestsApi } from '../api/requests';
 import { matchingApi } from '../api/matching';
 import { useAuth } from '../context/AuthContext';
+import { useToast } from '../context/ToastContext';
 import { Link } from 'react-router-dom';
 
 export function NgoDashboard() {
   const { user } = useAuth();
+  const { success: toastSuccess, error: toastError } = useToast();
   const [requests, setRequests] = useState([]);
   const [recommendations, setRecommendations] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -43,9 +45,11 @@ export function NgoDashboard() {
     if (!confirm('Are you sure you want to cancel this request? Any reserved portions will be restored to public available stock.')) return;
     try {
       await requestsApi.cancelRequest(id);
+      toastSuccess('Request cancelled. Reserved food restored to inventory.');
       loadData();
     } catch (err) {
-      alert(err.response?.data?.error || 'Failed to cancel request.');
+      const msg = err.response?.data?.error || 'Failed to cancel request.';
+      toastError(msg);
     }
   };
 

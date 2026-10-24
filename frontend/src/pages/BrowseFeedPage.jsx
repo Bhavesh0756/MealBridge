@@ -14,11 +14,13 @@ import {
 import { donationsApi } from '../api/donations';
 import { requestsApi } from '../api/requests';
 import { useAuth } from '../context/AuthContext';
+import { useToast } from '../context/ToastContext';
 import { LeafletMapView } from '../components/LeafletMapView';
 import { useNavigate } from 'react-router-dom';
 
 export function BrowseFeedPage() {
   const { isNgo, isAuthenticated } = useAuth();
+  const { error: toastError, success: toastSuccess } = useToast();
   const navigate = useNavigate();
 
   const [donations, setDonations] = useState([]);
@@ -80,7 +82,7 @@ export function BrowseFeedPage() {
       return;
     }
     if (!isNgo) {
-      alert('Only verified NGO / Recipient organizations can submit requests for surplus food. Please use an NGO profile or switch using the Demo Switcher in the top bar.');
+      toastError('Only verified NGO / Recipient organizations can submit requests for surplus food. Please switch role via Demo Switcher.');
       return;
     }
     setSelectedDonation(donation);
@@ -113,11 +115,13 @@ export function BrowseFeedPage() {
         beneficiary_notes: beneficiaryNotes,
       });
       setRequestSuccess(true);
+      toastSuccess('Surplus food request reserved successfully! Donor alerted.');
       fetchListings();
     } catch (err) {
       const errData = err.response?.data;
       const msg = errData?.requested_quantity?.[0] || errData?.error || 'Failed to submit request.';
       setRequestError(msg);
+      toastError(msg);
     } finally {
       setSubmitting(false);
     }

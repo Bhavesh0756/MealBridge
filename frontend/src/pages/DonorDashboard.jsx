@@ -12,14 +12,17 @@ import { donationsApi } from '../api/donations';
 import { requestsApi } from '../api/requests';
 import { matchingApi } from '../api/matching';
 import { useAuth } from '../context/AuthContext';
+import { useToast } from '../context/ToastContext';
 import { FoodSafetyModal } from '../components/FoodSafetyModal';
 
 export function DonorDashboard() {
   const { user } = useAuth();
+  const { success: toastSuccess, error: toastError, info: toastInfo } = useToast();
   const [myDonations, setMyDonations] = useState([]);
   const [incomingRequests, setIncomingRequests] = useState([]);
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [submitting, setSubmitting] = useState(false);
 
   // Create Listing Modal
   const [createModalOpen, setCreateModalOpen] = useState(false);
@@ -114,6 +117,7 @@ export function DonorDashboard() {
 
       await donationsApi.createDonation(payload);
       setCreateModalOpen(false);
+      toastSuccess('Surplus donation listing published with safety certification!');
       // Reset form
       setNewListing({
         title: '',
@@ -133,7 +137,9 @@ export function DonorDashboard() {
       loadDashboardData();
     } catch (err) {
       const errData = err.response?.data;
-      setFormError(errData?.error || 'Failed to publish donation listing.');
+      const errMsg = errData?.error || 'Failed to publish donation listing.';
+      setFormError(errMsg);
+      toastError(errMsg);
     } finally {
       setSubmitting(false);
     }
@@ -142,9 +148,11 @@ export function DonorDashboard() {
   const handleAcceptRequest = async (requestId) => {
     try {
       await requestsApi.acceptRequest(requestId, 'Accepted by donor kitchen. Ready for collection.');
+      toastSuccess('Request accepted! Dispatch pool alerted for volunteer pickup.');
       loadDashboardData();
     } catch (err) {
-      alert(err.response?.data?.error || 'Failed to accept request.');
+      const msg = err.response?.data?.error || 'Failed to accept request.';
+      toastError(msg);
     }
   };
 
@@ -153,9 +161,11 @@ export function DonorDashboard() {
     if (reason === null) return;
     try {
       await requestsApi.rejectRequest(requestId, reason);
+      toastInfo('Request declined.');
       loadDashboardData();
     } catch (err) {
-      alert(err.response?.data?.error || 'Failed to reject request.');
+      const msg = err.response?.data?.error || 'Failed to reject request.';
+      toastError(msg);
     }
   };
 
@@ -163,9 +173,11 @@ export function DonorDashboard() {
     if (!confirm('Are you sure you want to cancel this donation listing?')) return;
     try {
       await donationsApi.cancelDonation(donationId, 'Cancelled by donor kitchen.');
+      toastSuccess('Donation listing cancelled.');
       loadDashboardData();
     } catch (err) {
-      alert(err.response?.data?.error || 'Failed to cancel donation.');
+      const msg = err.response?.data?.error || 'Failed to cancel donation.';
+      toastError(msg);
     }
   };
 
@@ -178,7 +190,7 @@ export function DonorDashboard() {
       });
     } catch (err) {
       console.error('Failed to calculate matches for listing:', err);
-      alert('Could not calculate matches for this listing.');
+      toastError('Could not calculate matches for this listing.');
     }
   };
 
