@@ -167,11 +167,11 @@ export function BrowseFeedPage() {
   };
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-8">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-8 cyber-dots">
       {/* Page Title & Search Bar */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 pb-6 border-b border-slate-200/80">
         <div>
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-50 text-emerald-800 text-[11px] font-black uppercase tracking-widest border border-emerald-200/60 mb-2">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-50 text-emerald-800 text-[11px] font-black uppercase tracking-widest border border-emerald-300/60 mb-2">
             <span className="w-2 h-2 rounded-full bg-emerald-500 animate-ping" />
             Live Hyperlocal Network
           </div>
@@ -184,7 +184,7 @@ export function BrowseFeedPage() {
         </div>
 
         {/* View Switcher */}
-        <div className="flex items-center gap-1.5 bg-slate-100/80 p-1.5 rounded-2xl border border-slate-200/60 self-start md:self-auto shadow-2xs">
+        <div className="flex items-center gap-1.5 bg-slate-100/80 p-1.5 rounded-2xl border border-slate-200/60 self-start md:self-auto shadow-2xs backdrop-blur-md">
           <button
             onClick={() => setViewMode('grid')}
             className={`px-4 py-2 rounded-xl text-xs font-black flex items-center gap-2 transition-all cursor-pointer ${
@@ -211,7 +211,7 @@ export function BrowseFeedPage() {
       </div>
 
       {/* Filter Controls Bar */}
-      <div className="bg-white/90 backdrop-blur-md p-5 rounded-3xl border border-slate-200/80 shadow-md space-y-4">
+      <div className="glass-panel p-5 rounded-3xl border border-slate-200/80 shadow-md space-y-4">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5">
           {/* Search Input */}
           <div className="relative">
@@ -393,23 +393,27 @@ export function BrowseFeedPage() {
                   layout
                   initial={{ opacity: 0, y: 15 }}
                   animate={{ opacity: 1, y: 0 }}
-                  className="bg-white/95 backdrop-blur-md rounded-3xl border border-slate-200/80 shadow-md hover:shadow-2xl hover:border-emerald-400/60 hover:-translate-y-1 transition-all duration-300 overflow-hidden flex flex-col justify-between group"
+                  className="glass-panel rounded-3xl border border-slate-200/90 shadow-md card-interactive shimmer-sweep-hover transition-all duration-300 overflow-hidden flex flex-col justify-between group"
                 >
                   <div>
                     {/* Top Tag Header */}
-                    <div className="p-4 bg-gradient-to-r from-slate-50 to-emerald-50/20 border-b border-slate-100 flex items-center justify-between">
-                      <span className="px-3 py-1 rounded-full text-[11px] font-black bg-emerald-100 text-emerald-800 border border-emerald-200/60">
+                    <div className="p-4 bg-gradient-to-r from-slate-50 to-emerald-50/30 border-b border-slate-100 flex items-center justify-between">
+                      <span className="px-3 py-1 rounded-full text-[11px] font-black bg-emerald-100 text-emerald-800 border border-emerald-300/60">
                         {d.category?.name || 'Cooked Meals'}
                       </span>
                       <div className="flex items-center gap-2">
                         {d.latitude && d.longitude && calculateDistance(d.latitude, d.longitude) && (
-                          <span className="inline-flex items-center gap-1 text-[11px] font-bold text-slate-600 bg-white px-2.5 py-0.5 rounded-full border border-slate-200 shadow-2xs">
+                          <span className="inline-flex items-center gap-1 text-[11px] font-bold text-slate-600 bg-white px-2.5 py-0.5 rounded-full border border-slate-200 shadow-2xs font-mono-numbers">
                             <MapPin className="w-3 h-3 text-emerald-600" />
                             {calculateDistance(d.latitude, d.longitude)} km
                           </span>
                         )}
-                        <span className="text-[11px] font-black text-rose-700 bg-rose-50 px-2.5 py-0.5 rounded-full border border-rose-200 flex items-center gap-1 shadow-2xs">
-                          <Clock className="w-3 h-3 text-rose-500 animate-spin" />
+                        <span className={`text-[11px] font-black px-2.5 py-0.5 rounded-full flex items-center gap-1 shadow-2xs ${
+                          d.remaining_hours !== undefined && d.remaining_hours <= 4
+                            ? 'badge-coral-urgent animate-pulse'
+                            : 'badge-saffron'
+                        }`}>
+                          <Clock className="w-3 h-3 animate-spin" />
                           {d.remaining_hours !== undefined ? `${d.remaining_hours}h left` : 'Active'}
                         </span>
                       </div>
@@ -427,7 +431,7 @@ export function BrowseFeedPage() {
                       <div className="bg-slate-50/80 p-3.5 rounded-2xl border border-slate-100 space-y-2 text-xs">
                         <div className="flex justify-between items-center">
                           <span className="text-slate-500 font-medium">Available:</span>
-                          <span className="font-black text-emerald-700 text-sm">
+                          <span className="font-black text-emerald-700 text-sm font-mono-numbers">
                             {d.available_quantity} / {d.quantity} {d.unit}
                           </span>
                         </div>
@@ -472,7 +476,7 @@ export function BrowseFeedPage() {
                   <div className="p-5 pt-0">
                     <button
                       onClick={() => handleOpenRequest(d)}
-                      className="w-full py-3 px-4 bg-gradient-to-r from-[#047857] via-[#10b981] to-[#06b6d4] hover:from-[#065f46] hover:to-[#0891b2] text-white rounded-2xl text-xs font-black transition-all flex items-center justify-center gap-2 shadow-md shadow-emerald-500/25 group-hover:scale-[1.01] cursor-pointer"
+                      className="w-full py-3 px-4 bg-gradient-to-r from-[#047857] via-[#10b981] to-[#06b6d4] hover:brightness-110 text-white rounded-2xl text-xs font-black transition-all flex items-center justify-center gap-2 shadow-md shadow-emerald-500/25 group-hover:scale-[1.01] cursor-pointer"
                     >
                       <span>Request Food Portion</span>
                     </button>
