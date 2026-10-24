@@ -44,6 +44,12 @@ export function Footer() {
                 </Link>
               </li>
               <li>
+                <Link to="/#calculator" className="hover:text-emerald-400 transition flex items-center gap-1">
+                  <span>ESG Impact Estimator</span>
+                  <span className="text-[9px] px-1.5 py-0.2 rounded bg-emerald-500/20 text-emerald-400 font-bold">New</span>
+                </Link>
+              </li>
+              <li>
                 <Link to="/register" className="hover:text-emerald-400 transition">
                   Register as Donor / NGO / Volunteer
                 </Link>
