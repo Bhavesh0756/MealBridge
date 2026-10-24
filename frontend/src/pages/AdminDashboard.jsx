@@ -16,6 +16,7 @@ import {
 } from 'lucide-react';
 import { authApi } from '../api/auth';
 import { useToast } from '../context/ToastContext';
+import { SkeletonStat, SkeletonCard } from '../components/SkeletonLoader';
 
 export function AdminDashboard() {
   const { success: toastSuccess, error: toastError, info: toastInfo } = useToast();
@@ -153,9 +154,22 @@ export function AdminDashboard() {
 
   if (loading && users.length === 0) {
     return (
-      <div className="min-h-[60vh] flex flex-col items-center justify-center gap-3">
-        <div className="w-8 h-8 border-3 border-purple-500 border-t-transparent rounded-full animate-spin" />
-        <p className="text-sm text-slate-500 font-medium">Loading administrative audit and verification queue...</p>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
+        <div className="flex justify-between items-center pb-4 border-b border-slate-200">
+          <div className="space-y-2">
+            <div className="h-4 w-32 bg-slate-200 rounded-full skeleton-shimmer" />
+            <div className="h-7 w-72 bg-slate-200 rounded-lg skeleton-shimmer" />
+          </div>
+        </div>
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+          {Array.from({ length: 4 }).map((_, i) => (
+            <SkeletonStat key={i} />
+          ))}
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <SkeletonCard />
+          <SkeletonCard />
+        </div>
       </div>
     );
   }
