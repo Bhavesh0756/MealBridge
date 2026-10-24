@@ -277,24 +277,28 @@ export function DonorDashboard() {
   }
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-8">
       {/* Console Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-200">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-6 pb-6 border-b border-slate-200/80">
         <div>
-          <div className="flex items-center gap-2">
-            <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-emerald-100 text-emerald-800">
-              Food Donor Console
+          <div className="flex items-center gap-2 mb-2">
+            <span className="px-3 py-1 rounded-full text-[11px] font-black uppercase tracking-widest bg-emerald-50 text-emerald-800 border border-emerald-200/60 flex items-center gap-1.5">
+              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-ping" />
+              Donor Operational Console
             </span>
-            <span className="text-xs text-slate-500">{user?.donor_profile?.organization_name}</span>
+            <span className="text-xs font-bold text-slate-500 bg-slate-100 px-2.5 py-0.5 rounded-full">{user?.donor_profile?.organization_name || 'Verified Kitchen'}</span>
           </div>
-          <h1 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight mt-1">
-            Kitchen Surplus & Donation Dispatch
+          <h1 className="font-display text-3xl sm:text-4xl font-black text-slate-900 tracking-tight">
+            Kitchen Surplus & Dispatch Hub
           </h1>
+          <p className="text-xs sm:text-sm text-slate-500 max-w-xl">
+            Real-time commercial food surplus logging, NGO allocation review, and logistics handover coordination.
+          </p>
         </div>
 
         <button
           onClick={() => setCreateModalOpen(true)}
-          className="px-5 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold shadow-md shadow-emerald-600/20 transition flex items-center gap-2 self-start sm:self-auto cursor-pointer"
+          className="px-6 py-3.5 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white rounded-2xl text-xs font-black shadow-lg shadow-emerald-600/25 hover:shadow-xl hover:scale-[1.02] transition-all flex items-center gap-2 self-start sm:self-auto cursor-pointer"
         >
           <Plus className="w-4 h-4" />
           <span>Publish Surplus Listing</span>
@@ -302,32 +306,32 @@ export function DonorDashboard() {
       </div>
 
       {/* KPI Overview Cards */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-        <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs">
-          <p className="text-xs text-slate-500 font-medium">Active Food Listings</p>
-          <p className="text-2xl sm:text-3xl font-black text-emerald-700 mt-1">{activeDonationsCount}</p>
-          <p className="text-[10px] text-slate-400 mt-1">Available for NGOs to request</p>
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-5">
+        <div className="bg-white/90 backdrop-blur-md p-6 rounded-3xl border border-slate-200/80 shadow-md hover:shadow-xl hover:border-emerald-500/40 transition-all duration-300 space-y-1">
+          <p className="text-xs font-extrabold uppercase tracking-widest text-slate-400">Active Listings</p>
+          <p className="font-display text-3xl sm:text-4xl font-black text-emerald-600 mt-1">{activeDonationsCount}</p>
+          <p className="text-[11px] text-slate-500 font-medium">Available for NGOs to claim</p>
         </div>
 
-        <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs">
-          <p className="text-xs text-slate-500 font-medium">Requests Awaiting Review</p>
-          <p className="text-2xl sm:text-3xl font-black text-amber-600 mt-1">{pendingRequests.length}</p>
-          <p className="text-[10px] text-slate-400 mt-1">Requires your acceptance</p>
+        <div className="bg-white/90 backdrop-blur-md p-6 rounded-3xl border border-slate-200/80 shadow-md hover:shadow-xl hover:border-amber-500/40 transition-all duration-300 space-y-1">
+          <p className="text-xs font-extrabold uppercase tracking-widest text-slate-400">Awaiting Approval</p>
+          <p className="font-display text-3xl sm:text-4xl font-black text-amber-500 mt-1">{pendingRequests.length}</p>
+          <p className="text-[11px] text-slate-500 font-medium">Requires donor review</p>
         </div>
 
-        <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs">
-          <p className="text-xs text-slate-500 font-medium">Total Listings Created</p>
-          <p className="text-2xl sm:text-3xl font-black text-slate-800 mt-1">{myDonations.length}</p>
-          <p className="text-[10px] text-slate-400 mt-1">Lifetime rescue batches</p>
+        <div className="bg-white/90 backdrop-blur-md p-6 rounded-3xl border border-slate-200/80 shadow-md hover:shadow-xl hover:border-slate-400/40 transition-all duration-300 space-y-1">
+          <p className="text-xs font-extrabold uppercase tracking-widest text-slate-400">Total Batches</p>
+          <p className="font-display text-3xl sm:text-4xl font-black text-slate-900 mt-1">{myDonations.length}</p>
+          <p className="text-[11px] text-slate-500 font-medium">Lifetime rescue postings</p>
         </div>
 
-        <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs">
-          <p className="text-xs text-slate-500 font-medium">Hygiene Status</p>
-          <div className="flex items-center gap-1.5 mt-1 text-emerald-600 font-bold text-sm">
-            <ShieldCheck className="w-5 h-5" />
-            <span>FSSAI Certified</span>
+        <div className="bg-white/90 backdrop-blur-md p-6 rounded-3xl border border-slate-200/80 shadow-md hover:shadow-xl hover:border-emerald-500/40 transition-all duration-300 space-y-1">
+          <p className="text-xs font-extrabold uppercase tracking-widest text-slate-400">Hygiene Standard</p>
+          <div className="flex items-center gap-1.5 mt-2 text-emerald-600 font-black text-sm">
+            <ShieldCheck className="w-5 h-5 text-emerald-600" />
+            <span>FSSAI Compliant</span>
           </div>
-          <p className="text-[10px] text-slate-400 mt-1">Checklist strictly verified</p>
+          <p className="text-[11px] text-slate-500 font-medium">Safety checklist verified</p>
         </div>
       </div>
 
