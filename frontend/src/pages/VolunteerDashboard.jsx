@@ -13,6 +13,8 @@ import {
 import { pickupsApi } from '../api/pickups';
 import { useAuth } from '../context/AuthContext';
 import { useToast } from '../context/ToastContext';
+import { DeliveryTimeline } from '../components/DeliveryTimeline';
+import { SkeletonStat, SkeletonCard } from '../components/SkeletonLoader';
 
 export function VolunteerDashboard() {
   const { user } = useAuth();
@@ -134,9 +136,22 @@ export function VolunteerDashboard() {
 
   if (loading && availablePool.length === 0 && myPickups.length === 0) {
     return (
-      <div className="min-h-[60vh] flex flex-col items-center justify-center gap-3">
-        <div className="w-8 h-8 border-3 border-amber-500 border-t-transparent rounded-full animate-spin" />
-        <p className="text-sm text-slate-500 font-medium">Connecting to live volunteer dispatch pool...</p>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
+        <div className="flex justify-between items-center pb-4 border-b border-slate-200">
+          <div className="space-y-2">
+            <div className="h-4 w-32 bg-slate-200 rounded-full skeleton-shimmer" />
+            <div className="h-7 w-72 bg-slate-200 rounded-lg skeleton-shimmer" />
+          </div>
+        </div>
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+          {Array.from({ length: 4 }).map((_, i) => (
+            <SkeletonStat key={i} />
+          ))}
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <SkeletonCard />
+          <SkeletonCard />
+        </div>
       </div>
     );
   }
@@ -321,21 +336,14 @@ export function VolunteerDashboard() {
                       </div>
                     </div>
 
-                    {/* Step Timeline Indicator */}
-                    <div className="grid grid-cols-4 gap-2 text-center text-[11px] font-bold">
-                      <div className={`p-2 rounded-xl ${['CLAIMED', 'EN_ROUTE_PICKUP', 'FOOD_COLLECTED', 'EN_ROUTE_DELIVERY', 'DELIVERED'].includes(p.status) ? 'bg-emerald-100 text-emerald-800' : 'bg-slate-100 text-slate-400'}`}>
-                        1. Claimed
-                      </div>
-                      <div className={`p-2 rounded-xl ${['EN_ROUTE_PICKUP', 'FOOD_COLLECTED', 'EN_ROUTE_DELIVERY', 'DELIVERED'].includes(p.status) ? 'bg-emerald-100 text-emerald-800' : 'bg-slate-100 text-slate-400'}`}>
-                        2. En Route
-                      </div>
-                      <div className={`p-2 rounded-xl ${['FOOD_COLLECTED', 'EN_ROUTE_DELIVERY', 'DELIVERED'].includes(p.status) ? 'bg-emerald-100 text-emerald-800' : 'bg-slate-100 text-slate-400'}`}>
-                        3. Food Collected
-                      </div>
-                      <div className={`p-2 rounded-xl ${['EN_ROUTE_DELIVERY', 'DELIVERED'].includes(p.status) ? 'bg-emerald-100 text-emerald-800' : 'bg-slate-100 text-slate-400'}`}>
-                        4. To Delivery
-                      </div>
-                    </div>
+                    {/* Full Interactive Delivery Timeline */}
+                    <DeliveryTimeline
+                      currentStatus={p.status}
+                      pickupAddress={donation?.pickup_address}
+                      dropoffAddress={req?.delivery_address || req?.recipient_organization}
+                      canAdvance={false}
+                      compact
+                    />
 
                     {/* Route Details with Google Maps GPS Navigation */}
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs bg-white p-3.5 rounded-xl border border-slate-200">
