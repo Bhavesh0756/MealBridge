@@ -1,18 +1,37 @@
-import React, { useState, useEffect } from 'react';
-import { motion } from 'motion/react';
+import React, { useState, useEffect, useMemo } from 'react';
+import { motion, AnimatePresence } from 'motion/react';
 import {
   Sparkles,
   MapPin,
   CheckCircle2,
-  AlertCircle
+  AlertCircle,
+  X,
+  Send,
+  SlidersHorizontal,
+  ShieldCheck,
+  Check
 } from 'lucide-react';
 import { matchingApi } from '../api/matching';
-import { Link } from 'react-router-dom';
+import { requestsApi } from '../api/requests';
+import { useAuth } from '../context/AuthContext';
+import { useToast } from '../context/ToastContext';
+import { Link, useNavigate } from 'react-router-dom';
 
 export function SmartMatchmakerPage() {
+  const { isNgo, isAuthenticated } = useAuth();
+  const { success: toastSuccess, error: toastError, info: toastInfo } = useToast();
+  const navigate = useNavigate();
+
   const [radius, setRadius] = useState(25);
+  const [minScore, setMinScore] = useState(0); // 0 | 60 | 80
   const [matches, setMatches] = useState([]);
   const [loading, setLoading] = useState(false);
+
+  // Direct Allocation Modal
+  const [selectedMatch, setSelectedMatch] = useState(null);
+  const [requestQty, setRequestQty] = useState('');
+  const [beneficiaryNotes, setBeneficiaryNotes] = useState('');
+  const [submitting, setSubmitting] = useState(false);
 
   const fetchMatches = async (rad) => {
     try {
@@ -29,6 +48,52 @@ export function SmartMatchmakerPage() {
   useEffect(() => {
     fetchMatches(radius);
   }, [radius]);
+
+  const filteredMatches = useMemo(() => {
+    return matches.filter((m) => m.match_score >= minScore);
+  }, [matches, minScore]);
+
+  const handleOpenRequest = (match) => {
+    if (!isAuthenticated) {
+      navigate('/login');
+      return;
+    }
+    if (!isNgo) {
+      toastError('Only verified NGO accounts can request surplus allocations. Please switch to an NGO role.');
+      return;
+    }
+    setSelectedMatch(match);
+    setRequestQty(match.available_quantity);
+    setBeneficiaryNotes(`Automated match request based on high match score (${match.match_score}%).`);
+  };
+
+  const handleConfirmRequest = async (e) => {
+    e.preventDefault();
+    if (!selectedMatch) return;
+
+    const qty = parseFloat(requestQty);
+    if (isNaN(qty) || qty <= 0 || qty > selectedMatch.available_quantity) {
+      toastError(`Please enter a valid quantity up to ${selectedMatch.available_quantity} ${selectedMatch.unit}.`);
+      return;
+    }
+
+    try {
+      setSubmitting(true);
+      await requestsApi.createRequest({
+        donation: selectedMatch.donation_id,
+        requested_quantity: qty,
+        beneficiary_notes: beneficiaryNotes || 'Allocation requested via Smart Matchmaker engine.'
+      });
+      toastSuccess(`Allocation request for ${qty} ${selectedMatch.unit} submitted to donor!`);
+      setSelectedMatch(null);
+      fetchMatches(radius);
+    } catch (err) {
+      const msg = err.response?.data?.error || err.response?.data?.detail || 'Failed to submit allocation request.';
+      toastError(msg);
+    } finally {
+      setSubmitting(false);
+    }
+  };
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
@@ -53,17 +118,47 @@ export function SmartMatchmakerPage() {
             <h3 className="font-bold text-sm text-slate-900">Search Radius & Feasibility Filter</h3>
             <p className="text-xs text-slate-500">Adjust the transport range to explore nearby surplus matches.</p>
           </div>
-          <div className="flex items-center gap-3">
-            <span className="text-xs font-bold text-slate-700">{radius} km radius</span>
-            <input
-              type="range"
-              min="5"
-              max="50"
-              step="5"
-              value={radius}
-              onChange={(e) => setRadius(parseInt(e.target.value))}
-              className="w-36 accent-emerald-600 cursor-pointer"
-            />
+          <div className="flex items-center gap-4 flex-wrap">
+            {/* Min score chips */}
+            <div className="flex items-center gap-1 bg-slate-100 p-1 rounded-xl">
+              <button
+                onClick={() => setMinScore(0)}
+                className={`px-2.5 py-1 rounded-lg text-xs font-bold transition cursor-pointer ${
+                  minScore === 0 ? 'bg-white text-slate-900 shadow-xs' : 'text-slate-500 hover:text-slate-700'
+                }`}
+              >
+                All
+              </button>
+              <button
+                onClick={() => setMinScore(60)}
+                className={`px-2.5 py-1 rounded-lg text-xs font-bold transition cursor-pointer ${
+                  minScore === 60 ? 'bg-white text-slate-900 shadow-xs' : 'text-slate-500 hover:text-slate-700'
+                }`}
+              >
+                &ge;60% Score
+              </button>
+              <button
+                onClick={() => setMinScore(80)}
+                className={`px-2.5 py-1 rounded-lg text-xs font-bold transition cursor-pointer ${
+                  minScore === 80 ? 'bg-white text-slate-900 shadow-xs' : 'text-slate-500 hover:text-slate-700'
+                }`}
+              >
+                &ge;80% Elite
+              </button>
+            </div>
+
+            <div className="flex items-center gap-2">
+              <span className="text-xs font-bold text-slate-700">{radius} km</span>
+              <input
+                type="range"
+                min="5"
+                max="50"
+                step="5"
+                value={radius}
+                onChange={(e) => setRadius(parseInt(e.target.value))}
+                className="w-28 accent-emerald-600 cursor-pointer"
+              />
+            </div>
           </div>
         </div>
 
@@ -101,7 +196,7 @@ export function SmartMatchmakerPage() {
       <div className="space-y-4">
         <div className="flex items-center justify-between">
           <h2 className="font-extrabold text-lg text-slate-900">
-            Ranked Recommendations ({matches.length})
+            Ranked Recommendations ({filteredMatches.length})
           </h2>
           <span className="text-xs text-slate-500">Sorted by algorithmic rescue score</span>
         </div>
@@ -111,13 +206,13 @@ export function SmartMatchmakerPage() {
             <div className="w-8 h-8 border-3 border-emerald-500 border-t-transparent rounded-full animate-spin mx-auto mb-2" />
             <p className="text-xs">Computing optimal allocations...</p>
           </div>
-        ) : matches.length === 0 ? (
+        ) : filteredMatches.length === 0 ? (
           <div className="text-center py-16 bg-white rounded-3xl border border-slate-200 text-slate-500 text-xs">
-            No active food listings within {radius} km radius. Try extending the radius slider above!
+            No active food listings match the {radius} km radius and minimum score criteria. Try extending the radius or lowering the score threshold.
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {matches.map((item) => (
+            {filteredMatches.map((item) => (
               <motion.div
                 key={item.donation_id}
                 layout
@@ -129,7 +224,7 @@ export function SmartMatchmakerPage() {
                   {/* Top Match Badge */}
                   <div className="flex items-center justify-between">
                     <span className="px-3 py-1 rounded-full text-xs font-black bg-gradient-to-r from-emerald-500 to-teal-600 text-white shadow-xs">
-                      {item.match_score}% Score
+                      {item.match_score}% Match Score
                     </span>
                     <span className="text-xs font-bold text-slate-600 flex items-center gap-1">
                       <MapPin className="w-3.5 h-3.5 text-rose-500" />
@@ -180,17 +275,123 @@ export function SmartMatchmakerPage() {
                   </div>
                 </div>
 
-                <Link
-                  to="/browse"
-                  className="w-full py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold text-center transition block shadow-xs"
-                >
-                  Request Allocation in Feed →
-                </Link>
+                <div className="space-y-2 pt-2 border-t border-slate-100">
+                  <button
+                    onClick={() => handleOpenRequest(item)}
+                    className="w-full py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold text-center transition flex items-center justify-center gap-1.5 shadow-xs cursor-pointer"
+                  >
+                    <Send className="w-3.5 h-3.5" />
+                    <span>Claim Allocation Directly</span>
+                  </button>
+                  <Link
+                    to="/browse"
+                    className="w-full py-1.5 text-slate-500 hover:text-slate-800 text-[11px] font-semibold text-center transition block"
+                  >
+                    View in Browse Feed →
+                  </Link>
+                </div>
               </motion.div>
             ))}
           </div>
         )}
       </div>
+
+      {/* Direct Allocation Modal */}
+      <AnimatePresence>
+        {selectedMatch && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/50 backdrop-blur-xs">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.95 }}
+              className="bg-white rounded-3xl shadow-2xl max-w-md w-full border border-slate-200 overflow-hidden"
+            >
+              <div className="p-5 border-b border-slate-100 flex items-center justify-between bg-slate-50">
+                <div>
+                  <span className="px-2.5 py-0.5 rounded-full text-[10px] font-extrabold bg-emerald-100 text-emerald-800">
+                    Smart Match Claim
+                  </span>
+                  <h3 className="font-extrabold text-base text-slate-900 mt-1">
+                    Request {selectedMatch.title}
+                  </h3>
+                </div>
+                <button
+                  onClick={() => setSelectedMatch(null)}
+                  className="p-1 rounded-lg text-slate-400 hover:text-slate-600 hover:bg-slate-200/50 transition cursor-pointer"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+              </div>
+
+              <form onSubmit={handleConfirmRequest} className="p-5 space-y-4">
+                <div className="bg-emerald-50/60 p-3.5 rounded-2xl border border-emerald-100 text-xs space-y-1">
+                  <div className="flex justify-between font-bold text-emerald-900">
+                    <span>Available Quantity:</span>
+                    <span>{selectedMatch.available_quantity} {selectedMatch.unit}</span>
+                  </div>
+                  <div className="flex justify-between text-slate-600">
+                    <span>Algorithm Score:</span>
+                    <span className="font-bold text-emerald-700">{selectedMatch.match_score}%</span>
+                  </div>
+                  <div className="flex justify-between text-slate-600">
+                    <span>Donor Kitchen:</span>
+                    <span>{selectedMatch.donor_name}</span>
+                  </div>
+                </div>
+
+                <div>
+                  <label className="block text-xs font-bold text-slate-700 mb-1">
+                    Quantity to Rescue ({selectedMatch.unit}) *
+                  </label>
+                  <input
+                    type="number"
+                    step="0.5"
+                    min="0.5"
+                    max={selectedMatch.available_quantity}
+                    value={requestQty}
+                    onChange={(e) => setRequestQty(e.target.value)}
+                    required
+                    className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold focus:outline-none focus:ring-2 focus:ring-emerald-500/20"
+                  />
+                  <span className="text-[10px] text-slate-400">
+                    Max: {selectedMatch.available_quantity} {selectedMatch.unit}
+                  </span>
+                </div>
+
+                <div>
+                  <label className="block text-xs font-bold text-slate-700 mb-1">
+                    Beneficiary & Transport Notes
+                  </label>
+                  <textarea
+                    rows={3}
+                    value={beneficiaryNotes}
+                    onChange={(e) => setBeneficiaryNotes(e.target.value)}
+                    placeholder="E.g., Serving 80 homeless community members at evening community table."
+                    className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-emerald-500/20"
+                  />
+                </div>
+
+                <div className="pt-2 flex items-center justify-end gap-2 border-t border-slate-100">
+                  <button
+                    type="button"
+                    onClick={() => setSelectedMatch(null)}
+                    className="px-4 py-2 text-xs font-bold text-slate-600 hover:bg-slate-100 rounded-xl transition cursor-pointer"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    type="submit"
+                    disabled={submitting}
+                    className="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold rounded-xl transition shadow-xs flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
+                  >
+                    {submitting ? 'Submitting...' : 'Confirm Request ✓'}
+                  </button>
+                </div>
+              </form>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
