@@ -10,8 +10,10 @@ import {
   Sparkles,
   BarChart3,
   Menu,
+  User,
   X
 } from 'lucide-react';
+import { ProfileModal } from './ProfileModal';
 
 export function Navbar() {
   const { user, logout, switchDemoAccount, isDonor, isNgo, isVolunteer, isAdmin, isAuthenticated } = useAuth();
@@ -21,6 +23,7 @@ export function Navbar() {
 
   const [demoMenuOpen, setDemoMenuOpen] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [profileOpen, setProfileOpen] = useState(false);
 
   const isActive = (path) => location.pathname === path;
 
@@ -192,14 +195,30 @@ export function Navbar() {
           {/* User Profile / Auth State */}
           {isAuthenticated ? (
             <div className="flex items-center gap-2">
-              <div className="hidden lg:block text-right">
-                <p className="text-xs font-bold text-slate-800 leading-tight">
-                  {user.username}
-                </p>
-                <span className="text-[10px] text-slate-500 font-medium">
-                  {user.role} {user.is_verified && '• Verified ✓'}
-                </span>
-              </div>
+              <button
+                onClick={() => setProfileOpen(true)}
+                className="hidden lg:flex items-center gap-2 px-2.5 py-1.5 rounded-xl hover:bg-slate-100 transition text-right cursor-pointer group"
+                title="View & Edit Profile Settings"
+              >
+                <div className="w-8 h-8 rounded-lg bg-emerald-100 text-emerald-800 flex items-center justify-center font-bold text-xs group-hover:scale-105 transition">
+                  <User className="w-4 h-4" />
+                </div>
+                <div>
+                  <p className="text-xs font-bold text-slate-800 leading-tight">
+                    {user.username}
+                  </p>
+                  <span className="text-[10px] text-slate-500 font-medium">
+                    {user.role} {user.is_verified && '• Verified ✓'}
+                  </span>
+                </div>
+              </button>
+              <button
+                onClick={() => setProfileOpen(true)}
+                className="lg:hidden p-2 text-slate-600 hover:bg-slate-100 rounded-xl transition cursor-pointer"
+                title="Profile Settings"
+              >
+                <User className="w-5 h-5" />
+              </button>
               <button
                 onClick={logout}
                 className="p-2 text-slate-500 hover:text-rose-600 hover:bg-rose-50 rounded-xl transition cursor-pointer"
@@ -297,6 +316,9 @@ export function Navbar() {
           )}
         </div>
       )}
+
+      {/* Profile & Organization Settings Modal */}
+      <ProfileModal isOpen={profileOpen} onClose={() => setProfileOpen(false)} />
     </header>
   );
 }

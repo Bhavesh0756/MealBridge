@@ -81,6 +81,7 @@ export function AuthProvider({ children }) {
         logout,
         switchDemoAccount,
         refreshProfile: fetchProfile,
+        refreshUser: fetchProfile,
         isAuthenticated: !!user,
         isDonor: user?.role === 'DONOR',
         isNgo: user?.role === 'NGO',

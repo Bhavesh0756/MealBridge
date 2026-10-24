@@ -13,6 +13,10 @@ export const authApi = {
     const res = await api.get('/auth/me/');
     return res.data;
   },
+  updateProfile: async (payload) => {
+    const res = await api.patch('/auth/me/', payload);
+    return res.data;
+  },
   getAdminUsers: async () => {
     const res = await api.get('/auth/admin/users/');
     return res.data;
