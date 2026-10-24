@@ -18,6 +18,8 @@ import { matchingApi } from '../api/matching';
 import { useAuth } from '../context/AuthContext';
 import { useToast } from '../context/ToastContext';
 import { Link } from 'react-router-dom';
+import { ExpiryTimerRing } from '../components/ExpiryTimerRing';
+import { SkeletonStat, SkeletonCard } from '../components/SkeletonLoader';
 
 export function NgoDashboard() {
   const { user } = useAuth();
@@ -111,9 +113,23 @@ export function NgoDashboard() {
 
   if (loading && requests.length === 0) {
     return (
-      <div className="min-h-[60vh] flex flex-col items-center justify-center gap-3">
-        <div className="w-8 h-8 border-3 border-blue-500 border-t-transparent rounded-full animate-spin" />
-        <p className="text-sm text-slate-500 font-medium">Loading NGO community requests & surplus intake...</p>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
+        <div className="flex justify-between items-center pb-4 border-b border-slate-200">
+          <div className="space-y-2">
+            <div className="h-4 w-32 bg-slate-200 rounded-full skeleton-shimmer" />
+            <div className="h-7 w-72 bg-slate-200 rounded-lg skeleton-shimmer" />
+          </div>
+        </div>
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+          {Array.from({ length: 4 }).map((_, i) => (
+            <SkeletonStat key={i} />
+          ))}
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <SkeletonCard />
+          <SkeletonCard />
+          <SkeletonCard />
+        </div>
       </div>
     );
   }
@@ -211,28 +227,28 @@ export function NgoDashboard() {
             {recommendations.slice(0, 3).map((rec) => (
               <div
                 key={rec.donation_id}
-                className="bg-white rounded-2xl border border-blue-200 shadow-xs p-5 space-y-3 flex flex-col justify-between"
+                className="stripe-card rounded-2xl border border-slate-200/90 shadow-xs hover:shadow-md p-5 space-y-3 flex flex-col justify-between bg-white"
               >
                 <div>
-                  <div className="flex items-center justify-between mb-1.5">
-                    <span className="px-2 py-0.5 rounded text-[10px] font-extrabold bg-blue-100 text-blue-800">
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="px-2.5 py-0.5 rounded-full text-[10px] font-black bg-blue-100 text-blue-800">
                       {rec.match_score}% Match Score
                     </span>
                     <span className="text-xs font-semibold text-slate-500">
                       {rec.distance_km} km away
                     </span>
                   </div>
-                  <h3 className="font-bold text-sm text-slate-900">{rec.title}</h3>
+                  <h3 className="font-bold text-sm text-slate-900 line-clamp-1">{rec.title}</h3>
                   <p className="text-xs text-slate-500">{rec.donor_name} • {rec.pickup_address}</p>
 
-                  <div className="bg-slate-50 p-2.5 rounded-xl border border-slate-100 my-2 space-y-1 text-xs">
+                  <div className="bg-slate-50 p-2.5 rounded-xl border border-slate-100 my-2 space-y-2 text-xs">
                     <div className="flex justify-between">
                       <span className="text-slate-500">Available:</span>
                       <span className="font-bold text-emerald-700">{rec.available_quantity} {rec.unit}</span>
                     </div>
-                    <div className="flex justify-between">
-                      <span className="text-slate-500">Urgency:</span>
-                      <span className="font-bold text-amber-700">{rec.remaining_hours}h remaining</span>
+                    <div className="flex items-center justify-between pt-1 border-t border-slate-200/60">
+                      <span className="text-slate-500">Shelf-Life:</span>
+                      <ExpiryTimerRing remainingHours={rec.remaining_hours} size="sm" />
                     </div>
                   </div>
 
