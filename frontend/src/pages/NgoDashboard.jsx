@@ -292,6 +292,48 @@ export function NgoDashboard() {
                     </div>
                   </div>
 
+                  {/* Visual Live Logistics Tracker */}
+                  <div className="py-2">
+                    <div className="grid grid-cols-5 gap-1 text-center text-[10px] font-bold">
+                      <div className={`p-1.5 rounded-lg ${['PENDING', 'ACCEPTED', 'FULFILLED'].includes(req.status) ? 'bg-blue-100 text-blue-900' : 'bg-slate-100 text-slate-400'}`}>
+                        1. Requested
+                      </div>
+                      <div className={`p-1.5 rounded-lg ${['ACCEPTED', 'FULFILLED'].includes(req.status) ? 'bg-emerald-100 text-emerald-900' : 'bg-slate-100 text-slate-400'}`}>
+                        2. Accepted
+                      </div>
+                      <div className={`p-1.5 rounded-lg ${req.has_pickup_assignment ? 'bg-amber-100 text-amber-900' : 'bg-slate-100 text-slate-400'}`}>
+                        3. Dispatched
+                      </div>
+                      <div className={`p-1.5 rounded-lg ${['FOOD_COLLECTED', 'EN_ROUTE_DELIVERY', 'DELIVERED'].includes(req.pickup_status) || req.status === 'FULFILLED' ? 'bg-purple-100 text-purple-900' : 'bg-slate-100 text-slate-400'}`}>
+                        4. Collected
+                      </div>
+                      <div className={`p-1.5 rounded-lg ${req.status === 'FULFILLED' || req.pickup_status === 'DELIVERED' ? 'bg-teal-100 text-teal-900' : 'bg-slate-100 text-slate-400'}`}>
+                        5. Delivered ✓
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Assigned Volunteer Courier Card (if active) */}
+                  {req.volunteer_details && (
+                    <div className="p-2.5 bg-white rounded-xl border border-amber-200 flex items-center justify-between text-xs">
+                      <div className="flex items-center gap-2">
+                        <div className="w-7 h-7 rounded-lg bg-amber-100 text-amber-800 flex items-center justify-center font-bold text-xs">
+                          🚚
+                        </div>
+                        <div>
+                          <span className="font-bold text-slate-900">{req.volunteer_details.name}</span>
+                          <span className="text-[11px] text-slate-500 ml-1.5">({req.volunteer_details.vehicle})</span>
+                        </div>
+                      </div>
+                      <a
+                        href={`tel:${req.volunteer_details.phone}`}
+                        className="px-2.5 py-1 bg-amber-50 hover:bg-amber-100 text-amber-800 border border-amber-200 rounded-lg font-bold text-[11px] transition"
+                      >
+                        📞 {req.volunteer_details.phone}
+                      </a>
+                    </div>
+                  )}
+
                   {/* Notes / Details Footer */}
                   <div className="pt-2 text-xs flex flex-wrap gap-4 text-slate-600">
                     {req.donor_notes && (

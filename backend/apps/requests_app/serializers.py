@@ -15,6 +15,7 @@ class DonationRequestListSerializer(serializers.ModelSerializer):
     recipient_organization = serializers.SerializerMethodField()
     has_pickup_assignment = serializers.SerializerMethodField()
     pickup_status = serializers.SerializerMethodField()
+    volunteer_details = serializers.SerializerMethodField()
 
     class Meta:
         model = DonationRequest
@@ -22,7 +23,8 @@ class DonationRequestListSerializer(serializers.ModelSerializer):
             'id', 'donation', 'recipient', 'recipient_organization',
             'requested_quantity', 'status', 'beneficiary_notes',
             'donor_notes', 'rejection_reason', 'responded_at',
-            'created_at', 'has_pickup_assignment', 'pickup_status'
+            'created_at', 'has_pickup_assignment', 'pickup_status',
+            'volunteer_details'
         ]
 
     def get_recipient_organization(self, obj):
@@ -36,6 +38,17 @@ class DonationRequestListSerializer(serializers.ModelSerializer):
     def get_pickup_status(self, obj):
         if hasattr(obj, 'pickup_assignment'):
             return obj.pickup_assignment.status
+        return None
+
+    def get_volunteer_details(self, obj):
+        if hasattr(obj, 'pickup_assignment') and obj.pickup_assignment.volunteer:
+            v = obj.pickup_assignment.volunteer
+            name = getattr(v, 'volunteer_profile', None)
+            return {
+                'name': name.full_name if name else v.username,
+                'phone': v.phone_number or '+91 98000 00000',
+                'vehicle': name.vehicle_type if name else 'Motorcycle',
+            }
         return None
 
 
