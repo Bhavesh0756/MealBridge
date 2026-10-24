@@ -11,7 +11,8 @@ import {
   Truck,
   HeartHandshake,
   AlertTriangle,
-  XCircle
+  XCircle,
+  Download
 } from 'lucide-react';
 import { authApi } from '../api/auth';
 import { useToast } from '../context/ToastContext';
@@ -72,6 +73,33 @@ export function AdminDashboard() {
     } finally {
       setActionLoading(false);
     }
+  };
+
+  const handleExportCSV = () => {
+    if (filteredLogs.length === 0) {
+      toastInfo('No audit log entries available to export.');
+      return;
+    }
+    const headers = ['ID', 'Timestamp', 'Action', 'Actor Email', 'Entity Type', 'Entity ID', 'Details'];
+    const rows = filteredLogs.map((log) => [
+      log.id,
+      `"${log.timestamp}"`,
+      `"${log.action}"`,
+      `"${log.user_email || 'System'}"`,
+      `"${log.entity_type}"`,
+      `"${log.entity_id}"`,
+      `"${JSON.stringify(log.details || {}).replace(/"/g, '""')}"`
+    ]);
+
+    const csvContent = 'data:text/csv;charset=utf-8,' + [headers.join(','), ...rows.map((r) => r.join(','))].join('\n');
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement('a');
+    link.setAttribute('href', encodedUri);
+    link.setAttribute('download', `mealbridge_audit_logs_${new Date().toISOString().slice(0, 10)}.csv`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    toastSuccess(`Exported ${filteredLogs.length} audit trail records to CSV!`);
   };
 
   const pendingUsers = users.filter((u) => u.verification_status === 'PENDING');
@@ -506,9 +534,19 @@ export function AdminDashboard() {
                 Immutable logs for operations: donation creation, acceptance, pickup changes, and identity approvals.
               </p>
             </div>
-            <span className="text-xs font-bold text-slate-500">
-              Showing {filteredLogs.length} events
-            </span>
+            <div className="flex items-center gap-3">
+              <span className="text-xs font-bold text-slate-500">
+                Showing {filteredLogs.length} events
+              </span>
+              <button
+                onClick={handleExportCSV}
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-purple-50 hover:bg-purple-100 text-purple-700 border border-purple-200 text-xs font-bold transition cursor-pointer"
+                title="Download audit records as CSV"
+              >
+                <Download className="w-3.5 h-3.5" />
+                <span>Export CSV</span>
+              </button>
+            </div>
           </div>
 
           <div className="p-5 max-h-[550px] overflow-y-auto space-y-3 font-mono text-xs">

@@ -5,7 +5,8 @@ from .views import (
     CurrentUserView,
     AdminUserListView,
     AdminVerifyUserView,
-    AuditLogListView
+    AuditLogListView,
+    AdminAuditLogExportView
 )
 
 urlpatterns = [
@@ -19,4 +20,5 @@ urlpatterns = [
     path('admin/users/', AdminUserListView.as_view(), name='admin_user_list'),
     path('admin/users/<int:pk>/verify/', AdminVerifyUserView.as_view(), name='admin_verify_user'),
     path('admin/audit-logs/', AuditLogListView.as_view(), name='admin_audit_logs'),
+    path('admin/audit-logs/export/', AdminAuditLogExportView.as_view(), name='admin_audit_logs_export'),
 ]

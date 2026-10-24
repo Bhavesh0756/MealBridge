@@ -1,3 +1,6 @@
+import csv
+from django.http import HttpResponse
+from django.utils import timezone
 from rest_framework import generics, status, views, permissions
 from rest_framework.response import Response
 from rest_framework_simplejwt.tokens import RefreshToken
@@ -153,3 +156,33 @@ class AuditLogListView(generics.ListAPIView):
     queryset = AuditLog.objects.all().select_related('user')
     filterset_fields = ['action', 'entity_type']
     search_fields = ['action', 'entity_id', 'user__email']
+
+
+class AdminAuditLogExportView(views.APIView):
+    permission_classes = [IsAdminUserRole]
+
+    def get(self, request):
+        response = HttpResponse(content_type='text/csv')
+        filename = f"mealbridge_audit_logs_{timezone.now().strftime('%Y%m%d_%H%M%S')}.csv"
+        response['Content-Disposition'] = f'attachment; filename="{filename}"'
+
+        writer = csv.writer(response)
+        writer.writerow(['ID', 'Timestamp', 'Action', 'Actor Email', 'Entity Type', 'Entity ID', 'Details'])
+
+        action_prefix = request.query_params.get('action', '')
+        queryset = AuditLog.objects.all().select_related('user').order_by('-timestamp')
+        if action_prefix and action_prefix != 'ALL':
+            queryset = queryset.filter(action__startswith=action_prefix)
+
+        for log in queryset[:2000]:
+            writer.writerow([
+                log.id,
+                log.timestamp.isoformat(),
+                log.action,
+                log.user.email if log.user else 'System',
+                log.entity_type,
+                log.entity_id,
+                str(log.details)
+            ])
+
+        return response
