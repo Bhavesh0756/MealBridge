@@ -96,10 +96,10 @@ export function SmartMatchmakerPage() {
   };
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-8">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-8 cyber-dots">
       {/* Header */}
       <div className="space-y-3 pb-6 border-b border-slate-200/80">
-        <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-amber-50 text-amber-900 text-[11px] font-black uppercase tracking-widest border border-amber-200/60">
+        <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-amber-50 text-amber-900 text-[11px] font-black uppercase tracking-widest border border-amber-300/60 shadow-2xs">
           <Sparkles className="w-3.5 h-3.5 text-amber-500 animate-pulse" />
           <span>Algorithmic Allocation Intelligence</span>
         </div>
@@ -112,7 +112,7 @@ export function SmartMatchmakerPage() {
       </div>
 
       {/* Matching Parameters Explainer Card */}
-      <div className="bg-white/90 backdrop-blur-md p-6 sm:p-8 rounded-3xl border border-slate-200/80 shadow-md space-y-6">
+      <div className="glass-panel p-6 sm:p-8 rounded-3xl border border-slate-200/80 shadow-md space-y-6">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
             <h3 className="font-display font-bold text-base text-slate-900">Search Radius & Feasibility Filter</h3>
@@ -164,27 +164,27 @@ export function SmartMatchmakerPage() {
 
         {/* 5-Pillar Score Formula */}
         <div className="grid grid-cols-2 sm:grid-cols-5 gap-3.5 pt-4 border-t border-slate-100 text-center">
-          <div className="p-4 bg-emerald-50/60 rounded-2xl border border-emerald-200/60 hover:shadow-md transition">
+          <div className="p-4 bg-emerald-50/70 rounded-2xl border border-emerald-200/60 card-interactive shadow-xs hover:border-emerald-400">
             <div className="font-display font-black text-base text-emerald-800">30 Pts</div>
             <div className="text-[11px] text-slate-800 font-bold mt-1">Geographic Proximity</div>
             <div className="text-[10px] text-slate-500 mt-0.5">Haversine formula &lt;3km</div>
           </div>
-          <div className="p-4 bg-amber-50/60 rounded-2xl border border-amber-200/60 hover:shadow-md transition">
+          <div className="p-4 bg-amber-50/70 rounded-2xl border border-amber-200/60 card-interactive shadow-xs hover:border-amber-400">
             <div className="font-display font-black text-base text-amber-800">25 Pts</div>
             <div className="text-[11px] text-slate-800 font-bold mt-1">Rescue Urgency</div>
             <div className="text-[10px] text-slate-500 mt-0.5">Expiry deadline &lt;3 hrs</div>
           </div>
-          <div className="p-4 bg-blue-50/60 rounded-2xl border border-blue-200/60 hover:shadow-md transition">
+          <div className="p-4 bg-blue-50/70 rounded-2xl border border-blue-200/60 card-interactive shadow-xs hover:border-blue-400">
             <div className="font-display font-black text-base text-blue-800">20 Pts</div>
             <div className="text-[11px] text-slate-800 font-bold mt-1">Capacity Match</div>
             <div className="text-[10px] text-slate-500 mt-0.5">Within daily intake</div>
           </div>
-          <div className="p-4 bg-cyan-50/60 rounded-2xl border border-cyan-200/60 hover:shadow-md transition">
+          <div className="p-4 bg-cyan-50/70 rounded-2xl border border-cyan-200/60 card-interactive shadow-xs hover:border-cyan-400">
             <div className="font-display font-black text-base text-cyan-800">15 Pts</div>
             <div className="text-[11px] text-slate-800 font-bold mt-1">Storage Safe</div>
             <div className="text-[10px] text-slate-500 mt-0.5">Cold chain verified</div>
           </div>
-          <div className="p-4 bg-purple-50/60 rounded-2xl border border-purple-200/60 hover:shadow-md transition">
+          <div className="p-4 bg-purple-50/70 rounded-2xl border border-purple-200/60 card-interactive shadow-xs hover:border-purple-400">
             <div className="font-display font-black text-base text-purple-800">10 Pts</div>
             <div className="text-[11px] text-slate-800 font-bold mt-1">Trust Score</div>
             <div className="text-[10px] text-slate-500 mt-0.5">Verified donor partner</div>
@@ -198,7 +198,7 @@ export function SmartMatchmakerPage() {
           <h2 className="font-extrabold text-lg text-slate-900">
             Ranked Recommendations ({filteredMatches.length})
           </h2>
-          <span className="text-xs text-slate-500">Sorted by algorithmic rescue score</span>
+          <span className="text-xs text-slate-500 font-medium">Sorted by algorithmic rescue score</span>
         </div>
 
         {loading ? (
@@ -218,40 +218,48 @@ export function SmartMatchmakerPage() {
                 layout
                 initial={{ opacity: 0, y: 15 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="bg-white rounded-2xl border border-slate-200 shadow-xs hover:shadow-md transition p-5 space-y-4 flex flex-col justify-between"
+                className="glass-panel rounded-3xl border border-slate-200/90 shadow-md card-interactive shimmer-sweep-hover transition-all duration-300 p-6 space-y-4 flex flex-col justify-between group"
               >
                 <div className="space-y-3">
                   {/* Top Match Badge */}
                   <div className="flex items-center justify-between">
-                    <span className="px-3 py-1 rounded-full text-xs font-black bg-gradient-to-r from-[#047857] via-[#10b981] to-[#06b6d4] text-white shadow-md shadow-emerald-500/20">
+                    <span className={`px-3 py-1 rounded-full text-xs font-black shadow-md font-mono-numbers ${
+                      item.match_score >= 80
+                        ? 'bg-gradient-to-r from-[#047857] via-[#10b981] to-[#06b6d4] text-white shadow-emerald-500/25 glow-aurora'
+                        : 'bg-emerald-100 text-emerald-800 border border-emerald-300/60'
+                    }`}>
                       {item.match_score}% Match Score
                     </span>
-                    <span className="text-xs font-bold text-slate-600 flex items-center gap-1">
+                    <span className="text-xs font-bold text-slate-600 flex items-center gap-1 font-mono-numbers">
                       <MapPin className="w-3.5 h-3.5 text-rose-500" />
                       {item.distance_km} km away
                     </span>
                   </div>
 
                   <div>
-                    <h3 className="font-bold text-base text-slate-900">{item.title}</h3>
+                    <h3 className="font-display font-bold text-base text-slate-900 group-hover:text-emerald-700 transition">{item.title}</h3>
                     <p className="text-xs text-slate-500 mt-0.5">
-                      Donor: <strong>{item.donor_name}</strong> • {item.pickup_address}
+                      Donor: <strong className="text-slate-700">{item.donor_name}</strong> • {item.pickup_address}
                     </p>
                   </div>
 
                   {/* Quantity & Urgency */}
-                  <div className="bg-slate-50 p-3 rounded-xl border border-slate-100 space-y-1.5 text-xs">
-                    <div className="flex justify-between">
-                      <span className="text-slate-500">Available Amount:</span>
-                      <span className="font-bold text-emerald-700">{item.available_quantity} {item.unit}</span>
+                  <div className="bg-slate-50/80 p-3.5 rounded-2xl border border-slate-100 space-y-2 text-xs">
+                    <div className="flex justify-between items-center">
+                      <span className="text-slate-500 font-medium">Available Amount:</span>
+                      <span className="font-black text-emerald-700 font-mono-numbers text-sm">{item.available_quantity} {item.unit}</span>
                     </div>
-                    <div className="flex justify-between">
-                      <span className="text-slate-500">Time to Expiry:</span>
-                      <span className="font-bold text-amber-700">{item.remaining_hours} hours remaining</span>
+                    <div className="flex justify-between items-center">
+                      <span className="text-slate-500 font-medium">Time to Expiry:</span>
+                      <span className={`font-black font-mono-numbers px-2 py-0.5 rounded-md text-[11px] ${
+                        item.remaining_hours <= 4 ? 'badge-coral-urgent animate-pulse' : 'badge-saffron'
+                      }`}>
+                        {item.remaining_hours} hours left
+                      </span>
                     </div>
-                    <div className="flex justify-between">
-                      <span className="text-slate-500">Handling:</span>
-                      <span className="font-medium text-slate-800">{item.storage_requirement}</span>
+                    <div className="flex justify-between items-center">
+                      <span className="text-slate-500 font-medium">Handling:</span>
+                      <span className="font-semibold text-slate-800 text-[11px]">{item.storage_requirement}</span>
                     </div>
                   </div>
 
@@ -261,13 +269,13 @@ export function SmartMatchmakerPage() {
                       Why this donation is recommended:
                     </span>
                     {item.reasons?.map((reason, idx) => (
-                      <div key={idx} className="text-xs text-emerald-800 flex items-start gap-1.5">
+                      <div key={idx} className="text-xs text-emerald-800 flex items-start gap-1.5 font-medium">
                         <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
                         <span className="leading-snug">{reason}</span>
                       </div>
                     ))}
                     {item.warnings?.map((warn, idx) => (
-                      <div key={`w-${idx}`} className="text-xs text-amber-800 flex items-start gap-1.5">
+                      <div key={`w-${idx}`} className="text-xs text-amber-800 flex items-start gap-1.5 font-medium">
                         <AlertCircle className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" />
                         <span className="leading-snug">{warn}</span>
                       </div>
@@ -278,7 +286,7 @@ export function SmartMatchmakerPage() {
                 <div className="space-y-2 pt-2 border-t border-slate-100">
                   <button
                     onClick={() => handleOpenRequest(item)}
-                    className="w-full py-2.5 bg-gradient-to-r from-[#047857] via-[#10b981] to-[#06b6d4] hover:from-[#065f46] hover:to-[#0891b2] text-white rounded-xl text-xs font-bold text-center transition flex items-center justify-center gap-1.5 shadow-md shadow-emerald-500/20 cursor-pointer"
+                    className="w-full py-2.5 bg-gradient-to-r from-[#047857] via-[#10b981] to-[#06b6d4] hover:brightness-110 text-white rounded-xl text-xs font-black text-center transition flex items-center justify-center gap-1.5 shadow-md shadow-emerald-500/20 cursor-pointer"
                   >
                     <Send className="w-3.5 h-3.5" />
                     <span>Claim Allocation Directly</span>
