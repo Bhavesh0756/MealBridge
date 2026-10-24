@@ -21,8 +21,16 @@ export const donationsApi = {
     const res = await api.post('/donations/listings/', formData);
     return res.data;
   },
+  updateDonation: async (id, data) => {
+    const res = await api.patch(`/donations/listings/${id}/`, data);
+    return res.data;
+  },
   cancelDonation: async (id, reason) => {
     const res = await api.post(`/donations/listings/${id}/cancel/`, { reason });
+    return res.data;
+  },
+  completeDonation: async (id) => {
+    const res = await api.post(`/donations/listings/${id}/complete/`);
     return res.data;
   },
   moderateListing: async (id, action, reason) => {

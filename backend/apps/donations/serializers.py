@@ -93,10 +93,13 @@ class DonationCreateUpdateSerializer(serializers.ModelSerializer):
         if prep_time and pickup_deadline and pickup_deadline <= prep_time:
             raise serializers.ValidationError({"pickup_deadline": "Pickup deadline must be after preparation time."})
 
-        # Food safety checklist requirements
-        if not attrs.get('safety_checklist_completed'):
+        # Food safety checklist requirements (support partial updates)
+        is_completed = attrs.get('safety_checklist_completed') if 'safety_checklist_completed' in attrs else (getattr(self.instance, 'safety_checklist_completed', False) if self.instance else False)
+        is_accepted = attrs.get('safety_disclaimer_accepted') if 'safety_disclaimer_accepted' in attrs else (getattr(self.instance, 'safety_disclaimer_accepted', False) if self.instance else False)
+
+        if not is_completed:
             raise serializers.ValidationError({"safety_checklist_completed": "Food safety checklist must be completed."})
-        if not attrs.get('safety_disclaimer_accepted'):
+        if not is_accepted:
             raise serializers.ValidationError({"safety_disclaimer_accepted": "Food safety terms and disclaimer must be acknowledged."})
 
         return attrs

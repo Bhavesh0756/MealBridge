@@ -129,6 +129,25 @@ class DonationViewSet(viewsets.ModelViewSet):
 
         return Response({'status': 'Donation cancelled successfully.'})
 
+    @action(detail=True, methods=['post'], permission_classes=[permissions.IsAuthenticated])
+    @transaction.atomic
+    def complete(self, request, pk=None):
+        donation = self.get_object()
+        if donation.donor != request.user and not request.user.is_staff:
+            return Response({'error': 'You do not have permission to mark this donation completed.'}, status=status.HTTP_403_FORBIDDEN)
+
+        donation.status = Donation.Status.COMPLETED
+        donation.save(update_fields=['status'])
+
+        AuditLog.objects.create(
+            user=request.user,
+            action='DONATION_COMPLETED',
+            entity_type='Donation',
+            entity_id=str(donation.id),
+            details={'status': 'COMPLETED'}
+        )
+        return Response({'status': 'Donation marked as completed.'})
+
     @action(detail=True, methods=['post'], permission_classes=[permissions.IsAuthenticated, IsAdminUserRole])
     @transaction.atomic
     def moderate(self, request, pk=None):

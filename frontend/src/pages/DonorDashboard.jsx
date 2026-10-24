@@ -6,6 +6,8 @@ import {
   CheckCircle2,
   ShieldCheck,
   Sparkles,
+  Edit3,
+  CheckCheck,
   X
 } from 'lucide-react';
 import { donationsApi } from '../api/donations';
@@ -28,6 +30,15 @@ export function DonorDashboard() {
   const [createModalOpen, setCreateModalOpen] = useState(false);
   const [safetyModalOpen, setSafetyModalOpen] = useState(false);
   const [matchedNgosModal, setMatchedNgosModal] = useState(null);
+  const [editingDonation, setEditingDonation] = useState(null);
+  const [editFormData, setEditFormData] = useState({
+    title: '',
+    description: '',
+    special_instructions: '',
+    contact_phone: '',
+    pickup_address: '',
+    storage_requirement: 'ROOM_TEMPERATURE',
+  });
 
   // New Listing Form State
   const [newListing, setNewListing] = useState({
@@ -191,6 +202,42 @@ export function DonorDashboard() {
     } catch (err) {
       console.error('Failed to calculate matches for listing:', err);
       toastError('Could not calculate matches for this listing.');
+    }
+  };
+
+  const handleOpenEdit = (donation) => {
+    setEditingDonation(donation);
+    setEditFormData({
+      title: donation.title,
+      description: donation.description || '',
+      special_instructions: donation.special_instructions || '',
+      contact_phone: donation.contact_phone || user?.phone_number || '',
+      pickup_address: donation.pickup_address || '',
+      storage_requirement: donation.storage_requirement || 'ROOM_TEMPERATURE',
+    });
+  };
+
+  const handleSaveEdit = async (e) => {
+    e.preventDefault();
+    if (!editingDonation) return;
+    try {
+      await donationsApi.updateDonation(editingDonation.id, editFormData);
+      toastSuccess('Listing details updated successfully!');
+      setEditingDonation(null);
+      loadDashboardData();
+    } catch (err) {
+      toastError(err.response?.data?.error || 'Failed to update listing.');
+    }
+  };
+
+  const handleCompleteDonation = async (donationId) => {
+    if (!confirm('Mark this surplus food donation as fully completed & handed over?')) return;
+    try {
+      await donationsApi.completeDonation(donationId);
+      toastSuccess('Donation marked as completed!');
+      loadDashboardData();
+    } catch (err) {
+      toastError(err.response?.data?.error || 'Failed to complete donation.');
     }
   };
 
@@ -414,6 +461,25 @@ export function DonorDashboard() {
                     <Sparkles className="w-3.5 h-3.5 text-amber-600" />
                     <span>View Matched NGOs</span>
                   </button>
+
+                  {['AVAILABLE', 'PARTIALLY_RESERVED'].includes(d.status) && (
+                    <div className="grid grid-cols-2 gap-2">
+                      <button
+                        onClick={() => handleOpenEdit(d)}
+                        className="py-1.5 px-2 bg-slate-50 hover:bg-slate-100 border border-slate-200 text-slate-700 rounded-xl text-xs font-semibold transition flex items-center justify-center gap-1 cursor-pointer"
+                      >
+                        <Edit3 className="w-3 h-3 text-slate-500" />
+                        <span>Edit</span>
+                      </button>
+                      <button
+                        onClick={() => handleCompleteDonation(d.id)}
+                        className="py-1.5 px-2 bg-teal-50 hover:bg-teal-100 border border-teal-200 text-teal-800 rounded-xl text-xs font-semibold transition flex items-center justify-center gap-1 cursor-pointer"
+                      >
+                        <CheckCheck className="w-3 h-3 text-teal-600" />
+                        <span>Complete</span>
+                      </button>
+                    </div>
+                  )}
 
                   {['AVAILABLE', 'PARTIALLY_RESERVED'].includes(d.status) && (
                     <button
@@ -713,6 +779,110 @@ export function DonorDashboard() {
                   Done
                 </button>
               </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
+
+      {/* Edit Donation Modal */}
+      <AnimatePresence>
+        {editingDonation && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/50 backdrop-blur-xs overflow-y-auto">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.95 }}
+              className="bg-white rounded-3xl shadow-2xl max-w-lg w-full border border-slate-200 overflow-hidden my-8"
+            >
+              <div className="p-5 border-b border-slate-100 flex items-center justify-between bg-slate-50">
+                <div>
+                  <span className="text-[10px] font-bold uppercase tracking-wider text-emerald-600">
+                    Update Details
+                  </span>
+                  <h3 className="font-bold text-slate-900 text-base">Edit Donation Listing</h3>
+                </div>
+                <button
+                  onClick={() => setEditingDonation(null)}
+                  className="p-1 rounded-lg text-slate-400 hover:text-slate-600 cursor-pointer"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+              </div>
+
+              <form onSubmit={handleSaveEdit} className="p-5 space-y-4 text-xs">
+                <div>
+                  <label className="block font-bold text-slate-700 mb-1">Food Title</label>
+                  <input
+                    type="text"
+                    value={editFormData.title}
+                    onChange={(e) => setEditFormData({ ...editFormData, title: e.target.value })}
+                    className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-emerald-500 outline-none"
+                    required
+                  />
+                </div>
+
+                <div>
+                  <label className="block font-bold text-slate-700 mb-1">Description / Dish Details</label>
+                  <textarea
+                    rows={2}
+                    value={editFormData.description}
+                    onChange={(e) => setEditFormData({ ...editFormData, description: e.target.value })}
+                    className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-emerald-500 outline-none"
+                  />
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <div>
+                    <label className="block font-bold text-slate-700 mb-1">Storage Condition</label>
+                    <select
+                      value={editFormData.storage_requirement}
+                      onChange={(e) => setEditFormData({ ...editFormData, storage_requirement: e.target.value })}
+                      className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-emerald-500 outline-none"
+                    >
+                      <option value="ROOM_TEMPERATURE">Room Temperature</option>
+                      <option value="REFRIGERATED">Refrigerated (Cold Chain)</option>
+                      <option value="FROZEN">Deep Freeze</option>
+                      <option value="HEATED">Heated / Hot Holding</option>
+                    </select>
+                  </div>
+
+                  <div>
+                    <label className="block font-bold text-slate-700 mb-1">Contact Phone</label>
+                    <input
+                      type="text"
+                      value={editFormData.contact_phone}
+                      onChange={(e) => setEditFormData({ ...editFormData, contact_phone: e.target.value })}
+                      className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-emerald-500 outline-none"
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <label className="block font-bold text-slate-700 mb-1">Special Handling / Dispatch Instructions</label>
+                  <input
+                    type="text"
+                    value={editFormData.special_instructions}
+                    onChange={(e) => setEditFormData({ ...editFormData, special_instructions: e.target.value })}
+                    className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-emerald-500 outline-none"
+                  />
+                </div>
+
+                <div className="pt-3 border-t border-slate-100 flex items-center justify-end gap-2">
+                  <button
+                    type="button"
+                    onClick={() => setEditingDonation(null)}
+                    className="px-4 py-2 rounded-xl text-slate-600 hover:bg-slate-100 font-semibold cursor-pointer"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    type="submit"
+                    className="px-5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold shadow-xs cursor-pointer"
+                  >
+                    Save Changes
+                  </button>
+                </div>
+              </form>
             </motion.div>
           </div>
         )}
