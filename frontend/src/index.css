@@ -19,8 +19,8 @@
   html {
     font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
     scroll-behavior: smooth;
-    background-color: #fafbfd;
-    color: #0f172a;
+    background-color: #060d0a;
+    color: #e2e8f0;
   }
   
   h1, h2, h3, h4, .font-display {
@@ -29,20 +29,20 @@
   }
 }
 
-/* Custom scrollbars */
+/* Custom scrollbars — Dark Obsidian Theme */
 ::-webkit-scrollbar {
-  width: 7px;
-  height: 7px;
+  width: 6px;
+  height: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: #f8fafc;
+  background: #0b0f17;
 }
 ::-webkit-scrollbar-thumb {
-  background: #cbd5e1;
+  background: rgba(16, 185, 129, 0.35);
   border-radius: 9999px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #10b981;
+  background: rgba(16, 185, 129, 0.75);
 }
 
 /* Map height utilities */
@@ -334,4 +334,181 @@
 .cyber-glow-border {
   border: 1px solid rgba(16, 185, 129, 0.3);
   box-shadow: 0 0 15px rgba(16, 185, 129, 0.15), inset 0 0 15px rgba(16, 185, 129, 0.05);
+}
+
+/* ============================================================ */
+/* EXTENDED PREMIUM ANIMATIONS — Phase 2                        */
+/* ============================================================ */
+
+/* Morphing Neon Gradient Border */
+@keyframes border-rotate {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.neon-border-animated {
+  position: relative;
+  border-radius: 1.25rem;
+}
+
+.neon-border-animated::before {
+  content: '';
+  position: absolute;
+  inset: -1.5px;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #047857, #10b981, #06b6d4, #f59e0b, #10b981, #047857);
+  background-size: 300% 300%;
+  animation: border-rotate 4s linear infinite;
+  z-index: -1;
+  filter: blur(3px);
+  opacity: 0.7;
+}
+
+/* Aurora Scanner Line */
+@keyframes scanner-line {
+  0%   { top: 0%; opacity: 1; }
+  80%  { opacity: 1; }
+  100% { top: 100%; opacity: 0; }
+}
+
+.scanner-line {
+  position: absolute;
+  left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, rgba(16,185,129,0.9) 50%, transparent 100%);
+  animation: scanner-line 3s ease-in-out infinite;
+  pointer-events: none;
+}
+
+/* Neon Glow Button Pulse */
+@keyframes btn-neon-pulse {
+  0%, 100% { box-shadow: 0 0 20px rgba(16,185,129,0.4), 0 0 40px rgba(16,185,129,0.15); }
+  50%       { box-shadow: 0 0 35px rgba(16,185,129,0.7), 0 0 70px rgba(16,185,129,0.25), 0 0 5px rgba(6,182,212,0.5); }
+}
+
+.btn-neon-pulse {
+  animation: btn-neon-pulse 3s ease-in-out infinite;
+}
+
+/* Stagger fade-in for lists */
+@keyframes stagger-in {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.stagger-in > * {
+  animation: stagger-in 0.45s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.stagger-in > *:nth-child(1) { animation-delay: 0.0s; }
+.stagger-in > *:nth-child(2) { animation-delay: 0.07s; }
+.stagger-in > *:nth-child(3) { animation-delay: 0.14s; }
+.stagger-in > *:nth-child(4) { animation-delay: 0.21s; }
+.stagger-in > *:nth-child(5) { animation-delay: 0.28s; }
+.stagger-in > *:nth-child(6) { animation-delay: 0.35s; }
+
+/* Data stream animation */
+@keyframes data-stream {
+  0%   { background-position: 0% 0%; }
+  100% { background-position: 0% 100%; }
+}
+
+.data-stream-bg {
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 3px,
+    rgba(16, 185, 129, 0.04) 3px,
+    rgba(16, 185, 129, 0.04) 4px
+  );
+  background-size: 100% 60px;
+  animation: data-stream 2.5s linear infinite;
+}
+
+/* Orbit spin (for decorative rings) */
+@keyframes orbit-spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+.orbit-spin {
+  animation: orbit-spin 12s linear infinite;
+}
+
+.orbit-spin-reverse {
+  animation: orbit-spin 16s linear infinite reverse;
+}
+
+/* Page entrance fade-up */
+@keyframes page-enter {
+  from { opacity: 0; transform: translateY(20px) scale(0.99); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.page-enter {
+  animation: page-enter 0.55s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* Count-up number flash */
+@keyframes count-flash {
+  0%   { opacity: 0.4; transform: scale(0.95); }
+  50%  { opacity: 1;   transform: scale(1.04); }
+  100% { opacity: 1;   transform: scale(1); }
+}
+
+.count-flash {
+  animation: count-flash 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+/* Subtle scanline overlay for cyberpunk feel */
+.scanlines {
+  background-image: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 1px,
+    rgba(0, 0, 0, 0.04) 1px,
+    rgba(0, 0, 0, 0.04) 2px
+  );
+  pointer-events: none;
+}
+
+/* Typewriter cursor blink */
+@keyframes cursor-blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+.cursor-blink::after {
+  content: '|';
+  margin-left: 2px;
+  animation: cursor-blink 1s step-end infinite;
+  color: #10b981;
+}
+
+/* Tilt perspective card (activate via JS or hover) */
+.tilt-card {
+  transform-style: preserve-3d;
+  perspective: 1000px;
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.tilt-card:hover {
+  transform: perspective(1000px) rotateX(-3deg) rotateY(3deg) scale(1.02);
+}
+
+/* Gradient text glow on hover */
+.gradient-text-hover {
+  transition: filter 0.3s ease;
+}
+
+.gradient-text-hover:hover {
+  filter: drop-shadow(0 0 12px rgba(16, 185, 129, 0.7));
+}
+
+/* Input glow on focus */
+.input-glow-focus:focus {
+  box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.2), 0 0 20px rgba(16, 185, 129, 0.15);
+  border-color: rgba(16, 185, 129, 0.6) !important;
+  background: rgba(16, 185, 129, 0.04) !important;
 }
