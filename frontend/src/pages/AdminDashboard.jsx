@@ -161,65 +161,69 @@ export function AdminDashboard() {
   }
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-8">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-200">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-6 pb-6 border-b border-slate-200/80">
         <div>
-          <div className="flex items-center gap-2">
-            <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-purple-100 text-purple-800">
-              Administrative Control Center
+          <div className="flex items-center gap-2 mb-2">
+            <span className="px-3 py-1 rounded-full text-[11px] font-black uppercase tracking-widest bg-purple-50 text-purple-800 border border-purple-200/60 flex items-center gap-1.5">
+              <span className="w-2 h-2 rounded-full bg-purple-500 animate-ping" />
+              Administrative Security & Control
             </span>
           </div>
-          <h1 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight mt-1">
-            Platform Verification & Audit
+          <h1 className="font-display text-3xl sm:text-4xl font-black text-slate-900 tracking-tight">
+            Security Shield & Trust Governance
           </h1>
+          <p className="text-xs sm:text-sm text-slate-500 max-w-xl">
+            Identity verification queue, participant governance, and tamper-evident cryptographic security audit trails.
+          </p>
         </div>
 
         <button
           onClick={loadAdminData}
-          className="p-2 border border-slate-200 hover:bg-slate-50 rounded-xl text-slate-600 transition flex items-center gap-1.5 text-xs font-semibold cursor-pointer"
+          className="p-3 bg-white border border-slate-200 hover:bg-slate-50 rounded-2xl text-slate-600 transition-all flex items-center gap-2 text-xs font-bold cursor-pointer shadow-2xs"
         >
           <RefreshCw className="w-4 h-4" />
-          <span>Refresh</span>
+          <span>Refresh Queue</span>
         </button>
       </div>
 
       {/* KPI Cards */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-5">
         <div
           onClick={() => { setActiveTab('verification'); setStatusFilter('PENDING'); }}
-          className="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs cursor-pointer hover:border-amber-400 transition"
+          className="bg-white/90 backdrop-blur-md p-6 rounded-3xl border border-slate-200/80 shadow-md hover:shadow-xl hover:border-amber-500/50 transition-all duration-300 space-y-1 cursor-pointer"
         >
-          <p className="text-xs text-slate-500 font-medium">Pending Verifications</p>
-          <p className="text-2xl sm:text-3xl font-black text-amber-600 mt-1">{pendingUsers.length}</p>
-          <p className="text-[10px] text-slate-400 mt-1">Requiring identity checks</p>
+          <p className="text-xs font-extrabold uppercase tracking-widest text-slate-400">Pending Approvals</p>
+          <p className="font-display text-3xl sm:text-4xl font-black text-amber-500 mt-1">{pendingUsers.length}</p>
+          <p className="text-[11px] text-slate-500 font-medium">Requires verification</p>
         </div>
 
         <div
           onClick={() => { setActiveTab('directory'); setStatusFilter('VERIFIED'); }}
-          className="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs cursor-pointer hover:border-emerald-400 transition"
+          className="bg-white/90 backdrop-blur-md p-6 rounded-3xl border border-slate-200/80 shadow-md hover:shadow-xl hover:border-emerald-500/50 transition-all duration-300 space-y-1 cursor-pointer"
         >
-          <p className="text-xs text-slate-500 font-medium">Verified Accounts</p>
-          <p className="text-2xl sm:text-3xl font-black text-emerald-600 mt-1">{verifiedUsers.length}</p>
-          <p className="text-[10px] text-slate-400 mt-1">Approved platform actors</p>
+          <p className="text-xs font-extrabold uppercase tracking-widest text-slate-400">Verified Network</p>
+          <p className="font-display text-3xl sm:text-4xl font-black text-emerald-600 mt-1">{verifiedUsers.length}</p>
+          <p className="text-[11px] text-slate-500 font-medium">Certified platform actors</p>
         </div>
 
         <div
           onClick={() => { setActiveTab('directory'); setStatusFilter('ALL'); setRoleFilter('ALL'); }}
-          className="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs cursor-pointer hover:border-slate-400 transition"
+          className="bg-white/90 backdrop-blur-md p-6 rounded-3xl border border-slate-200/80 shadow-md hover:shadow-xl hover:border-slate-400/50 transition-all duration-300 space-y-1 cursor-pointer"
         >
-          <p className="text-xs text-slate-500 font-medium">Total Registered Users</p>
-          <p className="text-2xl sm:text-3xl font-black text-slate-800 mt-1">{users.length}</p>
-          <p className="text-[10px] text-slate-400 mt-1">Donors, NGOs, Volunteers</p>
+          <p className="text-xs font-extrabold uppercase tracking-widest text-slate-400">Total Participants</p>
+          <p className="font-display text-3xl sm:text-4xl font-black text-slate-900 mt-1">{users.length}</p>
+          <p className="text-[11px] text-slate-500 font-medium">Donors, NGOs, Couriers</p>
         </div>
 
         <div
           onClick={() => setActiveTab('logs')}
-          className="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs cursor-pointer hover:border-purple-400 transition"
+          className="bg-white/90 backdrop-blur-md p-6 rounded-3xl border border-slate-200/80 shadow-md hover:shadow-xl hover:border-purple-500/50 transition-all duration-300 space-y-1 cursor-pointer"
         >
-          <p className="text-xs text-slate-500 font-medium">Audit Events Logged</p>
-          <p className="text-2xl sm:text-3xl font-black text-purple-700 mt-1">{auditLogs.length}</p>
-          <p className="text-[10px] text-slate-400 mt-1">Transactional traceability</p>
+          <p className="text-xs font-extrabold uppercase tracking-widest text-slate-400">Audit Trail Events</p>
+          <p className="font-display text-3xl sm:text-4xl font-black text-purple-600 mt-1">{auditLogs.length}</p>
+          <p className="text-[11px] text-slate-500 font-medium">Cryptographic logs</p>
         </div>
       </div>
 
