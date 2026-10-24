@@ -72,7 +72,7 @@ export function LoginPage() {
         </div>
 
         {/* Login Form */}
-        <div className="bg-white p-6 sm:p-8 rounded-3xl border border-slate-200 shadow-xl space-y-5">
+        <div className="stripe-card p-6 sm:p-8 rounded-3xl border border-slate-200/90 shadow-xl space-y-5 bg-white">
           {error && (
             <div className="p-3 bg-rose-50 border border-rose-200 rounded-xl text-xs text-rose-700 flex items-center gap-2">
               <AlertCircle className="w-4 h-4 shrink-0" />
@@ -93,7 +93,7 @@ export function LoginPage() {
                   placeholder="name@organization.org"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full pl-9 pr-3 py-2 text-xs bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-emerald-500 transition outline-none"
+                  className="w-full pl-9 pr-3 py-2.5 text-xs bg-slate-50/80 border border-slate-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition outline-none"
                 />
               </div>
             </div>
@@ -110,7 +110,7 @@ export function LoginPage() {
                   placeholder="••••••••"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="w-full pl-9 pr-3 py-2 text-xs bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-emerald-500 transition outline-none"
+                  className="w-full pl-9 pr-3 py-2.5 text-xs bg-slate-50/80 border border-slate-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition outline-none"
                 />
               </div>
             </div>
@@ -118,9 +118,9 @@ export function LoginPage() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full py-3 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold shadow-md shadow-emerald-600/20 transition flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
+              className="w-full py-3 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold shadow-md shadow-emerald-600/20 transition flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50 hover:scale-[1.01] active:scale-[0.99]"
             >
-              <span>{loading ? 'Authenticating...' : 'Sign In'}</span>
+              <span>{loading ? 'Authenticating...' : 'Sign In to Account'}</span>
               <ArrowRight className="w-4 h-4" />
             </button>
           </form>
@@ -131,6 +131,15 @@ export function LoginPage() {
               Register now
             </Link>
           </div>
+        </div>
+
+        {/* Trust Seal */}
+        <div className="text-center text-[11px] text-slate-400 flex items-center justify-center gap-3">
+          <span>🛡️ FSSAI Food Safety</span>
+          <span>•</span>
+          <span>🔒 256-Bit Encrypted</span>
+          <span>•</span>
+          <span>📜 Instant Tax Slips</span>
         </div>
       </div>
     </div>
