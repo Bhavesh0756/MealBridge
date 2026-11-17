@@ -51,10 +51,18 @@ export function AuthProvider({ children }) {
 
   const register = async (userData) => {
     const res = await authApi.register(userData);
-    localStorage.setItem('mealbridge_access_token', res.tokens.access);
-    localStorage.setItem('mealbridge_refresh_token', res.tokens.refresh);
-    setUser(res.user);
-    localStorage.setItem('mealbridge_user', JSON.stringify(res.user));
+    const access = res.tokens?.access || res.access;
+    const refresh = res.tokens?.refresh || res.refresh;
+    if (access) {
+      localStorage.setItem('mealbridge_access_token', access);
+    }
+    if (refresh) {
+      localStorage.setItem('mealbridge_refresh_token', refresh);
+    }
+    if (res.user) {
+      setUser(res.user);
+      localStorage.setItem('mealbridge_user', JSON.stringify(res.user));
+    }
     return res;
   };
 

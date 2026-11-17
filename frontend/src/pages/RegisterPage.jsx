@@ -45,36 +45,56 @@ export function RegisterPage() {
     setError('');
     setLoading(true);
 
+    const username = formData.username || formData.email.split('@')[0];
     const payload = {
       email: formData.email,
-      username: formData.username || formData.email.split('@')[0],
+      username: username,
       password: formData.password,
       role: role,
       phone_number: formData.phone_number,
     };
 
     if (role === 'DONOR') {
+      const orgName = formData.organization_name || `${username} Kitchen`;
+      payload.organization_name = orgName;
+      payload.donor_type = formData.donor_type;
+      payload.license_number = formData.license_number;
+      payload.address = formData.address;
+      payload.city = formData.city;
       payload.donor_profile = {
-        organization_name: formData.organization_name || `${formData.username} Kitchen`,
+        organization_name: orgName,
         donor_type: formData.donor_type,
         license_number: formData.license_number,
         address: formData.address,
         city: formData.city,
       };
     } else if (role === 'NGO') {
+      const orgName = formData.organization_name || `${username} Welfare`;
+      const dailyCap = parseInt(formData.daily_capacity_meals, 10) || 200;
+      payload.organization_name = orgName;
+      payload.registration_number = formData.registration_number;
+      payload.address = formData.address;
+      payload.city = formData.city;
+      payload.daily_capacity_meals = dailyCap;
+      payload.cold_storage_available = formData.cold_storage_available;
       payload.ngo_profile = {
-        organization_name: formData.organization_name || `${formData.username} Welfare`,
+        organization_name: orgName,
         registration_number: formData.registration_number,
         address: formData.address,
         city: formData.city,
-        daily_capacity_meals: parseInt(formData.daily_capacity_meals) || 200,
+        daily_capacity_meals: dailyCap,
         cold_storage_available: formData.cold_storage_available,
       };
     } else if (role === 'VOLUNTEER') {
+      const fullName = formData.full_name || username;
+      const maxCap = parseInt(formData.max_transport_capacity_kg, 10) || 30;
+      payload.full_name = fullName;
+      payload.vehicle_type = formData.vehicle_type;
+      payload.max_transport_capacity_kg = maxCap;
       payload.volunteer_profile = {
-        full_name: formData.full_name || formData.username,
+        full_name: fullName,
         vehicle_type: formData.vehicle_type,
-        max_transport_capacity_kg: parseInt(formData.max_transport_capacity_kg) || 30,
+        max_transport_capacity_kg: maxCap,
       };
     }
 
@@ -86,7 +106,31 @@ export function RegisterPage() {
       else navigate('/');
     } catch (err) {
       const errData = err.response?.data;
-      const msg = errData?.email?.[0] || errData?.password?.[0] || errData?.detail || 'Registration failed.';
+      let msg = 'Registration failed.';
+      if (errData) {
+        if (typeof errData === 'string') {
+          msg = errData;
+        } else if (errData.detail) {
+          msg = errData.detail;
+        } else if (errData.email?.[0]) {
+          msg = errData.email[0];
+        } else if (errData.username?.[0]) {
+          msg = errData.username[0];
+        } else if (errData.password?.[0]) {
+          msg = errData.password[0];
+        } else if (errData.phone_number?.[0]) {
+          msg = errData.phone_number[0];
+        } else if (errData.non_field_errors?.[0]) {
+          msg = errData.non_field_errors[0];
+        } else {
+          const firstKey = Object.keys(errData)[0];
+          if (firstKey && Array.isArray(errData[firstKey])) {
+            msg = `${firstKey}: ${errData[firstKey][0]}`;
+          }
+        }
+      } else if (err.message) {
+        msg = err.message;
+      }
       setError(msg);
     } finally {
       setLoading(false);
