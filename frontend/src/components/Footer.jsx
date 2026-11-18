@@ -1,8 +1,10 @@
 import React from 'react';
 import { Utensils, Heart, Shield, Award } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 
 export function Footer() {
+  const { user, isDonor, isNgo, isVolunteer, isAdmin } = useAuth();
   return (
     <footer className="bg-slate-900 text-slate-400 text-sm mt-auto border-t border-slate-800">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -61,26 +63,34 @@ export function Footer() {
           <div>
             <h4 className="text-white font-bold text-xs uppercase tracking-wider mb-3">Roles & Consoles</h4>
             <ul className="space-y-2 text-xs">
-              <li>
-                <Link to="/dashboard/donor" className="hover:text-emerald-400 transition">
-                  Food Donor Console
-                </Link>
-              </li>
-              <li>
-                <Link to="/dashboard/ngo" className="hover:text-emerald-400 transition">
-                  NGO Recipient Hub
-                </Link>
-              </li>
-              <li>
-                <Link to="/dashboard/volunteer" className="hover:text-emerald-400 transition">
-                  Volunteer Transport Tracker
-                </Link>
-              </li>
-              <li>
-                <Link to="/dashboard/admin" className="hover:text-emerald-400 transition">
-                  Moderator & Audit Center
-                </Link>
-              </li>
+              {(!user || isDonor) && (
+                <li>
+                  <Link to="/dashboard/donor" className="hover:text-emerald-400 transition">
+                    Food Donor Console
+                  </Link>
+                </li>
+              )}
+              {(!user || isNgo) && (
+                <li>
+                  <Link to="/dashboard/ngo" className="hover:text-emerald-400 transition">
+                    NGO Recipient Hub
+                  </Link>
+                </li>
+              )}
+              {(!user || isVolunteer) && (
+                <li>
+                  <Link to="/dashboard/volunteer" className="hover:text-emerald-400 transition">
+                    Volunteer Transport Tracker
+                  </Link>
+                </li>
+              )}
+              {(!user || isAdmin) && (
+                <li>
+                  <Link to="/dashboard/admin" className="hover:text-emerald-400 transition">
+                    Moderator & Audit Center
+                  </Link>
+                </li>
+              )}
             </ul>
           </div>
 

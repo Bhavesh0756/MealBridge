@@ -4,7 +4,7 @@ import { useAuth, DEMO_ACCOUNTS } from '../context/AuthContext';
 import { Utensils, Lock, Mail, AlertCircle, ArrowRight } from 'lucide-react';
 
 export function LoginPage() {
-  const { login } = useAuth();
+  const { user, login } = useAuth();
   const navigate = useNavigate();
 
   const [email, setEmail] = useState('');
@@ -12,13 +12,28 @@ export function LoginPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
+  // If already authenticated, redirect immediately to role console
+  React.useEffect(() => {
+    if (user) {
+      if (user.role === 'DONOR') navigate('/dashboard/donor', { replace: true });
+      else if (user.role === 'NGO') navigate('/dashboard/ngo', { replace: true });
+      else if (user.role === 'VOLUNTEER') navigate('/dashboard/volunteer', { replace: true });
+      else if (user.role === 'ADMIN' || user.is_staff) navigate('/dashboard/admin', { replace: true });
+    }
+  }, [user, navigate]);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
     setLoading(true);
     try {
-      await login(email, password);
-      navigate('/');
+      const loggedInUser = await login(email, password);
+      const userRole = loggedInUser?.role;
+      if (userRole === 'DONOR') navigate('/dashboard/donor');
+      else if (userRole === 'NGO') navigate('/dashboard/ngo');
+      else if (userRole === 'VOLUNTEER') navigate('/dashboard/volunteer');
+      else if (userRole === 'ADMIN' || loggedInUser?.is_staff) navigate('/dashboard/admin');
+      else navigate('/');
     } catch (err) {
       setError(err.response?.data?.detail || 'Invalid email or password. Please try again.');
     } finally {

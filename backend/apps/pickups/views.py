@@ -4,14 +4,88 @@ from rest_framework.response import Response
 from django.utils import timezone
 from django.db import transaction
 from django.shortcuts import get_object_or_404
+from django.http import Http404
 
 from .models import PickupAssignment, PickupStatusLog
 from .serializers import PickupAssignmentSerializer, PickupStatusLogSerializer
 from apps.accounts.models import User, AuditLog
-from apps.accounts.permissions import IsVolunteer, IsVerified
+from apps.accounts.permissions import IsVolunteer, IsVerified, IsAdminUserRole
 from apps.notifications.models import Notification
 from apps.requests_app.models import DonationRequest
 from apps.donations.models import Donation
+
+
+def resolve_pickup(pk, user, for_update=True):
+    """
+    Resolves a PickupAssignment given an identifier.
+    Supports:
+    - Direct PickupAssignment ID (pk)
+    - Donation ID (request__donation_id)
+    - DonationRequest ID (request_id)
+    Returns a tuple: (pickup, flag)
+    where flag can be:
+    - 'assigned': Pickup belongs to current user
+    - 'unassigned': Pickup is in available pool (volunteer is None)
+    - 'other_volunteer': Pickup exists but is assigned to a different volunteer
+    - 'not_found': No pickup matches
+    """
+    qs = PickupAssignment.objects.select_related(
+        'request', 'request__donation', 'request__recipient',
+        'request__donation__donor', 'volunteer'
+    )
+    if for_update:
+        qs = qs.select_for_update()
+
+    try:
+        numeric_pk = int(pk)
+    except (TypeError, ValueError):
+        return None, 'not_found'
+
+    # Step 1: Direct PK lookup across all pickups (exact primary key match takes precedence)
+    direct_pickup = qs.filter(pk=numeric_pk).first()
+    if direct_pickup:
+        if direct_pickup.volunteer == user:
+            return direct_pickup, 'assigned'
+        elif direct_pickup.volunteer is None:
+            return direct_pickup, 'unassigned'
+        else:
+            # Direct PK belongs to another volunteer.
+            # If numeric_pk happens to also be a donation_id or request_id for the current user,
+            # allow falling back to the current user's assignment.
+            user_by_donation = qs.filter(request__donation_id=numeric_pk, volunteer=user).first()
+            if user_by_donation:
+                return user_by_donation, 'assigned'
+            user_by_request = qs.filter(request_id=numeric_pk, volunteer=user).first()
+            if user_by_request:
+                return user_by_request, 'assigned'
+            return direct_pickup, 'other_volunteer'
+
+    # Step 2: Fallback when no pickup has pk as its primary key: check donation_id or request_id
+    user_by_donation = qs.filter(request__donation_id=numeric_pk, volunteer=user).first()
+    if user_by_donation:
+        return user_by_donation, 'assigned'
+
+    user_by_request = qs.filter(request_id=numeric_pk, volunteer=user).first()
+    if user_by_request:
+        return user_by_request, 'assigned'
+
+    unassigned_by_donation = qs.filter(request__donation_id=numeric_pk, volunteer__isnull=True).first()
+    if unassigned_by_donation:
+        return unassigned_by_donation, 'unassigned'
+
+    unassigned_by_request = qs.filter(request_id=numeric_pk, volunteer__isnull=True).first()
+    if unassigned_by_request:
+        return unassigned_by_request, 'unassigned'
+
+    other_by_donation = qs.filter(request__donation_id=numeric_pk).first()
+    if other_by_donation:
+        return other_by_donation, 'other_volunteer'
+
+    other_by_request = qs.filter(request_id=numeric_pk).first()
+    if other_by_request:
+        return other_by_request, 'other_volunteer'
+
+    return None, 'not_found'
 
 
 class PickupAssignmentViewSet(viewsets.ModelViewSet):
@@ -47,7 +121,7 @@ class PickupAssignmentViewSet(viewsets.ModelViewSet):
 
     def get_permissions(self):
         if self.action in ['claim', 'unclaim', 'update_status']:
-            return [permissions.IsAuthenticated(), IsVolunteer(), IsVerified()]
+            return [permissions.IsAuthenticated(), (IsVolunteer | IsAdminUserRole)(), IsVerified()]
         return [permissions.IsAuthenticated()]
 
     @action(detail=False, methods=['get'])
@@ -73,10 +147,13 @@ class PickupAssignmentViewSet(viewsets.ModelViewSet):
     def claim(self, request, pk=None):
         """Volunteer claims a pickup assignment."""
         with transaction.atomic():
-            pickup = get_object_or_404(
-                PickupAssignment.objects.select_for_update(),
-                pk=pk
-            )
+            pickup, flag = resolve_pickup(pk, request.user, for_update=True)
+            if flag == 'not_found' or pickup is None:
+                raise Http404("No PickupAssignment matches the given query.")
+
+            if flag == 'assigned':
+                # Already claimed by this volunteer
+                return Response(PickupAssignmentSerializer(pickup).data)
 
             if pickup.status != PickupAssignment.Status.READY_FOR_PICKUP or pickup.volunteer is not None:
                 return Response(
@@ -133,11 +210,22 @@ class PickupAssignmentViewSet(viewsets.ModelViewSet):
         """Volunteer releases a claimed assignment back to the available pool before food is collected."""
         reason = request.data.get('reason', 'Volunteer reported an unexpected scheduling conflict or emergency.')
         with transaction.atomic():
-            pickup = get_object_or_404(
-                PickupAssignment.objects.select_for_update(),
-                pk=pk,
-                volunteer=request.user
-            )
+            pickup, flag = resolve_pickup(pk, request.user, for_update=True)
+            if flag == 'not_found' or pickup is None:
+                raise Http404("No PickupAssignment matches the given query.")
+
+            is_admin = bool(request.user and (request.user.role == User.Role.ADMIN or request.user.is_staff or request.user.is_superuser))
+            if flag == 'other_volunteer' and not is_admin:
+                return Response(
+                    {'error': 'Cannot release an assignment assigned to another volunteer.'},
+                    status=status.HTTP_403_FORBIDDEN
+                )
+
+            if flag == 'unassigned' or pickup.volunteer is None:
+                return Response(
+                    {'error': 'This pickup assignment is already in the available pool.'},
+                    status=status.HTTP_400_BAD_REQUEST
+                )
 
             if pickup.status not in [PickupAssignment.Status.CLAIMED, PickupAssignment.Status.EN_ROUTE_PICKUP]:
                 return Response(
@@ -181,10 +269,11 @@ class PickupAssignmentViewSet(viewsets.ModelViewSet):
         """
         Volunteer updates status along valid lifecycle.
         Valid transitions:
-        - CLAIMED -> EN_ROUTE_PICKUP
-        - EN_ROUTE_PICKUP -> FOOD_COLLECTED
-        - FOOD_COLLECTED -> EN_ROUTE_DELIVERY
-        - EN_ROUTE_DELIVERY -> DELIVERED
+        - READY_FOR_PICKUP -> CLAIMED, EN_ROUTE_PICKUP, FAILED
+        - CLAIMED -> EN_ROUTE_PICKUP, FAILED
+        - EN_ROUTE_PICKUP -> FOOD_COLLECTED, FAILED
+        - FOOD_COLLECTED -> EN_ROUTE_DELIVERY, FAILED
+        - EN_ROUTE_DELIVERY -> DELIVERED, FAILED
         - ANY ACTIVE -> FAILED
         """
         new_status = request.data.get('status')
@@ -193,13 +282,28 @@ class PickupAssignmentViewSet(viewsets.ModelViewSet):
         recipient_signature_name = request.data.get('recipient_signature_name', '')
 
         with transaction.atomic():
-            pickup = get_object_or_404(
-                PickupAssignment.objects.select_for_update(),
-                pk=pk,
-                volunteer=request.user
-            )
+            pickup, flag = resolve_pickup(pk, request.user, for_update=True)
+            if flag == 'not_found' or pickup is None:
+                raise Http404("No PickupAssignment matches the given query.")
+
+            is_admin = bool(request.user and (request.user.role == User.Role.ADMIN or request.user.is_staff or request.user.is_superuser))
+            if flag == 'other_volunteer' and not is_admin:
+                return Response(
+                    {'error': 'This pickup assignment is assigned to another volunteer.'},
+                    status=status.HTTP_403_FORBIDDEN
+                )
+
+            # Auto-assign if unassigned
+            was_unassigned = (flag == 'unassigned') or (pickup.volunteer is None)
+            if was_unassigned:
+                pickup.volunteer = request.user
 
             valid_transitions = {
+                PickupAssignment.Status.READY_FOR_PICKUP: [
+                    PickupAssignment.Status.CLAIMED,
+                    PickupAssignment.Status.EN_ROUTE_PICKUP,
+                    PickupAssignment.Status.FAILED
+                ],
                 PickupAssignment.Status.CLAIMED: [
                     PickupAssignment.Status.EN_ROUTE_PICKUP,
                     PickupAssignment.Status.FAILED
@@ -225,6 +329,44 @@ class PickupAssignmentViewSet(viewsets.ModelViewSet):
                 }, status=status.HTTP_400_BAD_REQUEST)
 
             now = timezone.now()
+
+            # If claiming from READY_FOR_PICKUP directly or via EN_ROUTE_PICKUP
+            if was_unassigned and new_status != PickupAssignment.Status.CLAIMED:
+                PickupStatusLog.objects.create(
+                    assignment=pickup,
+                    status=PickupAssignment.Status.CLAIMED,
+                    changed_by=request.user,
+                    notes=f"Auto-assigned to volunteer {request.user.email}"
+                )
+                AuditLog.objects.create(
+                    user=request.user,
+                    action='PICKUP_CLAIMED',
+                    entity_type='PickupAssignment',
+                    entity_id=str(pickup.id),
+                    details={'volunteer': request.user.email}
+                )
+
+                vol_name = getattr(request.user, 'volunteer_profile', None)
+                vol_label = vol_name.full_name if vol_name else request.user.email
+
+                Notification.objects.create(
+                    recipient=pickup.request.donation.donor,
+                    title="Volunteer Assigned for Pickup 🚚",
+                    message=f"Volunteer {vol_label} has accepted the pickup for '{pickup.request.donation.title}'.",
+                    notification_type=Notification.NotificationType.PICKUP_CLAIMED,
+                    related_entity_type='pickup',
+                    related_entity_id=str(pickup.id)
+                )
+
+                Notification.objects.create(
+                    recipient=pickup.request.recipient,
+                    title="Volunteer Assigned for Delivery 🚚",
+                    message=f"Volunteer {vol_label} is handling your food delivery for '{pickup.request.donation.title}'.",
+                    notification_type=Notification.NotificationType.PICKUP_CLAIMED,
+                    related_entity_type='pickup',
+                    related_entity_id=str(pickup.id)
+                )
+
             pickup.status = new_status
             if notes:
                 pickup.handover_notes = notes

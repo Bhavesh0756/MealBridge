@@ -22,8 +22,10 @@ export function AuthProvider({ children }) {
       const data = await authApi.getCurrentUser();
       setUser(data);
       localStorage.setItem('mealbridge_user', JSON.stringify(data));
+      return data;
     } catch {
       logout();
+      return null;
     } finally {
       setLoading(false);
     }
@@ -46,7 +48,7 @@ export function AuthProvider({ children }) {
     const data = await authApi.login(email, password);
     localStorage.setItem('mealbridge_access_token', data.access);
     localStorage.setItem('mealbridge_refresh_token', data.refresh);
-    await fetchProfile();
+    return await fetchProfile();
   };
 
   const register = async (userData) => {
@@ -79,6 +81,18 @@ export function AuthProvider({ children }) {
     setLoading(false);
   };
 
+  const isMultiRoleAuthorized = Boolean(
+    user && (
+      user.role === 'ADMIN' ||
+      user.is_staff ||
+      user.is_superuser ||
+      (Array.isArray(user.roles) && user.roles.length > 1) ||
+      (Array.isArray(user.allowed_roles) && user.allowed_roles.length > 1)
+    )
+  );
+
+  const canSwitchRoles = !user || isMultiRoleAuthorized;
+
   return (
     <AuthContext.Provider
       value={{
@@ -95,6 +109,8 @@ export function AuthProvider({ children }) {
         isNgo: user?.role === 'NGO',
         isVolunteer: user?.role === 'VOLUNTEER',
         isAdmin: user?.role === 'ADMIN' || user?.is_staff,
+        isMultiRoleAuthorized,
+        canSwitchRoles,
       }}
     >
       {children}

@@ -130,3 +130,73 @@ class PickupLifecycleAndUnclaimTests(TestCase):
         self.pickup.refresh_from_db()
         self.assertEqual(self.pickup.status, PickupAssignment.Status.READY_FOR_PICKUP)
         self.assertIsNone(self.pickup.volunteer)
+
+    def test_lookup_by_donation_id_and_request_id(self):
+        self.client.force_authenticate(user=self.volunteer)
+
+        # Claim using donation_id
+        claim_res = self.client.post(f'/api/pickups/{self.donation.id}/claim/')
+        self.assertEqual(claim_res.status_code, status.HTTP_200_OK)
+        self.pickup.refresh_from_db()
+        self.assertEqual(self.pickup.status, PickupAssignment.Status.CLAIMED)
+        self.assertEqual(self.pickup.volunteer, self.volunteer)
+
+        # Update status using donation_id
+        update_res = self.client.post(f'/api/pickups/{self.donation.id}/update_status/', {
+            'status': 'EN_ROUTE_PICKUP'
+        })
+        self.assertEqual(update_res.status_code, status.HTTP_200_OK)
+        self.pickup.refresh_from_db()
+        self.assertEqual(self.pickup.status, PickupAssignment.Status.EN_ROUTE_PICKUP)
+
+        # Update status using request_id
+        update_res2 = self.client.post(f'/api/pickups/{self.donation_request.id}/update_status/', {
+            'status': 'FOOD_COLLECTED'
+        })
+        self.assertEqual(update_res2.status_code, status.HTTP_200_OK)
+        self.pickup.refresh_from_db()
+        self.assertEqual(self.pickup.status, PickupAssignment.Status.FOOD_COLLECTED)
+
+    def test_auto_claim_from_ready_for_pickup(self):
+        self.client.force_authenticate(user=self.volunteer)
+        self.assertIsNone(self.pickup.volunteer)
+        self.assertEqual(self.pickup.status, PickupAssignment.Status.READY_FOR_PICKUP)
+
+        # Volunteer directly updates status to EN_ROUTE_PICKUP without manual claim first
+        res = self.client.post(f'/api/pickups/{self.pickup.id}/update_status/', {
+            'status': 'EN_ROUTE_PICKUP'
+        })
+        self.assertEqual(res.status_code, status.HTTP_200_OK)
+        self.pickup.refresh_from_db()
+        self.assertEqual(self.pickup.volunteer, self.volunteer)
+        self.assertEqual(self.pickup.status, PickupAssignment.Status.EN_ROUTE_PICKUP)
+
+    def test_other_volunteer_forbidden(self):
+        other_volunteer = User.objects.create_user(
+            username='other_vol',
+            email='other_vol@example.com',
+            password='Password@123',
+            role=User.Role.VOLUNTEER,
+            is_verified=True,
+            verification_status=User.VerificationStatus.VERIFIED
+        )
+        VolunteerProfile.objects.create(user=other_volunteer, full_name='Other Courier')
+
+        # Volunteer 1 claims
+        self.client.force_authenticate(user=self.volunteer)
+        self.client.post(f'/api/pickups/{self.pickup.id}/claim/')
+
+        # Other volunteer tries to update status
+        self.client.force_authenticate(user=other_volunteer)
+        res = self.client.post(f'/api/pickups/{self.pickup.id}/update_status/', {
+            'status': 'EN_ROUTE_PICKUP'
+        })
+        self.assertEqual(res.status_code, status.HTTP_403_FORBIDDEN)
+        self.assertIn('error', res.data)
+
+    def test_not_found_returns_404(self):
+        self.client.force_authenticate(user=self.volunteer)
+        res = self.client.post('/api/pickups/99999/update_status/', {
+            'status': 'EN_ROUTE_PICKUP'
+        })
+        self.assertEqual(res.status_code, status.HTTP_404_NOT_FOUND)

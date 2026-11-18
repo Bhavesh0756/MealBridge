@@ -16,7 +16,18 @@ import {
 import { ProfileModal } from './ProfileModal';
 
 export function Navbar() {
-  const { user, logout, switchDemoAccount, isDonor, isNgo, isVolunteer, isAdmin, isAuthenticated } = useAuth();
+  const {
+    user,
+    logout,
+    switchDemoAccount,
+    isDonor,
+    isNgo,
+    isVolunteer,
+    isAdmin,
+    isAuthenticated,
+    canSwitchRoles,
+    isMultiRoleAuthorized
+  } = useAuth();
   const { unreadCount, setDrawerOpen } = useNotifications();
   const navigate = useNavigate();
   const location = useLocation();
@@ -27,7 +38,17 @@ export function Navbar() {
 
   const isActive = (path) => location.pathname === path;
 
+  // Filter available accounts: only accounts the user is authorized for
+  const switchableAccounts = !user
+    ? DEMO_ACCOUNTS
+    : isMultiRoleAuthorized
+      ? (Array.isArray(user?.roles) && user.roles.length > 1)
+        ? DEMO_ACCOUNTS.filter((acc) => user.roles.includes(acc.role))
+        : DEMO_ACCOUNTS
+      : [];
+
   const handleDemoSwitch = async (acc) => {
+    if (!canSwitchRoles && user) return;
     setDemoMenuOpen(false);
     await switchDemoAccount(acc.email, acc.password);
     if (acc.role === 'DONOR') navigate('/dashboard/donor');
@@ -119,7 +140,7 @@ export function Navbar() {
                   isActive('/dashboard/volunteer') ? 'bg-amber-100 text-amber-900 font-bold' : 'text-amber-700 hover:bg-amber-50'
                 }`}
               >
-                Rescue Log
+                Volunteer Console
               </Link>
             )}
             {isAdmin && (
@@ -129,7 +150,7 @@ export function Navbar() {
                   isActive('/dashboard/admin') ? 'bg-purple-100 text-purple-900 font-bold' : 'text-purple-700 hover:bg-purple-50'
                 }`}
               >
-                Admin Panel
+                Admin Dashboard
               </Link>
             )}
           </nav>
@@ -142,7 +163,7 @@ export function Navbar() {
             <button
               onClick={() => setDemoMenuOpen(!demoMenuOpen)}
               className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-amber-50 hover:bg-amber-100 text-amber-900 border border-amber-200 transition cursor-pointer"
-              title="Switch demo roles instantly"
+              title={canSwitchRoles ? "Switch active role" : `Active Role: ${user?.role || 'Guest'}`}
             >
               <span className="w-2 h-2 rounded-full bg-amber-500 animate-pulse" />
               <span className="hidden sm:inline">Role:</span>
@@ -154,30 +175,52 @@ export function Navbar() {
 
             {demoMenuOpen && (
               <div className="absolute right-0 mt-2 w-64 bg-white rounded-xl shadow-xl border border-slate-200 p-2 z-50">
-                <div className="px-2 py-1 text-[11px] font-bold text-slate-400 uppercase tracking-wider">
-                  Switch Active Role
-                </div>
-                {DEMO_ACCOUNTS.map((acc) => (
-                  <button
-                    key={acc.role}
-                    onClick={() => handleDemoSwitch(acc)}
-                    className={`w-full text-left p-2 rounded-lg text-xs transition flex items-center justify-between cursor-pointer ${
-                      user?.email === acc.email
-                        ? 'bg-emerald-50 text-emerald-800 font-bold'
-                        : 'hover:bg-slate-50 text-slate-700'
-                    }`}
-                  >
-                    <div>
-                      <div className="font-semibold">{acc.label}</div>
-                      <div className="text-[10px] text-slate-400">{acc.org}</div>
+                {user && !isMultiRoleAuthorized ? (
+                  <div className="p-2 space-y-2">
+                    <div className="text-[11px] font-bold text-slate-400 uppercase tracking-wider">
+                      Account Role
                     </div>
-                    {user?.email === acc.email && (
+                    <div className="p-2.5 rounded-lg bg-emerald-50/80 border border-emerald-200 flex items-center justify-between">
+                      <div>
+                        <div className="font-bold text-xs text-emerald-950">{user.role} Console</div>
+                        <div className="text-[10px] text-emerald-700">Single Role Account</div>
+                      </div>
                       <span className="text-[10px] px-1.5 py-0.5 bg-emerald-600 text-white rounded font-bold">
                         ACTIVE
                       </span>
-                    )}
-                  </button>
-                ))}
+                    </div>
+                    <p className="text-[11px] text-slate-500 leading-snug">
+                      Role switching is restricted to multi-role authorized accounts.
+                    </p>
+                  </div>
+                ) : (
+                  <>
+                    <div className="px-2 py-1 text-[11px] font-bold text-slate-400 uppercase tracking-wider">
+                      Switch Active Role
+                    </div>
+                    {switchableAccounts.map((acc) => (
+                      <button
+                        key={acc.role}
+                        onClick={() => handleDemoSwitch(acc)}
+                        className={`w-full text-left p-2 rounded-lg text-xs transition flex items-center justify-between cursor-pointer ${
+                          user?.email === acc.email
+                            ? 'bg-emerald-50 text-emerald-800 font-bold'
+                            : 'hover:bg-slate-50 text-slate-700'
+                        }`}
+                      >
+                        <div>
+                          <div className="font-semibold">{acc.label}</div>
+                          <div className="text-[10px] text-slate-400">{acc.org}</div>
+                        </div>
+                        {user?.email === acc.email && (
+                          <span className="text-[10px] px-1.5 py-0.5 bg-emerald-600 text-white rounded font-bold">
+                            ACTIVE
+                          </span>
+                        )}
+                      </button>
+                    ))}
+                  </>
+                )}
               </div>
             )}
           </div>
@@ -317,7 +360,7 @@ export function Navbar() {
               onClick={() => setMobileMenuOpen(false)}
               className="block px-3 py-2 rounded-lg text-sm font-semibold text-purple-700 bg-purple-50"
             >
-              Admin Panel
+              Admin Dashboard
             </Link>
           )}
         </div>

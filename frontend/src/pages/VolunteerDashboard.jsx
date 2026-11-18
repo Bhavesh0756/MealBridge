@@ -18,7 +18,7 @@ import { SkeletonStat, SkeletonCard } from '../components/SkeletonLoader';
 
 export function VolunteerDashboard() {
   const { user } = useAuth();
-  const { success: toastSuccess, error: toastError, warning: toastWarning } = useToast();
+  const { success: toastSuccess, error: toastError, warning: toastWarning, info: toastInfo } = useToast();
   const [availablePool, setAvailablePool] = useState([]);
   const [myPickups, setMyPickups] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -32,9 +32,9 @@ export function VolunteerDashboard() {
   const [failureReason, setFailureReason] = useState('');
   const [submitting, setSubmitting] = useState(false);
 
-  const loadData = async () => {
+  const loadData = async (showLoading = true) => {
     try {
-      setLoading(true);
+      if (showLoading) setLoading(true);
       const [pool, mine] = await Promise.all([
         pickupsApi.getAvailablePool().catch(() => []),
         pickupsApi.getMyPickups().catch(() => []),
@@ -44,21 +44,38 @@ export function VolunteerDashboard() {
     } catch (e) {
       console.error(e);
     } finally {
-      setLoading(false);
+      if (showLoading) setLoading(false);
     }
   };
 
   useEffect(() => {
-    loadData();
+    loadData(true);
   }, []);
 
   const handleClaim = async (pickupId) => {
     try {
-      await pickupsApi.claimPickup(pickupId);
+      const claimedPickup = await pickupsApi.claimPickup(pickupId);
       toastSuccess('Delivery assignment claimed! Added to your active delivery tasks.');
-      loadData();
+      if (claimedPickup && (claimedPickup.id || claimedPickup.pickup_assignment_id)) {
+        const cId = claimedPickup.id || claimedPickup.pickup_assignment_id;
+        setMyPickups((prev) => {
+          const index = prev.findIndex(
+            (p) => p.id === cId || p.pickup_assignment_id === cId || p.id === pickupId
+          );
+          if (index !== -1) {
+            const next = [...prev];
+            next[index] = { ...next[index], ...claimedPickup };
+            return next;
+          }
+          return [claimedPickup, ...prev];
+        });
+        setAvailablePool((prev) =>
+          prev.filter((t) => t.id !== pickupId && t.id !== cId && t.pickup_assignment_id !== cId)
+        );
+      }
+      loadData(false);
     } catch (err) {
-      const msg = err.response?.data?.error || 'Failed to claim pickup.';
+      const msg = err.response?.data?.error || err.response?.data?.detail || 'Failed to claim pickup.';
       toastError(msg);
     }
   };
@@ -67,11 +84,18 @@ export function VolunteerDashboard() {
     const reason = window.prompt('Please provide a reason for releasing this mission back to the pool (e.g., flat tire, schedule emergency):');
     if (reason === null) return;
     try {
-      await pickupsApi.unclaimPickup(pickupId, reason || 'Volunteer released assignment');
+      const unclaimed = await pickupsApi.unclaimPickup(pickupId, reason || 'Volunteer released assignment');
       toastInfo('Mission released back to the available pool for another volunteer.');
-      loadData();
+      setMyPickups((prev) => prev.filter((p) => p.id !== pickupId));
+      if (unclaimed && (unclaimed.id || unclaimed.pickup_assignment_id)) {
+        setAvailablePool((prev) => {
+          const exists = prev.some((t) => t.id === unclaimed.id);
+          return exists ? prev : [unclaimed, ...prev];
+        });
+      }
+      loadData(false);
     } catch (err) {
-      const msg = err.response?.data?.error || 'Failed to release mission.';
+      const msg = err.response?.data?.error || err.response?.data?.detail || 'Failed to release mission.';
       toastError(msg);
     }
   };
@@ -90,13 +114,38 @@ export function VolunteerDashboard() {
 
     try {
       setSubmitting(true);
-      await pickupsApi.updateStatus(
-        activePickupForUpdate.id,
+      const targetId = activePickupForUpdate.id || activePickupForUpdate.pickup_assignment_id;
+      const updatedPickup = await pickupsApi.updateStatus(
+        targetId,
         targetStatus,
         notes,
         failureReason,
         recipientSignature
       );
+
+      // Immediately update local React state using the backend response
+      if (updatedPickup && (updatedPickup.id || updatedPickup.pickup_assignment_id)) {
+        const uId = updatedPickup.id || updatedPickup.pickup_assignment_id;
+        setMyPickups((prevPickups) => {
+          const index = prevPickups.findIndex(
+            (p) => (p.id === uId || p.pickup_assignment_id === uId || p.id === targetId)
+          );
+          if (index !== -1) {
+            const merged = {
+              ...prevPickups[index],
+              ...updatedPickup,
+              status: updatedPickup.status || targetStatus,
+              request_details: updatedPickup.request_details || prevPickups[index].request_details,
+              request: updatedPickup.request || prevPickups[index].request,
+            };
+            const next = [...prevPickups];
+            next[index] = merged;
+            return next;
+          }
+          return [...prevPickups, updatedPickup];
+        });
+      }
+
       if (targetStatus === 'FAILED') {
         toastWarning('Delivery issue recorded. Quantities returned safely to donor stock.');
       } else if (targetStatus === 'DELIVERED') {
@@ -105,9 +154,9 @@ export function VolunteerDashboard() {
         toastSuccess(`Delivery status updated to ${targetStatus.replace(/_/g, ' ')}`);
       }
       setActivePickupForUpdate(null);
-      loadData();
+      loadData(false);
     } catch (err) {
-      const msg = err.response?.data?.error || 'Failed to update pickup status.';
+      const msg = err.response?.data?.error || err.response?.data?.detail || 'Failed to update pickup status.';
       toastError(msg);
     } finally {
       setSubmitting(false);
@@ -115,12 +164,14 @@ export function VolunteerDashboard() {
   };
 
   const activeDeliveries = myPickups.filter((p) =>
-    ['CLAIMED', 'EN_ROUTE_PICKUP', 'FOOD_COLLECTED', 'EN_ROUTE_DELIVERY'].includes(p.status)
+    ['READY_FOR_PICKUP', 'CLAIMED', 'EN_ROUTE_PICKUP', 'FOOD_COLLECTED', 'EN_ROUTE_DELIVERY'].includes(p.status)
   );
   const completedDeliveries = myPickups.filter((p) => p.status === 'DELIVERED');
 
   const getNextStatus = (current) => {
     switch (current) {
+      case 'READY_FOR_PICKUP':
+        return { next: 'EN_ROUTE_PICKUP', label: 'Start Driving to Donor' };
       case 'CLAIMED':
         return { next: 'EN_ROUTE_PICKUP', label: 'Start Driving to Donor' };
       case 'EN_ROUTE_PICKUP':
@@ -318,7 +369,7 @@ export function VolunteerDashboard() {
                             {stepInfo.label} →
                           </button>
                         )}
-                        {['CLAIMED', 'EN_ROUTE_PICKUP'].includes(p.status) && (
+                        {['READY_FOR_PICKUP', 'CLAIMED', 'EN_ROUTE_PICKUP'].includes(p.status) && (
                           <button
                             onClick={() => handleUnclaimPickup(p.id)}
                             className="px-3 py-2 text-amber-700 hover:bg-amber-50 border border-amber-300 rounded-xl text-xs font-semibold transition cursor-pointer"

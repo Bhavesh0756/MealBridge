@@ -17,6 +17,8 @@ class DonationRequestListSerializer(serializers.ModelSerializer):
     pickup_status = serializers.SerializerMethodField()
     volunteer_details = serializers.SerializerMethodField()
 
+    pickup_assignment_id = serializers.SerializerMethodField()
+
     class Meta:
         model = DonationRequest
         fields = [
@@ -24,7 +26,8 @@ class DonationRequestListSerializer(serializers.ModelSerializer):
             'requested_quantity', 'status', 'beneficiary_notes',
             'donor_notes', 'rejection_reason', 'responded_at',
             'created_at', 'has_pickup_assignment', 'pickup_status',
-            'volunteer_details', 'recipient_feedback', 'rating'
+            'pickup_assignment_id', 'volunteer_details', 'recipient_feedback',
+            'rating'
         ]
 
     def get_recipient_organization(self, obj):
@@ -34,6 +37,11 @@ class DonationRequestListSerializer(serializers.ModelSerializer):
 
     def get_has_pickup_assignment(self, obj):
         return hasattr(obj, 'pickup_assignment')
+
+    def get_pickup_assignment_id(self, obj):
+        if hasattr(obj, 'pickup_assignment'):
+            return obj.pickup_assignment.id
+        return None
 
     def get_pickup_status(self, obj):
         if hasattr(obj, 'pickup_assignment'):
